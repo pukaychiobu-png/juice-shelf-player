@@ -102,6 +102,66 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
+    .storm-layer,
+    .storm-flash {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .storm-layer {
+      z-index: -1;
+      overflow: hidden;
+      opacity: 0;
+      background:
+        radial-gradient(ellipse at 22% 16%, rgba(85, 121, 178, .27), transparent 31%),
+        radial-gradient(ellipse at 82% 74%, rgba(32, 74, 143, .34), transparent 38%),
+        linear-gradient(160deg, #070b15 0%, #090d1a 48%, #05070d 100%);
+      transition: opacity 900ms ease;
+    }
+
+    .storm-room .storm-layer { opacity: 1; }
+    .storm-room { background: radial-gradient(ellipse at 50% -8%, rgba(69, 110, 190, .2), transparent 46rem), #050812; }
+    .storm-room .aurora { opacity: .48; filter: blur(31px) saturate(.65) hue-rotate(172deg); }
+    .storm-room .stars { opacity: .5; }
+
+    .storm-layer::before,
+    .storm-layer::after {
+      content: "";
+      position: absolute;
+      width: 92vw;
+      height: 31vh;
+      border-radius: 50%;
+      opacity: .55;
+      filter: blur(33px);
+      background: radial-gradient(ellipse, rgba(89, 116, 173, .44), rgba(12, 18, 34, .15) 48%, transparent 70%);
+      animation: storm-clouds 18s ease-in-out infinite alternate;
+    }
+
+    .storm-layer::before { top: -12vh; left: -24vw; }
+    .storm-layer::after { right: -27vw; bottom: 6vh; opacity: .32; animation-delay: -7s; }
+
+    .storm-bolt {
+      position: absolute;
+      width: clamp(45px, 7vw, 93px);
+      height: min(53vh, 490px);
+      opacity: 0;
+      background: linear-gradient(100deg, #f1fbff, #9cbfff 45%, #6278ff);
+      clip-path: polygon(49% 0, 88% 0, 55% 34%, 89% 34%, 20% 100%, 39% 51%, 9% 51%);
+      filter: drop-shadow(0 0 7px #effdff) drop-shadow(0 0 25px #7ca6ff);
+      transform-origin: top center;
+    }
+
+    .storm-bolt.one { top: 3vh; left: 18%; transform: rotate(4deg); }
+    .storm-bolt.two { top: -5vh; left: 58%; height: min(42vh, 400px); transform: rotate(-8deg); }
+    .storm-bolt.three { top: 14vh; right: 8%; height: min(31vh, 310px); transform: rotate(14deg); }
+    .storm-room .storm-layer.strike .storm-bolt { animation: lightning-bolt 540ms steps(2, end) both; }
+    .storm-room .storm-layer.strike .storm-bolt.two { animation-delay: 78ms; }
+    .storm-room .storm-layer.strike .storm-bolt.three { animation-delay: 155ms; }
+
+    .storm-flash { z-index: 20; opacity: 0; mix-blend-mode: screen; background: radial-gradient(ellipse at 48% 17%, rgba(222, 245, 255, .9), rgba(125, 170, 255, .22) 29%, transparent 62%); }
+    .storm-room .storm-flash.flash { animation: thunder-flash 600ms ease-out both; }
+
     .shell {
       position: relative;
       width: min(1320px, calc(100% - 36px));
@@ -342,6 +402,34 @@
 
     .song-card:hover::before,
     .song-card.active::before { transform: scale(1.28); }
+
+    .song-card.special {
+      border-color: rgba(132, 177, 255, .48);
+      background: linear-gradient(135deg, rgba(66, 106, 190, .18), rgba(8, 12, 27, .35));
+      box-shadow: inset 0 1px rgba(203, 226, 255, .15), 0 12px 32px rgba(46, 93, 183, .15);
+    }
+
+    .song-card.special::after {
+      content: "special room";
+      position: absolute;
+      z-index: 2;
+      right: 12px;
+      top: 12px;
+      padding: 5px 7px;
+      border: 1px solid rgba(188, 218, 255, .38);
+      border-radius: 999px;
+      color: #dbeeff;
+      background: rgba(16, 28, 58, .5);
+      font-size: .48rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .storm-room .focus-panel { border-color: rgba(139, 180, 255, .33); box-shadow: 0 26px 82px rgba(0, 0, 0, .42), 0 0 40px rgba(71, 123, 255, .12); }
+    .storm-room .cinematic-stage { background: radial-gradient(ellipse at 50% 41%, rgba(73, 120, 211, .18), transparent 37%), linear-gradient(150deg, #040812, #081020 58%, #040611); }
+    .storm-room .cinema-vinyl { opacity: .56; box-shadow: 0 0 120px rgba(89, 143, 255, .34), inset 0 0 90px rgba(0,0,0,.78); }
 
     .song-card small,
     .song-card strong,
@@ -689,6 +777,9 @@
     @keyframes twinkle { to { opacity: 0.12; transform: scale(0.45); } }
     @keyframes pulse { 50% { opacity: 0.35; transform: scale(0.65); } }
     @keyframes shooting { 10% { opacity: 0; } 23% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--angle)) translateX(var(--travel)); } }
+    @keyframes storm-clouds { to { transform: translate3d(27vw, 7vh, 0) scale(1.18); } }
+    @keyframes lightning-bolt { 0%, 17%, 100% { opacity: 0; } 18%, 36% { opacity: .97; } 44% { opacity: .16; } 51%, 66% { opacity: .76; } }
+    @keyframes thunder-flash { 0% { opacity: 0; } 9% { opacity: .68; } 16% { opacity: .08; } 23% { opacity: .42; } 34%, 100% { opacity: 0; } }
     @keyframes wave { to { height: 7px; opacity: .38; } }
     @keyframes drift-glow { to { transform: translate3d(18%, 10%, 0) scale(1.12); } }
     @keyframes vinyl-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
@@ -735,6 +826,12 @@
 <body>
   <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="storm-layer" id="storm-layer" aria-hidden="true">
+    <i class="storm-bolt one"></i>
+    <i class="storm-bolt two"></i>
+    <i class="storm-bolt three"></i>
+  </div>
+  <div class="storm-flash" id="storm-flash" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <main class="shell">
@@ -768,7 +865,7 @@
         <div class="focus-top">
           <div class="orbital-cover" id="orbital-cover" aria-hidden="true"><b id="cover-letter">E</b></div>
           <div>
-            <p class="eyebrow">now selected</p>
+            <p class="eyebrow" id="focus-eyebrow">now selected</p>
             <h2 class="focus-name" id="focus-name">Empty</h2>
             <p class="focus-artist" id="focus-artist">Juice WRLD</p>
           </div>
@@ -802,7 +899,7 @@
     <div class="cinema-dust" id="cinema-dust" aria-hidden="true"></div>
     <header class="cinema-top">
       <div class="cinema-song">
-        <p class="cinema-label">cinematic lyric mode</p>
+        <p class="cinema-label" id="cinema-label">cinematic lyric mode</p>
         <strong id="cinema-track-name">Empty</strong>
       </div>
       <button class="cinema-close" id="close-cinematic" type="button" aria-label="Tutup cinematic mode">×</button>
@@ -861,7 +958,8 @@
       { title: "Righteous", artist: "Juice WRLD", trackId: "1aeTT9PO1nnXR3EFJSrC0g", accent: "#ff8c72", accent2: "#f1ca81", soft: "rgba(255, 140, 114, 0.2)" },
       { title: "Suicidal (Remix)", artist: "YNW Melly, Juice WRLD", trackId: "4S2uhQE8L9V6p7rj7SiauJ", accent: "#d49aff", accent2: "#736dff", soft: "rgba(180, 119, 255, 0.21)" },
       { title: "Empty Out Your Pockets", artist: "Juice WRLD", trackId: "2QxekHjOYDnzNO5w8hu2D9", accent: "#ffca78", accent2: "#ff7c92", soft: "rgba(255, 192, 105, 0.2)" },
-      { title: "Lean Wit Me", artist: "Juice WRLD", trackId: "3lBJmfJH5JQbiy4GCoAuTy", accent: "#87c1ff", accent2: "#ae7bff", soft: "rgba(135, 193, 255, 0.21)" }
+      { title: "Lean Wit Me", artist: "Juice WRLD", trackId: "3lBJmfJH5JQbiy4GCoAuTy", accent: "#87c1ff", accent2: "#ae7bff", soft: "rgba(135, 193, 255, 0.21)" },
+      { title: "Bandit", artist: "Juice WRLD, YoungBoy Never Broke Again", trackId: "1oWM79mUVdZGCGYjSirHZR", accent: "#98bdff", accent2: "#526cf6", soft: "rgba(94, 145, 255, 0.25)", special: "storm" }
     ];
 
     const lyricKey = "midnight-shelf-lyrics-v1";
@@ -889,6 +987,10 @@
     const cinemaTrackName = document.getElementById("cinema-track-name");
     const constellation = document.getElementById("constellation");
     const cinemaDust = document.getElementById("cinema-dust");
+    const focusEyebrow = document.getElementById("focus-eyebrow");
+    const cinemaLabel = document.getElementById("cinema-label");
+    const stormLayer = document.getElementById("storm-layer");
+    const stormFlash = document.getElementById("storm-flash");
     const savedLyrics = JSON.parse(localStorage.getItem(lyricKey) || "{}");
     let selectedIndex = 0;
     let toastTimer = null;
@@ -896,6 +998,7 @@
     let cinematicIndex = 0;
     let activeUser = null;
     let lyricRequest = 0;
+    let stormTimer = null;
 
     function getLines(text) {
       return text.split(/\n+/).map(line => line.trim()).filter(Boolean);
@@ -973,6 +1076,40 @@
       }
     }
 
+    function triggerLightning() {
+      if (!document.body.classList.contains("storm-room")) return;
+      stormLayer.classList.remove("strike");
+      stormFlash.classList.remove("flash");
+      void stormLayer.offsetWidth;
+      stormLayer.classList.add("strike");
+      stormFlash.classList.add("flash");
+      window.setTimeout(() => {
+        stormLayer.classList.remove("strike");
+        stormFlash.classList.remove("flash");
+      }, 720);
+    }
+
+    function scheduleLightning() {
+      window.clearTimeout(stormTimer);
+      if (!document.body.classList.contains("storm-room")) return;
+      stormTimer = window.setTimeout(() => {
+        triggerLightning();
+        scheduleLightning();
+      }, 3600 + Math.random() * 5200);
+    }
+
+    function setRoomMood(song) {
+      const isStormRoom = song.special === "storm";
+      document.body.classList.toggle("storm-room", isStormRoom);
+      focusEyebrow.textContent = isStormRoom ? "special room · storm mode" : "now selected";
+      cinemaLabel.textContent = isStormRoom ? "special room · thunder cinematic" : "cinematic lyric mode";
+      window.clearTimeout(stormTimer);
+      if (isStormRoom) {
+        triggerLightning();
+        scheduleLightning();
+      }
+    }
+
     function renderShelf() {
       const query = search.value.trim().toLowerCase();
       const filtered = songs.map((song, index) => ({ song, index })).filter(({ song }) =>
@@ -982,7 +1119,7 @@
       filtered.forEach(({ song, index }) => {
         const card = document.createElement("button");
         card.type = "button";
-        card.className = `song-card${index === selectedIndex ? " active" : ""}`;
+        card.className = `song-card${index === selectedIndex ? " active" : ""}${song.special ? " special" : ""}`;
         card.style.setProperty("--card-accent", song.accent);
         card.innerHTML = `<small>${String(index + 1).padStart(2, "0")}</small><strong>${song.title}</strong><span>${song.artist}</span>`;
         card.addEventListener("click", () => selectSong(index));
@@ -1014,6 +1151,7 @@
       document.documentElement.style.setProperty("--accent", song.accent);
       document.documentElement.style.setProperty("--accent-2", song.accent2);
       document.documentElement.style.setProperty("--accent-soft", song.soft);
+      setRoomMood(song);
       focusName.textContent = song.title;
       focusArtist.textContent = song.artist;
       coverLetter.textContent = song.title.charAt(0);
