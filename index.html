@@ -365,6 +365,7 @@
       grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
       gap: 11px;
     }
+    .special-room-link{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:22px 0;padding:20px 22px;border:1px solid rgba(255,104,84,.45);border-radius:20px;color:#fff;text-decoration:none;background:linear-gradient(115deg,rgba(255,37,66,.22),rgba(255,180,72,.11));box-shadow:0 0 45px rgba(255,30,62,.16)}.special-room-link b{font-size:1.1rem}.special-room-link span{color:#ffbd6d;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase}
 
     .song-card {
       position: relative;
@@ -857,6 +858,7 @@
         <label class="search-wrap" aria-label="Cari di koleksi ini">
           <input id="search" type="search" autocomplete="off" placeholder="Cari dari koleksi ini…" />
         </label>
+        <a class="special-room-link" href="special-room.html"><div><span>Separate collection · 04 scenes</span><br><b>Enter Special Room</b></div><strong>→</strong></a>
         <div class="song-grid" id="song-grid"></div>
         <p class="empty-filter" id="empty-filter">Lagu itu belum ada di koleksi awal ini.</p>
       </section>
@@ -947,19 +949,15 @@
       { title: "All Girls Are The Same", artist: "Juice WRLD", trackId: "4VXIryQMWpIdGgYR4TrjT1", accent: "#7ba8ff", accent2: "#9ce5ff", soft: "rgba(123, 168, 255, 0.22)" },
       { title: "Cigarettes", artist: "Juice WRLD", trackId: "1CfuBY3BDdKpooQ9L5zgUc", accent: "#b69aff", accent2: "#7cdbff", soft: "rgba(182, 154, 255, 0.22)" },
       { title: "Candles", artist: "Juice WRLD", trackId: "1wa6QQsdSE3X2GbRljGpFk", accent: "#ffc36b", accent2: "#ff777b", soft: "rgba(255, 195, 107, 0.2)" },
-      { title: "Flaws And Sins", artist: "Juice WRLD", trackId: "2BSbCCbaSCzkOEZa6N5901", accent: "#55d7bc", accent2: "#80b2ff", soft: "rgba(85, 215, 188, 0.2)" },
       { title: "Used To", artist: "Juice WRLD", trackId: "1j1V8ZnkApuo7VS7ilSplV", accent: "#e6b4ff", accent2: "#a489ff", soft: "rgba(211, 159, 255, 0.2)" },
       { title: "734", artist: "Juice WRLD", trackId: "6vB8bdQCCTDDIH8fhRfuXA", accent: "#88e7ff", accent2: "#8b9cff", soft: "rgba(101, 204, 255, 0.2)" },
       { title: "Wasted", artist: "Juice WRLD, Lil Uzi Vert", trackId: "1a7WZZZH7LzyvorhpOJFTe", accent: "#bb8bff", accent2: "#ff75bd", soft: "rgba(187, 139, 255, 0.22)" },
       { title: "Lucid Dreams", artist: "Juice WRLD", trackId: "285pBltuF7vW8TeWk8hdRR", accent: "#72a8ff", accent2: "#d6a4ff", soft: "rgba(114, 168, 255, 0.22)" },
-      { title: "Black & White", artist: "Juice WRLD", trackId: "1fCeXjoRExPP2qwSBh2aST", accent: "#e7e9ff", accent2: "#8992ba", soft: "rgba(219, 225, 255, 0.18)" },
       { title: "Self Aware", artist: "Temper City", trackId: "4qW3BbQAwZsrnu8a3ZRdyT", accent: "#a6ffb3", accent2: "#64c7b3", soft: "rgba(126, 244, 172, 0.2)" },
       { title: "Wishing Well", artist: "Juice WRLD", trackId: "6o3QUC5oAE4g6WxRIFcZtb", accent: "#75e7e4", accent2: "#87a8ff", soft: "rgba(117, 231, 228, 0.2)" },
       { title: "Righteous", artist: "Juice WRLD", trackId: "1aeTT9PO1nnXR3EFJSrC0g", accent: "#ff8c72", accent2: "#f1ca81", soft: "rgba(255, 140, 114, 0.2)" },
-      { title: "Suicidal (Remix)", artist: "YNW Melly, Juice WRLD", trackId: "4S2uhQE8L9V6p7rj7SiauJ", accent: "#d49aff", accent2: "#736dff", soft: "rgba(180, 119, 255, 0.21)" },
       { title: "Empty Out Your Pockets", artist: "Juice WRLD", trackId: "2QxekHjOYDnzNO5w8hu2D9", accent: "#ffca78", accent2: "#ff7c92", soft: "rgba(255, 192, 105, 0.2)" },
       { title: "Lean Wit Me", artist: "Juice WRLD", trackId: "3lBJmfJH5JQbiy4GCoAuTy", accent: "#87c1ff", accent2: "#ae7bff", soft: "rgba(135, 193, 255, 0.21)" },
-      { title: "Bandit", artist: "Juice WRLD, YoungBoy Never Broke Again", trackId: "1oWM79mUVdZGCGYjSirHZR", accent: "#98bdff", accent2: "#526cf6", soft: "rgba(94, 145, 255, 0.25)", special: "storm" }
     ];
 
     const lyricKey = "midnight-shelf-lyrics-v1";
