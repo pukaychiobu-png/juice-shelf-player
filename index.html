@@ -365,6 +365,31 @@
       grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
       gap: 11px;
     }
+
+    .add-song-toggle {
+      width: 100%;
+      margin: 0 0 12px;
+      padding: 12px 15px;
+      border: 1px dashed color-mix(in srgb, var(--accent) 54%, white 18%);
+      border-radius: 15px;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-align: left;
+      text-transform: uppercase;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .add-song-toggle:hover:not(:disabled) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, transparent); transform: translateY(-2px); }
+    .add-song-toggle:disabled { cursor: not-allowed; opacity: .45; }
+    .add-song-form { display: none; gap: 10px; margin: 0 0 16px; padding: 14px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.035); }
+    .add-song-form.open { display: grid; }
+    .add-song-form input { width: 100%; min-width: 0; padding: 11px 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 11px; outline: none; color: var(--text); background: rgba(0,0,0,.18); }
+    .add-song-form input:focus { border-color: var(--accent); }
+    .add-song-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .add-song-submit { justify-self: end; padding: 10px 13px; border: 0; border-radius: 999px; color: #160a1c; background: var(--accent); font-size: .66rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
     .special-room-link{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:22px 0;padding:20px 22px;border:1px solid rgba(255,104,84,.45);border-radius:20px;color:#fff;text-decoration:none;background:linear-gradient(115deg,rgba(255,37,66,.22),rgba(255,180,72,.11));box-shadow:0 0 45px rgba(255,30,62,.16)}.special-room-link b{font-size:1.1rem}.special-room-link span{color:#ffbd6d;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase}
 
     .song-card {
@@ -858,7 +883,16 @@
         <label class="search-wrap" aria-label="Cari di koleksi ini">
           <input id="search" type="search" autocomplete="off" placeholder="Cari dari koleksi ini…" />
         </label>
-        <a class="special-room-link" href="special-room-v4.html"><div><span>Separate collection · 04 scenes</span><br><b>Enter Special Room</b></div><strong>→</strong></a>
+        <a class="special-room-link" href="special-room.html"><div><span>Separate collection · 04 scenes</span><br><b>Enter Special Room</b></div><strong>→</strong></a>
+        <button class="add-song-toggle" id="add-song-toggle" type="button" disabled>＋ Add a song to this shelf</button>
+        <form class="add-song-form" id="add-song-form">
+          <input id="new-song-url" type="url" inputmode="url" placeholder="Spotify track link" required />
+          <div class="form-row">
+            <input id="new-song-title" type="text" maxlength="80" placeholder="Song title" required />
+            <input id="new-song-artist" type="text" maxlength="100" placeholder="Artist name" required />
+          </div>
+          <button class="add-song-submit" type="submit">Save song</button>
+        </form>
         <div class="song-grid" id="song-grid"></div>
         <p class="empty-filter" id="empty-filter">Lagu itu belum ada di koleksi awal ini.</p>
       </section>
@@ -927,7 +961,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDUclkKHZC16QCYb5xeRHg55IZHmJA7_OI",
@@ -961,6 +995,7 @@
     ];
 
     const lyricKey = "midnight-shelf-lyrics-v1";
+    const customSongKey = "midnight-shelf-custom-songs-v1";
     const grid = document.getElementById("song-grid");
     const search = document.getElementById("search");
     const emptyFilter = document.getElementById("empty-filter");
@@ -989,7 +1024,13 @@
     const cinemaLabel = document.getElementById("cinema-label");
     const stormLayer = document.getElementById("storm-layer");
     const stormFlash = document.getElementById("storm-flash");
+    const addSongToggle = document.getElementById("add-song-toggle");
+    const addSongForm = document.getElementById("add-song-form");
+    const newSongUrl = document.getElementById("new-song-url");
+    const newSongTitle = document.getElementById("new-song-title");
+    const newSongArtist = document.getElementById("new-song-artist");
     const savedLyrics = JSON.parse(localStorage.getItem(lyricKey) || "{}");
+    const savedCustomSongs = JSON.parse(localStorage.getItem(customSongKey) || "{}");
     let selectedIndex = 0;
     let toastTimer = null;
     let cinematicLines = [];
@@ -1014,12 +1055,56 @@
       toastTimer = window.setTimeout(() => toast.classList.remove("show"), 1900);
     }
 
+    function getTrackId(value) {
+      const input = value.trim();
+      const fromUrl = input.match(/spotify\.com\/track\/([A-Za-z0-9]{22})/i);
+      if (fromUrl) return fromUrl[1];
+      return /^[A-Za-z0-9]{22}$/.test(input) ? input : "";
+    }
+
+    function getSongColors(seed) {
+      const palette = [
+        ["#ff7a93", "#ffbd7e", "rgba(255, 122, 147, 0.21)"],
+        ["#7cc7ff", "#a795ff", "rgba(124, 199, 255, 0.21)"],
+        ["#65e0c1", "#8da7ff", "rgba(101, 224, 193, 0.21)"],
+        ["#ffc96a", "#ff7e9b", "rgba(255, 201, 106, 0.21)"]
+      ];
+      const total = [...seed].reduce((sum, character) => sum + character.charCodeAt(0), 0);
+      const [accent, accent2, soft] = palette[total % palette.length];
+      return { accent, accent2, soft };
+    }
+
+    function addCustomSong(data, options = {}) {
+      if (!data?.trackId || songs.some(song => song.trackId === data.trackId)) return;
+      songs.push({ title: data.title, artist: data.artist, trackId: data.trackId, ...getSongColors(data.trackId), custom: true });
+      renderShelf();
+      if (options.select) selectSong(songs.length - 1);
+    }
+
+    async function loadCustomSongs() {
+      Object.values(savedCustomSongs).forEach(song => addCustomSong(song));
+      try {
+        const snapshot = await getDocs(collection(db, "customSongs"));
+        snapshot.forEach(item => {
+          const song = item.data();
+          if (typeof song.title !== "string" || typeof song.artist !== "string" || typeof song.trackId !== "string") return;
+          savedCustomSongs[song.trackId] = song;
+          addCustomSong(song);
+        });
+        localStorage.setItem(customSongKey, JSON.stringify(savedCustomSongs));
+      } catch (error) {
+        console.error("Could not load custom songs", error);
+      }
+    }
+
     function setEditorAccess(user) {
       activeUser = user;
       const signedIn = Boolean(user);
       lyricsInput.disabled = !signedIn;
       saveLyricsButton.disabled = !signedIn;
       clearLyricsButton.disabled = !signedIn;
+      addSongToggle.disabled = !signedIn;
+      if (!signedIn) addSongForm.classList.remove("open");
       authButton.textContent = signedIn ? "Sign out" : "Admin sign in";
       syncState.textContent = signedIn ? "admin connected" : "cloud sync";
       syncState.classList.toggle("online", signedIn);
@@ -1205,6 +1290,54 @@
       lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
     });
 
+    addSongToggle.addEventListener("click", () => {
+      addSongForm.classList.toggle("open");
+      if (addSongForm.classList.contains("open")) newSongUrl.focus();
+    });
+
+    addSongForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!auth.currentUser) {
+        await toggleAuthentication();
+        return;
+      }
+      const trackId = getTrackId(newSongUrl.value);
+      const title = newSongTitle.value.trim();
+      const artist = newSongArtist.value.trim();
+      if (!trackId) {
+        showToast("Tempel link Spotify track yang valid");
+        newSongUrl.focus();
+        return;
+      }
+      if (!title || !artist) {
+        showToast("Isi judul dan artist dulu");
+        return;
+      }
+      if (songs.some(song => song.trackId === trackId)) {
+        showToast("Lagu itu sudah ada di shelf");
+        return;
+      }
+      const customSong = { title, artist, trackId };
+      try {
+        await setDoc(doc(db, "customSongs", trackId), {
+          ...customSong,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        savedCustomSongs[trackId] = customSong;
+        localStorage.setItem(customSongKey, JSON.stringify(savedCustomSongs));
+        addSongForm.reset();
+        addSongForm.classList.remove("open");
+        addCustomSong(customSong, { select: true });
+        showToast("Lagu baru masuk ke shelf");
+      } catch (error) {
+        const message = error.code === "permission-denied"
+          ? "Tambahkan aturan Firestore untuk customSongs"
+          : "Gagal menyimpan lagu. Coba lagi.";
+        showToast(message);
+        console.error("Could not save custom song", error);
+      }
+    });
+
     authButton.addEventListener("click", toggleAuthentication);
     setEditorAccess(null);
     onAuthStateChanged(auth, setEditorAccess);
@@ -1329,6 +1462,7 @@
     for (let i = 0; i < 3; i += 1) window.setTimeout(launchShootingStar, 1000 + i * 1500);
     window.setInterval(launchShootingStar, 3800);
     selectSong(0);
+    loadCustomSongs();
   </script>
 </body>
 </html>
