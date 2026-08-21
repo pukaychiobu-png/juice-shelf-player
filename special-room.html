@@ -4,41 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Special Room · Cinematic Lyrics</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap');
-    :root{--hot:#ff456d;--amber:#ffb35f;--line:rgba(255,255,255,.16)}
-    *{box-sizing:border-box} body{margin:0;min-width:320px;background:#080105;color:#fff;font-family:"Space Grotesk",sans-serif} button,input,textarea{font:inherit} button{cursor:pointer}
-    .room{min-height:100svh;padding:28px max(22px,calc((100% - 1180px)/2)) 72px;overflow:hidden;background:radial-gradient(ellipse 56% 35% at 52% -8%,#791b395e,transparent 73%),radial-gradient(ellipse 30% 30% at 100% 44%,#3f164c27,transparent 75%),#090105}
-    .back{display:inline-flex;gap:8px;color:#ffd27c;text-decoration:none;font:10px "DM Mono",monospace;letter-spacing:.13em;text-shadow:0 0 14px #ff9d5a}.back:hover{color:#fff}
-    .hero{display:flex;justify-content:space-between;align-items:end;gap:28px;margin:8vh 0 38px}.eyebrow{margin:0;color:#ffca78;font:10px "DM Mono",monospace;letter-spacing:.19em;text-shadow:0 0 16px #ff9d54}
-    .hero h1{margin:13px 0 0;font:700 clamp(54px,9vw,118px)/.82 "Unbounded",sans-serif;letter-spacing:-.13em;color:#fff;text-shadow:0 0 13px #fff7,0 0 54px #ff355467}.hero h1 span{color:#ffbe6a;text-shadow:0 0 15px #fff4,0 0 38px #ff7a4c}.intro{max-width:330px;margin:0;color:#fff9;font-size:14px;line-height:1.58;text-shadow:0 0 16px #ff3d634d}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{position:relative;isolation:isolate;min-height:260px;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:22px;background:#15101a;color:#fff;text-align:left;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}.card:hover,.card:focus-visible{outline:none;transform:translateY(-7px) scale(1.008);border-color:#fff9;box-shadow:0 23px 64px #000a,0 0 34px var(--g)}.card:focus-visible{outline:2px solid #fff}.card:after{position:absolute;z-index:1;inset:0;content:"";background:linear-gradient(180deg,transparent 25%,#030105c7 100%);pointer-events:none}.card>*{position:relative;z-index:2}
-    .tag{display:inline-flex;align-items:center;gap:8px;font:10px "DM Mono",monospace;letter-spacing:.14em;color:#fff;text-shadow:0 0 13px var(--g)}.tag:before{width:6px;height:6px;border-radius:999px;background:currentColor;box-shadow:0 0 12px currentColor;content:""}.card h2{position:absolute;left:22px;bottom:30px;max-width:80%;margin:0;font:600 clamp(25px,4vw,49px)/.92 "Unbounded",sans-serif;letter-spacing:-.105em;color:#fff;text-shadow:0 0 7px #fff,0 0 24px var(--g),0 0 72px var(--g)}.card p{position:absolute;left:22px;bottom:10px;margin:0;color:#fff;font-size:11px;text-shadow:0 0 14px var(--g)}.card .visual{position:absolute;z-index:0;inset:0;pointer-events:none}
-    .bw{--g:#fff;background:#090909}.bw .visual{inset:-22%;background:repeating-linear-gradient(90deg,#fff3 0 1px,transparent 1px 32px),repeating-linear-gradient(0deg,#fff3 0 1px,transparent 1px 32px);transform:perspective(430px) rotateX(62deg);animation:floor 6s linear infinite}
-    .bandit{--g:#ff3155;background:radial-gradient(circle at 74% 27%,#d7193a,#4f0715 30%,#100105 70%)}.bandit .visual{right:7%;left:auto;top:-22%;bottom:auto;font:clamp(180px,24vw,300px)/1 Georgia;color:#ffdf9d;filter:drop-shadow(0 0 12px #ffdf9d) drop-shadow(0 0 38px #ff3154);animation:boltFloat 4.3s ease-in-out infinite}.bandit .visual:before{content:"ϟ"}
-    .flaws{--g:#f13d5d;background:radial-gradient(ellipse at 54% 44%,#090105 0 17%,#88162a 18% 20%,#ef254641 21% 29%,transparent 46%),#070104}.flaws .visual{inset:-55%;background:repeating-conic-gradient(transparent 0 15deg,#f43e5e3b 16deg 17deg,transparent 18deg 28deg);animation:spin 22s linear infinite}
-    .suicidal{--g:#ffbf5e;background:#120706}.suicidal .visual{inset:-28%;background:radial-gradient(ellipse at 14% 76%,#ff315a77,transparent 29%),radial-gradient(ellipse at 83% 19%,#ffcc677a,transparent 35%),linear-gradient(116deg,transparent 15%,#ec2f5f7d 37%,#ffbf5d9b 54%,transparent 78%);filter:blur(19px);animation:aurora 10s ease-in-out infinite alternate}
-    .ransom{--g:#b8ff58;background:radial-gradient(circle at 19% 22%,#ff7d1b92,transparent 26%),radial-gradient(circle at 84% 72%,#9c55ff9b,transparent 31%),linear-gradient(137deg,#120a16,#062217 54%,#2f0d3d)}.ransom .visual{inset:-30%;background:repeating-linear-gradient(112deg,transparent 0 28px,#bfff5a25 29px 30px,transparent 31px 76px),repeating-linear-gradient(22deg,transparent 0 58px,#ff8f2d2c 59px 61px,transparent 62px 112px);transform:rotate(-8deg);animation:heistGrid 12s linear infinite}.ransom .visual:before,.ransom .visual:after{position:absolute;border:1px solid #c0ff6aa8;border-radius:50%;box-shadow:0 0 24px #b1ff4b,0 0 70px #9e5cff;content:""}.ransom .visual:before{width:260px;aspect-ratio:1;left:43%;top:23%;animation:orbitPulse 3.6s ease-in-out infinite}.ransom .visual:after{width:100px;aspect-ratio:1;left:62%;top:55%;border-color:#ff952c;animation:orbitPulse 2.8s .4s ease-in-out infinite reverse}.ransom .tag{color:#d3ff88}
-    .angels{--g:#ff77bd;background:radial-gradient(circle at 68% 23%,#ff9fd552,transparent 23%),radial-gradient(circle at 22% 78%,#d9438d47,transparent 26%),linear-gradient(145deg,#08040a 4%,#180614 52%,#050305)}.angels .visual{inset:-10%;background:radial-gradient(ellipse at 51% 43%,#ffb9df69,transparent 17%),radial-gradient(ellipse at 63% 37%,#ff4fa67e,transparent 29%),radial-gradient(ellipse at 51% 43%,transparent 32%,#ff7bb41c 33% 34%,transparent 36%);filter:blur(3px);animation:pinkVeil 11s ease-in-out infinite alternate}.angels .visual:before,.angels .visual:after{position:absolute;width:140%;height:54%;left:-18%;border:1px solid #ffcae452;border-radius:50%;content:"";transform:rotate(-11deg);animation:veilRing 12s ease-in-out infinite}.angels .visual:before{top:17%}.angels .visual:after{top:40%;animation-delay:-6s}.angels .tag{color:#ffd1e9}
-    .panel{display:none;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:23px;margin-top:23px;padding:24px;border:1px solid #ffffff2b;border-radius:28px;background:linear-gradient(135deg,#170610df,#0e0614df);box-shadow:0 26px 82px #0009;backdrop-filter:blur(18px)}.panel.open{display:grid;animation:panelUp .45s both}.world{margin:0;color:#ffca78;font:10px "DM Mono",monospace;letter-spacing:.13em;text-shadow:0 0 13px #ff944d}.panel h3{margin:10px 0 3px;font:600 clamp(32px,5vw,62px)/.94 "Unbounded",sans-serif;letter-spacing:-.09em;color:#fff;text-shadow:0 0 9px #fff,0 0 32px var(--hot)}.artist{margin:0;color:#fff;text-shadow:0 0 14px #ff4e7c}iframe{width:100%;height:152px;margin-top:22px;border:0;border-radius:15px}.editor{padding:16px;border:1px solid #ffffff28;border-radius:18px;background:#ffffff08}.editor-head{display:flex;justify-content:space-between;gap:12px;font:10px "DM Mono",monospace;letter-spacing:.1em}.status{color:#ffd17b;text-align:right;text-shadow:0 0 11px #ff9d4d}textarea{width:100%;min-height:145px;margin-top:12px;padding:13px;border:1px solid #ffffff32;border-radius:12px;background:#030103;color:#fff;resize:vertical;font:13px/1.55 "Space Grotesk",sans-serif;outline:none;box-shadow:inset 0 0 24px #0008}textarea:focus{border-color:#fff9;box-shadow:0 0 0 3px #ff5a7430,inset 0 0 24px #0008}.actions{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:11px}.action-group{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid #ffffff4d;border-radius:999px;padding:11px 13px;color:#fff;background:#ffffff10;font:600 10px "DM Mono",monospace;letter-spacing:.06em;transition:transform .2s,box-shadow .2s,border-color .2s}.btn:hover,.btn:focus-visible{outline:none;transform:translateY(-2px);border-color:#fff;box-shadow:0 0 22px #ff5178}.primary{border-color:transparent;background:linear-gradient(100deg,#ff496d,#ffbd61);color:#210308}
-    .cinema{--a:#ff476d;--b:#ffbd61;--bg:#120207;position:fixed;z-index:20;inset:0;display:none;place-items:center;overflow:hidden;background:var(--bg);text-align:center;isolation:isolate}.cinema.open{display:grid}.cinema:before,.cinema:after{position:absolute;z-index:-3;inset:0;content:"";pointer-events:none}.cinema:before{background:radial-gradient(circle at 50% 45%,#ff3e633d,transparent 33%),linear-gradient(130deg,#110109,#050106)}.cinema:after{opacity:.25;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:67px 67px;mask-image:linear-gradient(#000,transparent)}.scene-veil,.scene-orbit,.scene-dust{position:absolute;z-index:-2;inset:0;pointer-events:none}.scene-dust i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0}.close{position:absolute;z-index:5;right:24px;top:22px}.meta{position:absolute;z-index:5;left:29px;top:28px;margin:0;color:#fff;font:10px "DM Mono",monospace;letter-spacing:.13em;text-align:left;text-shadow:0 0 13px currentColor}.line{position:relative;z-index:3;max-width:min(1130px,87vw);margin:0;color:#fff;font:600 clamp(34px,7.1vw,106px)/.98 "Unbounded",sans-serif;letter-spacing:-.11em;text-shadow:0 0 8px #fff,0 0 28px var(--a),0 0 82px var(--a),0 0 145px var(--a);will-change:transform,filter,opacity}.hint{position:absolute;z-index:5;bottom:25px;margin:0;color:#fff;font:10px "DM Mono",monospace;letter-spacing:.04em;text-shadow:0 0 13px var(--a)}.reaction{position:absolute;z-index:6;top:calc(50% - min(18vw,150px));left:calc(50% + min(34vw,440px));display:grid;width:clamp(38px,6vw,76px);aspect-ratio:1;border:1px solid #fff8;border-radius:50%;color:#fff;background:#ffffff18;place-items:center;font:clamp(19px,3vw,36px)/1 "Space Grotesk",sans-serif;opacity:0;transform:scale(.3) rotate(-20deg);filter:drop-shadow(0 0 9px var(--a)) drop-shadow(0 0 26px var(--a));pointer-events:none}.reaction.show{animation:reactionPop .7s cubic-bezier(.18,.9,.24,1) both}.reaction.hot{background:#ff315433;border-color:#ffce74}.reaction.pause{border-style:dashed}.reaction.short{background:#ffffff26}
-    .cinema.bw{--a:#fff;--b:#bdbdbd;--bg:#050505}.cinema.bw:before{inset:-28%;background:repeating-linear-gradient(90deg,#fff2 0 1px,transparent 1px 53px),repeating-linear-gradient(0deg,#fff2 0 1px,transparent 1px 53px);transform:perspective(520px) rotateX(62deg);animation:floor 4.5s linear infinite}.cinema.bw:after{opacity:.32;background:linear-gradient(90deg,transparent 49.8%,#fff4 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.8%,#fff4 50%,transparent 50.2%)}.cinema.bandit{--a:#ff3150;--b:#ffc46b;--bg:#120205}.cinema.bandit:before{inset:-35%;background:conic-gradient(transparent,#ff214544,transparent 28%,#ffce7330,transparent 58%,#ff214536,transparent);animation:spin 15s linear infinite}.cinema.bandit:after{width:92px;height:58vh;top:-5%;left:24%;background:#ffe7a7;clip-path:polygon(48% 0,90% 0,57% 35%,86% 35%,14% 100%,39% 54%,5% 54%);filter:drop-shadow(0 0 12px #ffe7a7) drop-shadow(0 0 32px #ff3154);animation:lightning 5s infinite}.cinema.flaws{--a:#f33a59;--b:#861326;--bg:#050103}.cinema.flaws:before{width:122vw;height:30vh;left:-11vw;top:25%;background:linear-gradient(90deg,transparent,#ff1d4530,#ef496e96,#ff1d4530,transparent);filter:blur(28px);animation:ribbon 7s ease-in-out infinite alternate}.cinema.flaws:after{inset:0;opacity:.5;background:repeating-linear-gradient(137deg,transparent 0 78px,#ff5e7424 79px 80px)}.cinema.suicidal{--a:#ffbd5b;--b:#f63555;--bg:#100605}.cinema.suicidal:before{inset:-30%;background:radial-gradient(ellipse at 17% 74%,#ff315a84,transparent 31%),radial-gradient(ellipse at 82% 20%,#ffca678e,transparent 36%),linear-gradient(114deg,transparent 11%,#e92b5e87 37%,#ffbf5c9b 52%,transparent 80%);filter:blur(32px) saturate(1.5);animation:aurora 12s ease-in-out infinite alternate}.cinema.suicidal:after{opacity:.4;background:repeating-linear-gradient(109deg,transparent 0 72px,#fff2 73px 74px);mix-blend-mode:screen}
-    .cinema.ransom{--a:#bfff5c;--b:#a863ff;--bg:#090511;background:#090511}.cinema.ransom:before{background:radial-gradient(circle at 16% 24%,#ff8d2d75,transparent 21%),radial-gradient(circle at 87% 70%,#a65dff7e,transparent 28%),radial-gradient(circle at 46% 46%,#aeff5144,transparent 30%),#08050d}.cinema.ransom:after{opacity:.6;background:repeating-linear-gradient(110deg,transparent 0 66px,#c5ff6430 67px 68px,transparent 69px 119px),repeating-linear-gradient(20deg,transparent 0 102px,#ff9e3c22 103px 105px,transparent 106px 166px);animation:heistGrid 14s linear infinite}.cinema.ransom .scene-veil{inset:-20%;background:conic-gradient(from 40deg at 52% 49%,transparent 0 12%,#ff8a2e42 16%,transparent 21% 44%,#b7ff5643 50%,transparent 59% 78%,#a660ff4d 84%,transparent);filter:blur(21px);animation:spin 18s linear infinite}.cinema.ransom .scene-orbit{inset:auto;width:min(76vw,980px);aspect-ratio:1;left:50%;top:50%;border:1px solid #c7ff7391;border-radius:41% 59% 63% 37% / 43% 39% 61% 57%;box-shadow:0 0 38px #baff4c66,inset 0 0 44px #a85bff46;transform:translate(-50%,-50%) rotate(-14deg);animation:heistOrbit 10s ease-in-out infinite alternate}.cinema.ransom .scene-orbit:before,.cinema.ransom .scene-orbit:after{position:absolute;border:1px solid #ffab4b90;border-radius:inherit;content:"";inset:12%;transform:rotate(31deg)}.cinema.ransom .scene-orbit:after{inset:29%;border-color:#b66dffb3;transform:rotate(-48deg)}.cinema.ransom .scene-dust i{background:#e5ffb7;box-shadow:0 0 12px #b7ff57;animation:heistDust var(--dur) linear infinite}.cinema.ransom .line{max-width:min(1180px,89vw)}.cinema.ransom .line.ransom-words{letter-spacing:-.09em}.cinema.ransom .line .word{display:inline-block;margin:0 .07em .08em 0;animation:ransomWord .76s cubic-bezier(.15,.82,.16,1) both;animation-delay:var(--delay);will-change:transform,filter,opacity}
-    .cinema.angels{--a:#ff73bc;--b:#ffd1e8;--bg:#080308;background:#080308}.cinema.angels:before{background:radial-gradient(ellipse at 50% 48%,#ff91cc54,transparent 25%),radial-gradient(ellipse at 19% 79%,#a725633d,transparent 28%),radial-gradient(ellipse at 84% 14%,#e55a9e39,transparent 27%),#060306}.cinema.angels:after{opacity:.29;background:linear-gradient(132deg,transparent 0 47%,#ffd6ea20 49%,transparent 51%),radial-gradient(#fff 1px,transparent 1px);background-size:100% 100%,79px 79px}.cinema.angels .scene-veil{inset:-18%;background:radial-gradient(ellipse at 49% 47%,#ffcae677,transparent 15%),radial-gradient(ellipse at 62% 32%,#ff4fa663,transparent 28%),radial-gradient(ellipse at 38% 67%,#c62c7247,transparent 26%);filter:blur(33px);animation:pinkVeil 13s ease-in-out infinite alternate}.cinema.angels .scene-orbit{inset:auto;left:50%;top:50%;width:min(84vw,1040px);height:min(48vw,560px);border:1px solid #ffd6ea69;border-radius:50%;box-shadow:0 0 37px #ff70b156,inset 0 0 42px #ff90c032;transform:translate(-50%,-50%) rotate(-13deg);animation:softOrbit 13s ease-in-out infinite alternate}.cinema.angels .scene-orbit:before,.cinema.angels .scene-orbit:after{position:absolute;inset:17%;border:1px solid #ff8bc753;border-radius:inherit;content:"";transform:rotate(28deg)}.cinema.angels .scene-orbit:after{inset:35%;border-color:#ffe0ef8f;transform:rotate(-35deg)}.cinema.angels .scene-dust i{background:#ffe1f1;box-shadow:0 0 13px #ff8bc9;animation:angelDust var(--dur) ease-in-out infinite}.cinema.angels .line{animation:angelLine .95s cubic-bezier(.16,.82,.22,1) both}
-    .toast{position:fixed;z-index:30;bottom:24px;left:50%;padding:10px 15px;border-radius:999px;color:#210309;background:#fff7ee;transform:translate(-50%,90px);transition:transform .25s;box-shadow:0 10px 34px #0008}.toast.show{transform:translate(-50%,0)}
-    @keyframes spin{to{transform:rotate(360deg)}}@keyframes floor{to{transform:perspective(520px) rotateX(62deg) translateY(53px)}}@keyframes boltFloat{50%{transform:translate(-8px,12px);opacity:.74}}@keyframes aurora{to{transform:translate3d(11%,-9%,0) rotate(-8deg) scale(1.15)}}@keyframes heistGrid{to{transform:translate3d(0,82px,0) rotate(-8deg)}}@keyframes orbitPulse{50%{transform:scale(.76);opacity:.46}}@keyframes pinkVeil{to{transform:translate3d(-8%,6%,0) scale(1.15) rotate(5deg)}}@keyframes veilRing{50%{transform:rotate(-2deg) scale(.9);opacity:.35}}@keyframes panelUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}@keyframes lightning{0%,71%,100%{opacity:0}73%,76%{opacity:1}79%{opacity:.12}82%{opacity:.8}}@keyframes ribbon{to{transform:translateY(22vh) skewX(-15deg) scaleX(1.15)}}@keyframes reactionPop{0%{opacity:0;transform:scale(.25) rotate(-24deg);filter:blur(8px)}55%{opacity:1;transform:scale(1.18) rotate(7deg)}100%{opacity:.9;transform:scale(1) rotate(0);filter:blur(0)}}@keyframes heistOrbit{to{transform:translate(-50%,-50%) rotate(19deg) scale(1.09);border-radius:59% 41% 39% 61% / 57% 63% 37% 43%}}@keyframes heistDust{0%{opacity:0;transform:translate3d(0,18px,0) scale(.4)}35%{opacity:.95}100%{opacity:0;transform:translate3d(var(--drift),-120px,0) scale(1.3)}}@keyframes angelDust{0%,100%{opacity:.08;transform:translate3d(0,0,0) scale(.75)}50%{opacity:.95;transform:translate3d(var(--drift),-31px,0) scale(1.2)}}@keyframes ransomWord{from{opacity:0;filter:blur(12px);transform:translate3d(var(--x),var(--y),0) rotate(var(--turn)) skewX(var(--skew)) scale(.68)}66%{opacity:1;filter:blur(0);transform:translate3d(-2px,1px,0) rotate(-1deg) scale(1.04)}to{opacity:1;filter:none;transform:none}}@keyframes angelLine{from{opacity:0;filter:blur(18px);transform:translateY(40px) scale(.93);letter-spacing:-.16em}68%{opacity:1;filter:blur(0);transform:translateY(-4px) scale(1.015)}to{opacity:1;filter:none;transform:none;letter-spacing:-.11em}}@keyframes softOrbit{to{transform:translate(-50%,-50%) rotate(12deg) scale(1.08);opacity:.58}}
-    @media(max-width:740px){.room{padding:20px 18px 52px}.hero{display:block;margin-top:64px}.intro{margin-top:25px}.grid,.panel{grid-template-columns:1fr}.card{min-height:222px}.panel{padding:16px}.actions{align-items:stretch;flex-direction:column}.action-group{justify-content:stretch}.action-group .btn{flex:1}.meta{left:20px;top:20px;max-width:60vw}.close{right:18px;top:16px}.reaction{top:16%;left:auto;right:12%}.hint{bottom:20px}.cinema.ransom .scene-orbit{width:125vw}.cinema.angels .scene-orbit{width:126vw;height:68vw}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
-    .editor{max-height:640px;overflow:auto}.editor-caption{margin:8px 0 14px;color:#fff9;font-size:11px;line-height:1.45}.bulk-area{padding:11px;border:1px solid #ffffff1f;border-radius:14px;background:#03010473}.bulk-head,.scene-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;font:9px "DM Mono",monospace;letter-spacing:.1em}.bulk-state{color:#ffce7d;text-shadow:0 0 12px #ff9850}.bulk-area textarea{min-height:76px;height:76px;margin:9px 0 0}.bulk-actions{display:flex;justify-content:flex-end;margin-top:8px}.import-btn{padding:8px 11px;color:#ffd687}.scene-toolbar{margin-top:16px;padding:0 2px}.scene-count{color:#fff;text-shadow:0 0 12px #ff5379}.scene-sub{color:#fff8}.add-scene{padding:8px 10px}.scene-list{display:grid;gap:8px;min-height:54px;margin-top:10px}.scene-empty{padding:16px 12px;border:1px dashed #ffffff33;border-radius:13px;color:#fff9;font:10px/1.5 "DM Mono",monospace;text-align:center}.scene-card{display:grid;grid-template-columns:28px minmax(0,1fr) 96px auto;align-items:center;gap:8px;padding:8px;border:1px solid #ffffff21;border-radius:14px;background:linear-gradient(105deg,#ffffff0d,#ffffff04);transition:border-color .2s,transform .2s,background .2s}.scene-card:focus-within{border-color:#ff8a9f9c;background:#ff527412}.scene-number{display:grid;width:28px;aspect-ratio:1;border:1px solid #ffffff32;border-radius:50%;color:#ffcf7e;background:#ffffff08;place-items:center;font:9px "DM Mono",monospace;text-shadow:0 0 10px #ff984e}.scene-text{width:100%;min-height:48px;height:48px;margin:0;padding:9px 10px;border-radius:10px;font-size:12px;resize:vertical}.scene-mode{display:grid;gap:3px;color:#fff9;font:8px "DM Mono",monospace;letter-spacing:.08em}.scene-mode select{width:100%;min-width:0;border:1px solid #ffffff30;border-radius:9px;padding:8px 6px;color:#fff;background:#080307;font:9px "DM Mono",monospace;outline:none}.scene-tools{display:grid;grid-template-columns:repeat(2,30px);gap:5px}.scene-tool{display:grid;width:30px;height:29px;border:1px solid #ffffff2e;border-radius:8px;color:#fff;background:#ffffff0a;place-items:center;font:12px "DM Mono",monospace;transition:.18s}.scene-tool:hover,.scene-tool:focus-visible{outline:none;border-color:#fff;box-shadow:0 0 16px #ff5681;transform:translateY(-1px)}.scene-tool.delete:hover{border-color:#ff718b;color:#ff91a4}.editor.readonly{opacity:.8}.editor.readonly .scene-card{background:#ffffff05}.editor.readonly .scene-text{cursor:not-allowed}.scene-progress{position:absolute;z-index:5;right:29px;bottom:24px;margin:0;color:#fff;font:9px "DM Mono",monospace;letter-spacing:.11em;text-shadow:0 0 12px var(--a)}.cinema .hint{left:50%;transform:translateX(-50%)}.line.mood-impact{animation:impactIn .57s cubic-bezier(.15,.9,.2,1) both!important}.line.mood-glitch{animation:glitchIn .64s cubic-bezier(.2,.8,.2,1) both!important}.line.mood-pause{animation:pauseIn 1s cubic-bezier(.2,.8,.2,1) both!important}.cinema.ransom .line .word.mood-glitch{animation-name:ransomGlitchWord}.cinema.ransom .line .word.mood-pause{animation-name:ransomPauseWord}@keyframes impactIn{from{opacity:0;filter:blur(10px);transform:scale(.58) rotate(-3deg)}62%{opacity:1;filter:none;transform:scale(1.09) rotate(.7deg)}to{transform:none}}@keyframes glitchIn{0%{opacity:0;filter:blur(12px);transform:translate(-30px,12px) skewX(-13deg)}38%{opacity:1;transform:translate(19px,-5px) skewX(8deg);text-shadow:-7px 0 #ff4f7f,7px 0 #80ffe7,0 0 27px var(--a)}72%{transform:translate(-5px,2px) skewX(-2deg)}to{filter:none;transform:none}}@keyframes pauseIn{from{opacity:0;filter:blur(18px);transform:translateY(20px);letter-spacing:.08em}to{opacity:1;filter:none;transform:none;letter-spacing:-.11em}}@keyframes ransomGlitchWord{from{opacity:0;filter:blur(12px);transform:translate3d(var(--x),var(--y),0) rotate(var(--turn)) skewX(var(--skew)) scale(.68)}48%{opacity:1;filter:none;transform:translate3d(8px,-4px,0) skewX(-8deg);text-shadow:-5px 0 #ff8d32,5px 0 #bbff56,0 0 24px #a363ff}to{opacity:1;filter:none;transform:none}}@keyframes ransomPauseWord{from{opacity:0;filter:blur(16px);transform:translate3d(var(--x),var(--y),0) scale(.76)}to{opacity:1;filter:none;transform:none}}
-    @media(max-width:740px){.editor{max-height:none}.scene-card{grid-template-columns:28px minmax(0,1fr)}.scene-mode{grid-column:2}.scene-tools{grid-column:2;grid-template-columns:repeat(4,30px)}.scene-progress{right:18px;bottom:56px}.cinema .hint{width:100%;padding:0 20px}.bulk-actions{justify-content:stretch}.bulk-actions .btn{width:100%}}
-    .righteous{--g:#74b8ff;background:radial-gradient(circle at 70% 24%,#579cff8e,transparent 26%),radial-gradient(circle at 22% 76%,#174a8f70,transparent 29%),linear-gradient(142deg,#03050f,#09162e 52%,#02030a)}.righteous .visual{inset:-26%;background:repeating-linear-gradient(117deg,transparent 0 46px,#a9dcff31 47px 48px,transparent 49px 112px),radial-gradient(ellipse at 50% 50%,transparent 0 25%,#4c9dff37 26% 27%,transparent 29%);filter:drop-shadow(0 0 14px #5aaaff);animation:blueDrift 11s linear infinite}.righteous .visual:before,.righteous .visual:after{position:absolute;width:4px;height:78%;top:-12%;background:linear-gradient(180deg,transparent,#d8f4ff,#629fff,transparent);box-shadow:0 0 15px #a6d9ff;transform:rotate(29deg);content:"";animation:meteorCard 3.8s linear infinite}.righteous .visual:before{left:25%}.righteous .visual:after{left:67%;animation-delay:-1.9s}.righteous .tag{color:#b8e2ff}
-    .cinema.righteous{--a:#78baff;--b:#b8ebff;--bg:#02050d;background:#02050d}.cinema.righteous:before{background:radial-gradient(ellipse at 50% 49%,#285eab42,transparent 18%),radial-gradient(circle at 72% 23%,#5ca8ff54,transparent 24%),linear-gradient(133deg,#02030b,#06142b 54%,#01030a)}.cinema.righteous:after{opacity:.55;background:repeating-linear-gradient(116deg,transparent 0 94px,#8ed2ff26 95px 96px,transparent 97px 175px);animation:blueDrift 13s linear infinite}.cinema.righteous .scene-veil{inset:-18%;background:radial-gradient(ellipse at 50% 50%,#4b9eff66,transparent 18%),radial-gradient(ellipse at 17% 75%,#0b397d6b,transparent 27%),radial-gradient(ellipse at 83% 22%,#6db8ff62,transparent 22%);filter:blur(27px);animation:eclipseBreathe 9s ease-in-out infinite alternate}.cinema.righteous .scene-orbit{inset:auto;left:50%;top:50%;width:min(74vw,900px);aspect-ratio:1;border:1px solid #b8e7ff78;border-radius:50%;box-shadow:0 0 0 18px #66adff0b,0 0 64px #4d9fff55,inset 0 0 70px #031127;transform:translate(-50%,-50%) scaleX(1.34);animation:eclipseOrbit 15s linear infinite}.cinema.righteous .scene-orbit:before,.cinema.righteous .scene-orbit:after{position:absolute;content:"";border-radius:inherit}.cinema.righteous .scene-orbit:before{inset:18%;border:1px dashed #c4ecff65;animation:spin 18s linear infinite reverse}.cinema.righteous .scene-orbit:after{inset:37%;background:#01030b;box-shadow:0 0 52px #000,0 0 115px #1c61bb75}.cinema.righteous .scene-dust i{background:#c8edff;box-shadow:0 0 13px #71b9ff;animation:meteorDust var(--dur) linear infinite}.cinema.righteous .line{letter-spacing:-.1em;text-shadow:0 0 8px #fff,0 0 31px #7ebdff,0 0 88px #3d8cff,0 0 150px #12448e;animation:eclipseLine .85s cubic-bezier(.14,.83,.21,1) both}
-    @keyframes blueDrift{to{transform:translate3d(-84px,74px,0) rotate(-4deg)}}@keyframes meteorCard{0%{opacity:0;transform:translate3d(0,-60px,0) rotate(29deg)}23%{opacity:1}70%{opacity:.7}100%{opacity:0;transform:translate3d(-80px,280px,0) rotate(29deg)}}@keyframes eclipseBreathe{to{transform:scale(1.13) rotate(-8deg);filter:blur(36px)}}@keyframes eclipseOrbit{to{transform:translate(-50%,-50%) scaleX(1.34) rotate(360deg)}}@keyframes meteorDust{0%{opacity:0;transform:translate3d(0,-30px,0) scale(.4)}27%{opacity:1}100%{opacity:0;transform:translate3d(-100px,130px,0) scale(1.1)}}@keyframes eclipseLine{from{opacity:0;filter:blur(17px);transform:translateY(34px) scale(.9);text-shadow:0 0 0 transparent}56%{opacity:1;filter:blur(0);transform:translateY(-5px) scale(1.025)}to{opacity:1;filter:none;transform:none}}
-  </style>
+  <link rel="stylesheet" href="special-room.css">
 </head>
 <body>
   <main class="room">
     <a class="back" href="index.html">← PLAYLIST BIASA</a>
-    <header class="hero"><div><p class="eyebrow">SEVEN TRACKS · SEVEN WORLDS</p><h1>SPECIAL<br><span>ROOM.</span></h1></div><p class="intro">Tujuh dunia visual, lirik cloud sendiri, dan satu tap untuk melanjutkan cinematic.</p></header>
+    <header class="hero"><div><p class="eyebrow">SEVEN TRACKS · SEVEN WORLDS</p><h1>SPECIAL<br><span>ROOM.</span></h1></div><p class="intro">Tujuh dunia visual, lirik cloud sendiri, cinematic auto-sync ke Spotify, dan tap manual saat kamu mau mengambil alih.</p></header>
     <section class="grid" aria-label="Special Room songs">
       <button class="card bw" type="button" data-id="1fCeXjoRExPP2qwSBh2aST" data-name="Black & White" data-artist="Juice WRLD" data-theme="bw"><span class="visual" aria-hidden="true"></span><span class="tag">01 · MONOCHROME GALLERY</span><h2>Black<br>&amp; White</h2><p>Juice WRLD</p></button>
       <button class="card bandit" type="button" data-id="1oWM79mUVdZGCGYjSirHZR" data-name="Bandit" data-artist="Juice WRLD, YoungBoy Never Broke Again" data-theme="bandit"><span class="visual" aria-hidden="true"></span><span class="tag">02 · SCARLET STORM</span><h2>Bandit</h2><p>Juice WRLD · YoungBoy</p></button>
@@ -49,225 +20,43 @@
       <button class="card righteous" type="button" data-id="1aeTT9PO1nnXR3EFJSrC0g" data-name="Righteous" data-artist="Juice WRLD" data-theme="righteous"><span class="visual" aria-hidden="true"></span><span class="tag">07 · BLUE ECLIPSE</span><h2>Righteous</h2><p>Juice WRLD</p></button>
     </section>
     <section class="panel" id="panel" aria-live="polite">
-      <div><p class="world" id="world">—</p><h3 id="title">—</h3><p class="artist" id="artist">—</p><iframe id="player" title="Spotify player" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture"></iframe></div>
-      <div class="editor" id="editor"><div class="editor-head"><span>Scene editor</span><span class="status" id="status">select track</span></div><p class="editor-caption">Satu baris menjadi satu scene. Atur urutan dan mood-nya sebelum membuka cinematic.</p><div class="bulk-area"><div class="bulk-head"><span>PASTE LYRICS</span><span class="bulk-state" id="bulk-state">ready</span></div><textarea id="lyrics" placeholder="Tempel lirik di sini. Satu baris = satu scene." spellcheck="false"></textarea><div class="bulk-actions"><button class="btn import-btn" id="import-scenes" type="button">SPLIT INTO SCENES →</button></div></div><div class="scene-toolbar"><span><b class="scene-count" id="scene-count">0 scenes</b><span class="scene-sub"> · order &amp; mood</span></span><button class="btn add-scene" id="add-scene" type="button">＋ ADD SCENE</button></div><div class="scene-list" id="scene-list"></div><div class="actions"><button class="btn" id="auth" type="button">ADMIN SIGN IN</button><span class="action-group"><button class="btn" id="open" type="button">CINEMATIC</button><button class="btn primary" id="save" type="button">SAVE CLOUD</button></span></div></div>
+      <div>
+        <p class="world" id="world">—</p><h3 id="title">—</h3><p class="artist" id="artist">—</p>
+        <div class="player-shell"><div id="player" aria-label="Spotify player"></div></div>
+        <p class="live-lyric" id="live-lyric"></p>
+      </div>
+      <div class="editor" id="editor">
+        <div class="editor-head"><span>Scene editor <b class="sync-badge" id="sync-badge">synced</b></span><span class="status" id="status">select track</span></div>
+        <p class="editor-caption">Satu baris = satu scene. Mood tetap bisa diatur, dan timestamp <b>[mm:ss.xx]</b> akan membuat cinematic mengikuti playback Spotify otomatis.</p>
+        <div class="bulk-area"><div class="bulk-head"><span>PASTE LYRICS / LRC</span><span class="bulk-state" id="bulk-state">ready</span></div><textarea id="lyrics" placeholder="Tempel lirik biasa atau [00:12.50] lirik bertimestamp. Satu baris = satu scene." spellcheck="false"></textarea><div class="bulk-actions"><button class="btn import-btn" id="import-scenes" type="button">SPLIT INTO SCENES →</button></div></div>
+        <div class="scene-toolbar"><span><b class="scene-count" id="scene-count">0 scenes</b><span class="scene-sub"> · timing, order &amp; mood</span></span><button class="btn add-scene" id="add-scene" type="button">＋ ADD SCENE</button></div>
+        <div class="scene-list" id="scene-list"></div>
+        <div class="actions"><button class="btn" id="auth" type="button">ADMIN SIGN IN</button><span class="action-group"><button class="btn" id="tap-sync" type="button">🎯 TAP SYNC</button><button class="btn" id="open" type="button">CINEMATIC</button><button class="btn primary" id="save" type="button">SAVE CLOUD</button></span></div>
+      </div>
     </section>
   </main>
-  <section class="cinema" id="cinema" aria-label="Cinematic lyrics"><div class="scene-veil" aria-hidden="true"></div><div class="scene-orbit" aria-hidden="true"></div><div class="scene-dust" id="dust" aria-hidden="true"></div><button class="btn close" id="close" type="button">× CLOSE</button><p class="meta" id="meta"></p><p class="line" id="line">Tambahkan teks di editor untuk memulai.</p><span class="reaction" id="reaction" aria-hidden="true"></span><p class="scene-progress" id="scene-progress"></p><p class="hint">tap layar / → untuk lanjut</p></section>
+  <section class="cinema" id="cinema" aria-label="Cinematic lyrics"><div class="scene-veil" aria-hidden="true"></div><div class="scene-orbit" aria-hidden="true"></div><div class="scene-dust" id="dust" aria-hidden="true"></div><button class="btn close" id="close" type="button">× CLOSE</button><p class="meta" id="meta"></p><p class="line" id="line">Tambahkan teks di editor untuk memulai.</p><span class="reaction" id="reaction" aria-hidden="true"></span><p class="scene-progress" id="scene-progress"></p><p class="hint" id="cinema-hint">tap layar / → untuk lanjut</p></section>
+  <section class="tap-stage" id="tap-stage" aria-hidden="true" aria-label="Tap sync tool">
+    <div class="tap-panel">
+      <div class="tap-head"><div><p class="tap-eyebrow">SPECIAL ROOM · TAP SYNC</p><strong class="tap-track" id="tap-track">—</strong></div><button class="btn tap-close" id="tap-close" type="button" aria-label="Tutup tap sync">×</button></div>
+      <p class="tap-hint">Putar lagu dari player lalu tekan tombol besar tepat saat scene mulai dinyanyikan. Timing tersimpan tanpa menghapus mood atau scene yang di-skip.</p>
+      <p class="tap-progress" id="tap-progress">0 / 0 scenes</p>
+      <p class="tap-current" id="tap-current">—</p>
+      <p class="tap-next" id="tap-next"></p>
+      <p class="tap-timer" id="tap-timer">00:00.0</p>
+      <button class="tap-button" id="tap-button" type="button">TAP</button>
+      <div class="tap-controls"><button class="tap-secondary" id="tap-undo" type="button">↩ Undo last</button><button class="tap-secondary" id="tap-skip" type="button">Skip scene →</button></div>
+      <div class="tap-actions"><button class="btn" id="tap-cancel" type="button">BATAL</button><button class="btn primary" id="tap-apply" type="button">TERAPKAN TIMING</button></div>
+    </div>
+  </section>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js';
-    import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js';
-    const app=initializeApp({apiKey:'AIzaSyDUclkKHZC16QCYb5xeRHg55IZHmJA7_OI',authDomain:'lirik-lagu-8b4e2.firebaseapp.com',projectId:'lirik-lagu-8b4e2',storageBucket:'lirik-lagu-8b4e2.firebasestorage.app',messagingSenderId:'795702258465',appId:'1:795702258465:web:6d704efba58241c73eac60'});
-    const auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider(),$=s=>document.querySelector(s);
-    const moods={auto:'AUTO',soft:'SOFT',impact:'IMPACT',glitch:'GLITCH',pause:'PAUSE'};
-    const textCache=JSON.parse(localStorage.getItem('midnight-shelf-lyrics-v1')||'{}');
-    const sceneCache=JSON.parse(localStorage.getItem('midnight-shelf-scenes-v2')||'{}');
-    let song,user,draftScenes=[],playbackScenes=[],pos=0,bulkDirty=false;
-
-    function toast(message){$('#toast').textContent=message;$('#toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('show'),1800)}
-    function seed(number){const value=Math.sin(number*9283.71)*49297.13;return value-Math.floor(value)}
-    function createDust(){const dust=$('#dust');for(let i=0;i<34;i+=1){const dot=document.createElement('i');dot.style.left=(4+seed(i+3)*92)+'%';dot.style.top=(7+seed(i+31)*84)+'%';dot.style.setProperty('--drift',((seed(i+55)*2-1)*46).toFixed(1)+'px');dot.style.setProperty('--dur',(3.2+seed(i+79)*5.5).toFixed(2)+'s');dot.style.animationDelay=(-seed(i+111)*8).toFixed(2)+'s';dust.append(dot)}}
-    function scene(text='',mood='auto'){return{text:String(text??''),mood:Object.hasOwn(moods,mood)?mood:'auto'}}
-    function normalizeScenes(items){return Array.isArray(items)?items.map(item=>scene(typeof item==='string'?item:item?.text,item?.mood)):[]}
-    function scenesFromText(text){return String(text||'').split(/\n+/).map(value=>value.trim()).filter(Boolean).map(value=>scene(value))}
-    function cleanScenes(items=draftScenes){return normalizeScenes(items).map(item=>scene(item.text.trim(),item.mood)).filter(item=>item.text)}
-    function textFromScenes(items=draftScenes){return cleanScenes(items).map(item=>item.text).join('\n')}
-    function cacheDraft(){if(!song)return;const clean=cleanScenes();sceneCache[song.id]=clean;textCache[song.id]=textFromScenes();localStorage.setItem('midnight-shelf-scenes-v2',JSON.stringify(sceneCache));localStorage.setItem('midnight-shelf-lyrics-v1',JSON.stringify(textCache))}
-    function syncBulkFromDraft(){$('#lyrics').value=draftScenes.map(item=>item.text).join('\n');bulkDirty=false;$('#bulk-state').textContent=draftScenes.length?'synced':'ready'}
-
-    function makeTool(icon,label,action,index,disabled=false){
-      const button=document.createElement('button');
-      button.type='button';button.className='scene-tool '+(action==='delete'?'delete':'');button.textContent=icon;button.title=label;button.setAttribute('aria-label',label);button.disabled=disabled;
-      button.addEventListener('click',()=>handleSceneTool(action,index));
-      return button;
-    }
-
-    function renderSceneList(){
-      const list=$('#scene-list'),editable=Boolean(user);
-      list.replaceChildren();
-      $('#editor').classList.toggle('readonly',!editable);
-      $('#lyrics').disabled=!editable;
-      $('#import-scenes').disabled=!editable;
-      $('#add-scene').disabled=!editable;
-      $('#scene-count').textContent=cleanScenes().length+' scene'+(cleanScenes().length===1?'':'s');
-
-      if(!draftScenes.length){
-        const empty=document.createElement('p');
-        empty.className='scene-empty';
-        empty.textContent=editable?'Tempel lirik lalu tekan “Split into scenes”, atau tambahkan scene baru.':'Belum ada scene untuk lagu ini.';
-        list.append(empty);
-        return;
-      }
-
-      draftScenes.forEach((item,index)=>{
-        const card=document.createElement('article');
-        card.className='scene-card';
-        const number=document.createElement('span');
-        number.className='scene-number';
-        number.textContent=String(index+1).padStart(2,'0');
-        const input=document.createElement('textarea');
-        input.className='scene-text';
-        input.value=item.text;
-        input.placeholder='Tulis scene';
-        input.disabled=!editable;
-        input.addEventListener('input',()=>{draftScenes[index].text=input.value;syncBulkFromDraft();cacheDraft();$('#status').textContent='unsaved changes';$('#scene-count').textContent=cleanScenes().length+' scene'+(cleanScenes().length===1?'':'s')});
-        const mode=document.createElement('label');
-        mode.className='scene-mode';
-        mode.textContent='MOOD';
-        const select=document.createElement('select');
-        select.disabled=!editable;
-        Object.entries(moods).forEach(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;option.selected=value===item.mood;select.append(option)});
-        select.addEventListener('change',()=>{draftScenes[index].mood=select.value;cacheDraft();$('#status').textContent='unsaved changes';renderSceneList()});
-        mode.append(select);
-        const tools=document.createElement('div');
-        tools.className='scene-tools';
-        tools.append(
-          makeTool('↑','Move scene up','up',index,!editable||index===0),
-          makeTool('↓','Move scene down','down',index,!editable||index===draftScenes.length-1),
-          makeTool('◉','Preview scene','preview',index,false),
-          makeTool('×','Delete scene','delete',index,!editable)
-        );
-        card.append(number,input,mode,tools);
-        list.append(card);
-      });
-    }
-
-    function handleSceneTool(action,index){
-      if(action==='preview'){const one=cleanScenes([draftScenes[index]]);return one.length?openCinema(one):toast('Isi scene dulu')}
-      if(!user)return;
-      if(action==='up'&&index>0){[draftScenes[index-1],draftScenes[index]]=[draftScenes[index],draftScenes[index-1]]}
-      if(action==='down'&&index<draftScenes.length-1){[draftScenes[index+1],draftScenes[index]]=[draftScenes[index],draftScenes[index+1]]}
-      if(action==='delete'){draftScenes.splice(index,1);toast('Scene dihapus')}
-      syncBulkFromDraft();cacheDraft();$('#status').textContent='unsaved changes';renderSceneList();
-    }
-
-    function importBulk(showMessage=true){
-      draftScenes=scenesFromText($('#lyrics').value);
-      bulkDirty=false;
-      syncBulkFromDraft();
-      cacheDraft();
-      $('#status').textContent=draftScenes.length?'unsaved changes':'empty';
-      renderSceneList();
-      if(showMessage)toast(draftScenes.length+' scene siap diatur');
-    }
-
-    function editorScenes(){
-      if(bulkDirty)importBulk(false);
-      return cleanScenes();
-    }
-
-    function updateAccess(){
-      $('#auth').textContent=user?'SIGN OUT':'ADMIN SIGN IN';
-      renderSceneList();
-      if(song&&!user)$('#status').textContent='read only';
-    }
-
-    async function choose(card){
-      song=card.dataset;
-      $('#panel').classList.add('open');
-      $('#world').textContent=card.querySelector('.tag').textContent;
-      $('#title').textContent=song.name;
-      $('#artist').textContent=song.artist;
-      $('#player').src='https://open.spotify.com/embed/track/'+song.id+'?theme=0';
-      $('#status').textContent='loading';
-      try{
-        const snapshot=await getDoc(doc(db,'lyrics',song.id));
-        const saved=snapshot.exists()?snapshot.data():{};
-        const cloudScenes=normalizeScenes(saved.scenes);
-        const localScenes=normalizeScenes(sceneCache[song.id]);
-        const text=typeof saved.text==='string'?saved.text:(textCache[song.id]||'');
-        draftScenes=cloudScenes.length?cloudScenes:(localScenes.length?localScenes:scenesFromText(text));
-        syncBulkFromDraft();
-        cacheDraft();
-        $('#status').textContent=draftScenes.length?'cloud saved':'empty';
-      }catch(error){
-        const localScenes=normalizeScenes(sceneCache[song.id]);
-        draftScenes=localScenes.length?localScenes:scenesFromText(textCache[song.id]||'');
-        syncBulkFromDraft();
-        $('#status').textContent='local only';
-      }
-      renderSceneList();
-      $('#panel').scrollIntoView({behavior:'smooth',block:'center'});
-    }
-
-    function reactionFor(text){const words=text?text.split(/\s+/).length:0;if(text.includes('!'))return['⚡','hot'];if(/\.{3,}/.test(text))return['···','pause'];if(words>0&&words<=4)return['✦','short'];return['✹','']}
-    function renderRansom(current){
-      const line=$('#line'),text=current.text||'Tambahkan teks di editor untuk memulai.',mood=current.mood||'auto';
-      line.style.animation='none';line.className='line ransom-words mood-'+mood;line.replaceChildren();
-      text.split(/\s+/).forEach((piece,index)=>{
-        const word=document.createElement('span'),base=(pos+1)*37+(index+1)*11;
-        word.className='word mood-'+mood;word.textContent=piece;
-        word.style.setProperty('--x',((seed(base)*2-1)*36).toFixed(1)+'vw');
-        word.style.setProperty('--y',((seed(base+4)*2-1)*24).toFixed(1)+'vh');
-        word.style.setProperty('--turn',((seed(base+8)*2-1)*28).toFixed(1)+'deg');
-        word.style.setProperty('--skew',((seed(base+12)*2-1)*12).toFixed(1)+'deg');
-        word.style.setProperty('--delay',(index*.042+seed(base+15)*.09).toFixed(2)+'s');
-        line.append(word,document.createTextNode(' '));
-      });
-    }
-
-    function animationFor(mood){
-      if(mood==='impact')return'impactIn .57s cubic-bezier(.15,.9,.2,1) both';
-      if(mood==='glitch')return'glitchIn .64s cubic-bezier(.2,.8,.2,1) both';
-      if(mood==='pause')return'pauseIn 1s cubic-bezier(.2,.8,.2,1) both';
-      if(song.theme==='righteous')return'eclipseLine .85s cubic-bezier(.14,.83,.21,1) both';
-      return song.theme==='angels'||mood==='soft'?'angelLine .95s cubic-bezier(.16,.82,.22,1) both':'angelLine .68s cubic-bezier(.16,.82,.22,1) both';
-    }
-
-    function render(){
-      const current=playbackScenes[pos]||scene('Tambahkan teks di editor untuk memulai.');
-      const text=current.text||'';
-      const mood=Object.hasOwn(moods,current.mood)?current.mood:'auto';
-      const line=$('#line'),reaction=$('#reaction'),result=reactionFor(text);
-      if(song.theme==='ransom'&&mood!=='soft'){renderRansom(scene(text,mood))}
-      else{
-        line.className='line mood-'+mood;
-        if(song.theme==='angels')line.classList.add('angels-line');
-        line.textContent=text||'Tambahkan teks di editor untuk memulai.';
-        line.style.animation='none';
-        void line.offsetWidth;
-        line.style.animation=animationFor(mood);
-      }
-      reaction.textContent=result[0];
-      reaction.className='reaction '+result[1];
-      void reaction.offsetWidth;
-      reaction.classList.add('show');
-      $('#scene-progress').textContent=playbackScenes.length?(String(pos+1).padStart(2,'0')+' / '+String(playbackScenes.length).padStart(2,'0')+' · '+moods[mood]):'';
-    }
-
-    function openCinema(scenes){
-      if(!song)return toast('Pilih lagu dulu');
-      playbackScenes=cleanScenes(scenes);
-      if(!playbackScenes.length)return toast('Tambahkan minimal satu scene');
-      pos=0;
-      $('#cinema').className='cinema open '+song.theme;
-      $('#meta').textContent=song.name+' · '+song.artist;
-      render();
-    }
-
-    document.querySelectorAll('.card').forEach(card=>card.addEventListener('click',()=>choose(card)));
-    $('#lyrics').addEventListener('input',()=>{bulkDirty=true;$('#bulk-state').textContent='ready to split';$('#status').textContent='unsaved changes'});
-    $('#import-scenes').addEventListener('click',()=>importBulk(true));
-    $('#add-scene').addEventListener('click',()=>{if(!user)return;draftScenes.push(scene());syncBulkFromDraft();cacheDraft();$('#status').textContent='unsaved changes';renderSceneList()});
-    onAuthStateChanged(auth,account=>{user=account;updateAccess()});
-    $('#auth').addEventListener('click',async()=>{try{if(auth.currentUser)await signOut(auth);else await signInWithPopup(auth,provider)}catch(error){toast(error.code==='auth/unauthorized-domain'?'Tambahkan domain Vercel ke Firebase':'Login gagal')}});
-    $('#save').addEventListener('click',async()=>{
-      if(!song)return toast('Pilih lagu dulu');
-      if(!user)return $('#auth').click();
-      const scenes=editorScenes(),text=textFromScenes(scenes);
-      try{
-        await setDoc(doc(db,'lyrics',song.id),{text,scenes,updatedAt:serverTimestamp()},{merge:true});
-        draftScenes=scenes;syncBulkFromDraft();cacheDraft();$('#status').textContent='cloud saved';renderSceneList();toast('Scene tersimpan ke cloud');
-      }catch(error){toast('Akun ini tidak punya izin simpan')}
-    });
-    $('#open').addEventListener('click',()=>openCinema(editorScenes()));
-    function nextLine(direction){if(!playbackScenes.length)return;pos=(pos+direction+playbackScenes.length)%playbackScenes.length;render()}
-    $('#close').addEventListener('click',()=>$('#cinema').className='cinema');
-    $('#cinema').addEventListener('click',event=>{if(event.target.closest('#close'))return;nextLine(1)});
-    document.addEventListener('keydown',event=>{if(!$('#cinema').classList.contains('open'))return;if(event.key==='Escape')$('#cinema').className='cinema';if(event.key==='ArrowRight'||event.key===' '){event.preventDefault();nextLine(1)}if(event.key==='ArrowLeft'){event.preventDefault();nextLine(-1)}});
-    createDust();
+  <script>
+    window.onSpotifyIframeApiReady=function(IFrameAPI){
+      window.__spotifyIframeAPI=IFrameAPI;
+      if(typeof window.__onSpecialSpotifyIframeReady==='function')window.__onSpecialSpotifyIframeReady(IFrameAPI);
+    };
   </script>
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+  <script type="module" src="special-room.js"></script>
 </body>
 </html>
