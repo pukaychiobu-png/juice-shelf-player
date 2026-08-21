@@ -1,0 +1,256 @@
+nsform: translate3d(18%, 10%, 0) scale(1.12); } }
+    @keyframes vinyl-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes orbit-drift { to { transform: translate(-50%, -50%) rotate(-8deg) scale(1.08); } }
+    @keyframes dust-float { 0%,100% { opacity: 0; transform: translate3d(0, 15px, 0) scale(.55); } 38% { opacity: var(--dust-opacity); } 68% { opacity: var(--dust-opacity); } 100% { transform: translate3d(var(--dust-x), var(--dust-y), 0) scale(1); } }
+    @keyframes word-rise { from { opacity: 0; filter: blur(18px); transform: translateY(34px) scale(.87) rotate(1deg); } 62% { opacity: 1; } to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1) rotate(0); } }
+    @keyframes flare { from { opacity: 0; transform: scale(.67); } 38% { opacity: .9; } to { opacity: 0; transform: scale(1.5); } }
+    @keyframes echo-up { from { opacity: 0; filter: blur(15px); transform: translateY(25px); } to { opacity: 1; filter: blur(4px); transform: translateY(-7px); } }
+    @keyframes echo-down { from { opacity: 0; filter: blur(15px); transform: translateY(-28px); } to { opacity: 1; filter: blur(4px); transform: translateY(7px); } }
+
+    @media (max-width: 850px) {
+      .intro { align-items: start; flex-direction: column; }
+      .intro-copy { max-width: 410px; text-align: left; }
+      .app-grid { grid-template-columns: 1fr; }
+      .focus-panel { position: relative; top: auto; }
+      .cinema-hint { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 24px, 1320px); padding-top: 22px; }
+      .top-note { display: none; }
+      .sync-state { display: none; }
+      .song-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .song-card { min-height: 109px; }
+      .focus-top { grid-template-columns: 84px 1fr; gap: 16px; }
+      .orbital-cover { width: 84px; border-radius: 23px; }
+      .orbital-cover b { font-size: 2.55rem; }
+      .focus-name { font-size: 2rem; }
+      .cinematic-stage { padding: 19px; }
+      .lyric-tap-zone { min-height: 54svh; }
+      .lyric-echo.previous { top: 8%; }
+      .lyric-echo.next { bottom: 8%; }
+      .cinema-vinyl { width: 115vw; }
+      .cinema-orbit { width: 160vw; }
+      .constellation { min-width: 62px; gap: 5px; }
+      .constellation i:nth-child(n + 9) { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+
+    /* ===== TAP SYNC TOOL ===== */
+    .tap-stage {
+      position: fixed; inset: 0; z-index: 45;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      background: rgba(5,3,10,0.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 320ms ease, visibility 320ms ease;
+    }
+    .tap-stage.open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .tap-panel {
+      width: min(460px, 100%); border: 1px solid var(--line); border-radius: 28px; padding: 28px 26px;
+      background: rgba(15,10,25,.94); box-shadow: 0 30px 90px rgba(0,0,0,.55); text-align: center;
+    }
+    .tap-head { display: flex; justify-content: space-between; align-items: flex-start; text-align: left; margin-bottom: 14px; gap: 14px; }
+    .tap-eyebrow { margin: 0 0 4px; color: var(--accent); font-size: .6rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    .tap-head strong { font-size: 1.05rem; letter-spacing: -0.03em; }
+    .tap-hint { color: var(--muted); font-size: .78rem; line-height: 1.5; margin-bottom: 14px; }
+    .tap-progress { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; font-weight: 800; }
+    .tap-current { font-size: clamp(1.2rem, 4vw, 1.5rem); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.3; min-height: 2.6em; display: flex; align-items: center; justify-content: center; }
+    .tap-next { font-size: .78rem; color: var(--muted); margin-top: 2px; min-height: 1.2em; }
+    .tap-timer { margin: 16px 0 8px; font-size: .95rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .tap-button {
+      width: 128px; height: 128px; border-radius: 50%; border: none; margin: 4px auto 18px; display: block;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #150a20;
+      font-weight: 900; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase;
+      transition: transform 120ms ease; box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+    .tap-button:active { transform: scale(.9); }
+    .tap-button:disabled { opacity: .35; cursor: not-allowed; }
+    .tap-button.pulse { animation: tapPulse 320ms ease; }
+    @keyframes tapPulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100% { box-shadow: 0 0 0 26px transparent; } }
+    .tap-controls { display: flex; justify-content: center; gap: 18px; margin-bottom: 16px; }
+    .tap-secondary { border: 0; background: transparent; color: var(--muted); font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .tap-secondary:hover:not(:disabled) { color: #fff; }
+    .tap-secondary:disabled { opacity: .35; cursor: not-allowed; }
+    .tap-actions { display: flex; justify-content: space-between; gap: 10px; }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="storm-layer" id="storm-layer" aria-hidden="true">
+    <i class="storm-bolt one"></i>
+    <i class="storm-bolt two"></i>
+    <i class="storm-bolt three"></i>
+  </div>
+  <div class="storm-flash" id="storm-flash" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">midnight shelf</div>
+      <div class="top-actions">
+        <span class="sync-state" id="sync-state">cloud sync</span>
+        <button class="auth-button" id="auth-button" type="button">Admin sign in</button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <h1>pick a<span>feeling.</span></h1>
+      <p class="intro-copy">Pilih satu lagu, putar dari Spotify, lalu aurora di halaman akan berubah suasana mengikuti pilihanmu.</p>
+    </section>
+
+    <section class="app-grid">
+      <section class="shelf-panel" aria-labelledby="shelf-title">
+        <div class="panel-heading">
+          <h2 id="shelf-title">Your starter shelf</h2>
+          <span class="count" id="song-count">7 tracks</span>
+        </div>
+        <label class="search-wrap" aria-label="Cari di koleksi ini">
+          <input id="search" type="search" autocomplete="off" placeholder="Cari dari koleksi ini…" />
+        </label>
+        <a class="special-room-link" href="special-room.html"><div><span>Separate collection · 07 scenes</span><br><b>Enter Special Room</b></div><strong>→</strong></a>
+        <button class="add-song-toggle" id="add-song-toggle" type="button" disabled>＋ Add a song to this shelf</button>
+        <form class="add-song-form" id="add-song-form">
+          <input id="new-song-url" type="url" inputmode="url" placeholder="Spotify track link" required />
+          <div class="form-row">
+            <input id="new-song-title" type="text" maxlength="80" placeholder="Song title" required />
+            <input id="new-song-artist" type="text" maxlength="100" placeholder="Artist name" required />
+          </div>
+          <button class="add-song-submit" type="submit">Save song</button>
+        </form>
+        <div class="song-grid" id="song-grid"></div>
+        <p class="empty-filter" id="empty-filter">Lagu itu belum ada di koleksi awal ini.</p>
+      </section>
+
+      <aside class="focus-panel" aria-live="polite">
+        <div class="focus-top">
+          <div class="orbital-cover" id="orbital-cover" aria-hidden="true"><b id="cover-letter">E</b></div>
+          <div>
+            <p class="eyebrow" id="focus-eyebrow">now selected</p>
+            <h2 class="focus-name" id="focus-name">Empty</h2>
+            <p class="focus-artist" id="focus-artist">Juice WRLD</p>
+          </div>
+        </div>
+
+        <div class="visualizer" id="visualizer" aria-hidden="true"></div>
+        <div id="spotify-player"></div>
+
+        <section class="lyrics-box" aria-labelledby="lyrics-title">
+          <div class="lyrics-heading">
+            <h3 id="lyrics-title">Your lyrics board<span class="sync-badge" id="sync-badge">synced</span></h3>
+            <span class="status" id="lyric-status">not available</span>
+          </div>
+          <div class="lyrics-tools">
+            <button class="cinema-button" id="open-cinematic" type="button">Open cinematic mode</button>
+            <button class="cinema-button" id="open-tap-sync" type="button" disabled>🎯 Tap sync</button>
+          </div>
+          <p class="live-lyric" id="live-lyric"></p>
+          <textarea id="lyrics-input" spellcheck="true" placeholder="Lirik belum tersedia. Satu baris = satu adegan cinematic. Tambahkan [mm:ss] di depan baris untuk auto-sync ke beat lagu, misal: [00:12.50] i pray my sins are forgiven"></textarea>
+          <div class="lyrics-actions">
+            <span class="privacy-note" id="editor-note">Login admin untuk menyimpan ke cloud.</span>
+            <div>
+              <button class="clear-button" id="clear-lyrics" type="button">Reset</button>
+              <button class="save-button" id="save-lyrics" type="button">Save text</button>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <section class="cinematic-stage" id="cinematic-stage" aria-hidden="true" aria-label="Cinematic lyric mode">
+    <div class="cinema-vinyl" aria-hidden="true"></div>
+    <div class="cinema-orbit" aria-hidden="true"></div>
+    <div class="cinema-dust" id="cinema-dust" aria-hidden="true"></div>
+    <header class="cinema-top">
+      <div class="cinema-song">
+        <p class="cinema-label" id="cinema-label">cinematic lyric mode</p>
+        <strong id="cinema-track-name">Empty</strong>
+      </div>
+      <button class="cinema-close" id="close-cinematic" type="button" aria-label="Tutup cinematic mode">×</button>
+    </header>
+    <div class="lyric-tap-zone" id="lyric-tap-zone" tabindex="0" role="button" aria-label="Tekan untuk pindah ke baris berikutnya">
+      <p class="lyric-echo previous" id="lyric-previous"></p>
+      <p class="cinematic-line" id="cinematic-line"></p>
+      <p class="lyric-echo next" id="lyric-next"></p>
+    </div>
+    <footer class="cinema-footer">
+      <div class="cinema-controls">
+        <button class="cinema-nav" id="previous-line" type="button" aria-label="Baris sebelumnya">←</button>
+        <span class="constellation" id="constellation" aria-hidden="true"></span>
+        <span class="cinema-progress" id="cinema-progress">01 / 01</span>
+        <button class="cinema-nav" id="next-line" type="button" aria-label="Baris berikutnya">→</button>
+      </div>
+      <span class="cinema-hint" id="cinema-hint">tap layar atau tekan → untuk lanjut</span>
+    </footer>
+  </section>
+
+  <section class="tap-stage" id="tap-stage" aria-hidden="true" aria-label="Tap sync tool">
+    <div class="tap-panel">
+      <div class="tap-head">
+        <div>
+          <p class="tap-eyebrow">tap sync</p>
+          <strong id="tap-track-name">Empty</strong>
+        </div>
+        <button class="cinema-close" id="tap-close" type="button" aria-label="Tutup tap sync">×</button>
+      </div>
+      <p class="tap-hint">Putar lagunya dari player, lalu tap tombol besar tepat saat tiap baris mulai dinyanyikan. Waktunya kecatet otomatis.</p>
+      <p class="tap-progress" id="tap-progress">0 / 0 baris</p>
+      <p class="tap-current" id="tap-current">—</p>
+      <p class="tap-next" id="tap-next"></p>
+      <p class="tap-timer" id="tap-timer">00:00.0</p>
+      <button class="tap-button" id="tap-button" type="button">TAP</button>
+      <div class="tap-controls">
+        <button class="tap-secondary" id="tap-undo" type="button">↩ Undo last</button>
+        <button class="tap-secondary" id="tap-skip" type="button">Skip baris →</button>
+      </div>
+      <div class="tap-actions">
+        <button class="clear-button" id="tap-cancel" type="button">Batal</button>
+        <button class="save-button" id="tap-apply" type="button">Terapkan ke editor</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Bridge so the Spotify iFrame API (loaded async, non-module) can hand its
+    // controller factory to our module script once both are ready, in either order.
+    window.onSpotifyIframeApiReady = function (IFrameAPI) {
+      window.__spotifyIframeAPI = IFrameAPI;
+      if (typeof window.__onSpotifyIframeReady === "function") window.__onSpotifyIframeReady(IFrameAPI);
+    };
+  </script>
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUclkKHZC16QCYb5xeRHg55IZHmJA7_OI",
+      authDomain: "lirik-lagu-8b4e2.firebaseapp.com",
+      projectId: "lirik-lagu-8b4e2",
+      storageBucket: "lirik-lagu-8b4e2.firebasestorage.app",
+      messagingSenderId: "795702258465",
+      appId: "1:795702258465:web:6d704efba58241c73eac60"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
+    const provider = new GoogleAuthProvider();
+    const songs = [
+      { title: "Empty", artist: "Juice WRLD", trackId: "3T06rGO2dVEntMvym0vpQu", accent: "#a77bff", accent2: "#ff8ac9", soft: "rgba(167, 123, 255, 0.23)" },
+      { title: "Robbery", artist: "Juice WRLD", trackId: "6iaSML1PIYq936g62BDtBq", accent: "#ff6678", accent2: "#ffb38d", soft: "rgba(255, 102, 120, 0.22)" },
+      { title: "Life's A Mess", artist: "Juice WRLD, Halsey", trackId: "5wWAwzGp2OaaoIkwcz6wZs", accent: "#ff4f76", accent2: "#ff927c", soft: "rgba(255, 79, 118, 0.21)" },
+      { title: "All Girls Are The Same", artist: "Juice WRLD", trackId: "4VXIryQMWpIdGgYR4TrjT1", accent: "#7ba8ff", accent2: "#9ce5ff", soft: "rgba(123, 168, 255, 0.22)" },
+      { title: "Cigarettes", artist: "Juice WRLD", trackId: "1CfuBY3BDdKpooQ9L5zgUc", accent: "#b69aff", accent2: "#7cdbff", soft: "rgba(182, 154, 255, 0.22)" },
+      { title: "Candles", artist: "Juice WRLD", trackId: "1wa6QQsdSE3X2GbRljGpFk", accent: "#ffc36b", accent2: "#ff777b", soft: "rgba(255, 195, 107, 0.2)" },
+      { title: "Used To", artist: "Juice WRLD", trackId: "1j1V8ZnkApuo7VS7ilSplV", accent: "#e6b4ff", accent2: "#a489ff", soft: "rgba(211, 159, 255, 0.2)" },
+      { title: "734", artist: "Juice WRLD", trackId: "6vB8bdQCCTDDIH8fhRfuXA", accent: "#88e7ff", accent2: "#8b9cff", soft: "rgba(101, 204, 255, 0.2)" },
+      { title: "Wasted", artist: "Juice WRLD, Lil Uzi Vert", trackId: "1a7WZZZH7LzyvorhpOJFTe", accent: "#bb8bff", accent2: "#ff75bd", soft: "rgba(187,
