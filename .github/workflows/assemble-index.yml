@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/index-sync-player
+  workflow_dispatch:
 
 permissions:
   contents: write
