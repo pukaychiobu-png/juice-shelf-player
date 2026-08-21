@@ -1,0 +1,124 @@
+form: translate3d(18%, 10%, 0) scale(1.12); } }
+    @keyframes vinyl-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes orbit-drift { to { transform: translate(-50%, -50%) rotate(-8deg) scale(1.08); } }
+    @keyframes dust-float { 0%,100% { opacity: 0; transform: translate3d(0, 15px, 0) scale(.55); } 38% { opacity: var(--dust-opacity); } 68% { opacity: var(--dust-opacity); } 100% { transform: translate3d(var(--dust-x), var(--dust-y), 0) scale(1); } }
+    @keyframes word-rise { from { opacity: 0; filter: blur(18px); transform: translateY(34px) scale(.87) rotate(1deg); } 62% { opacity: 1; } to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1) rotate(0); } }
+    @keyframes flare { from { opacity: 0; transform: scale(.67); } 38% { opacity: .9; } to { opacity: 0; transform: scale(1.5); } }
+    @keyframes echo-up { from { opacity: 0; filter: blur(15px); transform: translateY(25px); } to { opacity: 1; filter: blur(4px); transform: translateY(-7px); } }
+    @keyframes echo-down { from { opacity: 0; filter: blur(15px); transform: translateY(-28px); } to { opacity: 1; filter: blur(4px); transform: translateY(7px); } }
+
+    @media (max-width: 850px) {
+      .intro { align-items: start; flex-direction: column; }
+      .intro-copy { max-width: 410px; text-align: left; }
+      .app-grid { grid-template-columns: 1fr; }
+      .focus-panel { position: relative; top: auto; }
+      .cinema-hint { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 24px, 1320px); padding-top: 22px; }
+      .top-note { display: none; }
+      .sync-state { display: none; }
+      .song-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .song-card { min-height: 109px; }
+      .focus-top { grid-template-columns: 84px 1fr; gap: 16px; }
+      .orbital-cover { width: 84px; border-radius: 23px; }
+      .orbital-cover b { font-size: 2.55rem; }
+      .focus-name { font-size: 2rem; }
+      .cinematic-stage { padding: 19px; }
+      .lyric-tap-zone { min-height: 54svh; }
+      .lyric-echo.previous { top: 8%; }
+      .lyric-echo.next { bottom: 8%; }
+      .cinema-vinyl { width: 115vw; }
+      .cinema-orbit { width: 160vw; }
+      .constellation { min-width: 62px; gap: 5px; }
+      .constellation i:nth-child(n + 9) { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+
+    /* ===== TAP SYNC TOOL ===== */
+    .tap-stage {
+      position: fixed; inset: 0; z-index: 45;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      background: rgba(5,3,10,0.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 320ms ease, visibility 320ms ease;
+    }
+    .tap-stage.open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .tap-panel {
+      width: min(460px, 100%); border: 1px solid var(--line); border-radius: 28px; padding: 28px 26px;
+      background: rgba(15,10,25,.94); box-shadow: 0 30px 90px rgba(0,0,0,.55); text-align: center;
+    }
+    .tap-head { display: flex; justify-content: space-between; align-items: flex-start; text-align: left; margin-bottom: 14px; gap: 14px; }
+    .tap-eyebrow { margin: 0 0 4px; color: var(--accent); font-size: .6rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    .tap-head strong { font-size: 1.05rem; letter-spacing: -0.03em; }
+    .tap-hint { color: var(--muted); font-size: .78rem; line-height: 1.5; margin-bottom: 14px; }
+    .tap-progress { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; font-weight: 800; }
+    .tap-current { font-size: clamp(1.2rem, 4vw, 1.5rem); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.3; min-height: 2.6em; display: flex; align-items: center; justify-content: center; }
+    .tap-next { font-size: .78rem; color: var(--muted); margin-top: 2px; min-height: 1.2em; }
+    .tap-timer { margin: 16px 0 8px; font-size: .95rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .tap-button {
+      width: 128px; height: 128px; border-radius: 50%; border: none; margin: 4px auto 18px; display: block;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #150a20;
+      font-weight: 900; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase;
+      transition: transform 120ms ease; box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+    .tap-button:active { transform: scale(.9); }
+    .tap-button:disabled { opacity: .35; cursor: not-allowed; }
+    .tap-button.pulse { animation: tapPulse 320ms ease; }
+    @keyframes tapPulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100% { box-shadow: 0 0 0 26px transparent; } }
+    .tap-controls { display: flex; justify-content: center; gap: 18px; margin-bottom: 16px; }
+    .tap-secondary { border: 0; background: transparent; color: var(--muted); font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .tap-secondary:hover:not(:disabled) { color: #fff; }
+    .tap-secondary:disabled { opacity: .35; cursor: not-allowed; }
+    .tap-actions { display: flex; justify-content: space-between; gap: 10px; }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="storm-layer" id="storm-layer" aria-hidden="true">
+    <i class="storm-bolt one"></i>
+    <i class="storm-bolt two"></i>
+    <i class="storm-bolt three"></i>
+  </div>
+  <div class="storm-flash" id="storm-flash" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">midnight shelf</div>
+      <div class="top-actions">
+        <span class="sync-state" id="sync-state">cloud sync</span>
+        <button class="auth-button" id="auth-button" type="button">Admin sign in</button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <h1>pick a<span>feeling.</span></h1>
+      <p class="intro-copy">Pilih satu lagu, putar dari Spotify, lalu aurora di halaman akan berubah suasana mengikuti pilihanmu.</p>
+    </section>
+
+    <section class="app-grid">
+      <section class="shelf-panel" aria-labelledby="shelf-title">
+        <div class="panel-heading">
+          <h2 id="shelf-title">Your starter shelf</h2>
+          <span class="count" id="song-count">7 tracks</span>
+        </div>
+        <label class="search-wrap" aria-label="Cari di koleksi ini">
+          <input id="search" type="search" autocomplete="off" placeholder="Cari dari koleksi ini…" />
+        </label>
+        <a class="special-room-link" href="special-room.html"><div><span>Separate collection · 07 scenes</span><br><b>Enter Special Room</b></div><strong>→</strong></a>
+        <button class="add-song-toggle" id="add-song-toggle" type="button" disabled>＋ Add a song to this shelf</button>
+        <form class="add-song-form" id="add-song-form">
+          <input id="new-song-url" type="url" inputmode="url" placeholder="Spotify track link" required />
+          <div class="form-row">
+            <input id="new-song-title" type="text" maxlength="80" placeholder="Song title" required />
+            <input id="new-song-artist" type="text" maxlength="100" placeholder="Artist name" required />
+          </div>
+          <button class="add-song-submit" type="submit">Save song</button>
+        </form>
+        <div class="song-gr

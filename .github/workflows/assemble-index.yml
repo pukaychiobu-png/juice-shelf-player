@@ -1,0 +1,37 @@
+name: Assemble synced index
+
+on:
+  push:
+    branches:
+      - feat/index-sync-player
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Assemble exact index source
+        shell: bash
+        run: |
+          cat index-sync-src/part-*.txt > index.html
+          actual="$(git hash-object index.html)"
+          expected="3037f25a4d505410a57b206c8ea12ab703e3c6fc"
+          if [ "$actual" != "$expected" ]; then
+            echo "Index hash mismatch: $actual"
+            exit 1
+          fi
+
+      - name: Commit assembled index and remove temporary files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- index.html
+          git rm -- index-sync-src/part-01.txt index-sync-src/part-02.txt index-sync-src/part-03.txt index-sync-src/part-04.txt index-sync-src/part-05.txt index-sync-src/part-06.txt index-sync-src/part-07.txt index-sync-src/part-08.txt index-sync-src/part-09.txt index-sync-src/part-10.txt .github/workflows/assemble-index.yml
+          git commit -m "Update index with Spotify lyric sync"
+          git push origin HEAD:feat/index-sync-player

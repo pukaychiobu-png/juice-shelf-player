@@ -1,0 +1,133 @@
+id" id="song-grid"></div>
+        <p class="empty-filter" id="empty-filter">Lagu itu belum ada di koleksi awal ini.</p>
+      </section>
+
+      <aside class="focus-panel" aria-live="polite">
+        <div class="focus-top">
+          <div class="orbital-cover" id="orbital-cover" aria-hidden="true"><b id="cover-letter">E</b></div>
+          <div>
+            <p class="eyebrow" id="focus-eyebrow">now selected</p>
+            <h2 class="focus-name" id="focus-name">Empty</h2>
+            <p class="focus-artist" id="focus-artist">Juice WRLD</p>
+          </div>
+        </div>
+
+        <div class="visualizer" id="visualizer" aria-hidden="true"></div>
+        <div id="spotify-player"></div>
+
+        <section class="lyrics-box" aria-labelledby="lyrics-title">
+          <div class="lyrics-heading">
+            <h3 id="lyrics-title">Your lyrics board<span class="sync-badge" id="sync-badge">synced</span></h3>
+            <span class="status" id="lyric-status">not available</span>
+          </div>
+          <div class="lyrics-tools">
+            <button class="cinema-button" id="open-cinematic" type="button">Open cinematic mode</button>
+            <button class="cinema-button" id="open-tap-sync" type="button" disabled>🎯 Tap sync</button>
+          </div>
+          <p class="live-lyric" id="live-lyric"></p>
+          <textarea id="lyrics-input" spellcheck="true" placeholder="Lirik belum tersedia. Satu baris = satu adegan cinematic. Tambahkan [mm:ss] di depan baris untuk auto-sync ke beat lagu, misal: [00:12.50] i pray my sins are forgiven"></textarea>
+          <div class="lyrics-actions">
+            <span class="privacy-note" id="editor-note">Login admin untuk menyimpan ke cloud.</span>
+            <div>
+              <button class="clear-button" id="clear-lyrics" type="button">Reset</button>
+              <button class="save-button" id="save-lyrics" type="button">Save text</button>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <section class="cinematic-stage" id="cinematic-stage" aria-hidden="true" aria-label="Cinematic lyric mode">
+    <div class="cinema-vinyl" aria-hidden="true"></div>
+    <div class="cinema-orbit" aria-hidden="true"></div>
+    <div class="cinema-dust" id="cinema-dust" aria-hidden="true"></div>
+    <header class="cinema-top">
+      <div class="cinema-song">
+        <p class="cinema-label" id="cinema-label">cinematic lyric mode</p>
+        <strong id="cinema-track-name">Empty</strong>
+      </div>
+      <button class="cinema-close" id="close-cinematic" type="button" aria-label="Tutup cinematic mode">×</button>
+    </header>
+    <div class="lyric-tap-zone" id="lyric-tap-zone" tabindex="0" role="button" aria-label="Tekan untuk pindah ke baris berikutnya">
+      <p class="lyric-echo previous" id="lyric-previous"></p>
+      <p class="cinematic-line" id="cinematic-line"></p>
+      <p class="lyric-echo next" id="lyric-next"></p>
+    </div>
+    <footer class="cinema-footer">
+      <div class="cinema-controls">
+        <button class="cinema-nav" id="previous-line" type="button" aria-label="Baris sebelumnya">←</button>
+        <span class="constellation" id="constellation" aria-hidden="true"></span>
+        <span class="cinema-progress" id="cinema-progress">01 / 01</span>
+        <button class="cinema-nav" id="next-line" type="button" aria-label="Baris berikutnya">→</button>
+      </div>
+      <span class="cinema-hint" id="cinema-hint">tap layar atau tekan → untuk lanjut</span>
+    </footer>
+  </section>
+
+  <section class="tap-stage" id="tap-stage" aria-hidden="true" aria-label="Tap sync tool">
+    <div class="tap-panel">
+      <div class="tap-head">
+        <div>
+          <p class="tap-eyebrow">tap sync</p>
+          <strong id="tap-track-name">Empty</strong>
+        </div>
+        <button class="cinema-close" id="tap-close" type="button" aria-label="Tutup tap sync">×</button>
+      </div>
+      <p class="tap-hint">Putar lagunya dari player, lalu tap tombol besar tepat saat tiap baris mulai dinyanyikan. Waktunya kecatet otomatis.</p>
+      <p class="tap-progress" id="tap-progress">0 / 0 baris</p>
+      <p class="tap-current" id="tap-current">—</p>
+      <p class="tap-next" id="tap-next"></p>
+      <p class="tap-timer" id="tap-timer">00:00.0</p>
+      <button class="tap-button" id="tap-button" type="button">TAP</button>
+      <div class="tap-controls">
+        <button class="tap-secondary" id="tap-undo" type="button">↩ Undo last</button>
+        <button class="tap-secondary" id="tap-skip" type="button">Skip baris →</button>
+      </div>
+      <div class="tap-actions">
+        <button class="clear-button" id="tap-cancel" type="button">Batal</button>
+        <button class="save-button" id="tap-apply" type="button">Terapkan ke editor</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Bridge so the Spotify iFrame API (loaded async, non-module) can hand its
+    // controller factory to our module script once both are ready, in either order.
+    window.onSpotifyIframeApiReady = function (IFrameAPI) {
+      window.__spotifyIframeAPI = IFrameAPI;
+      if (typeof window.__onSpotifyIframeReady === "function") window.__onSpotifyIframeReady(IFrameAPI);
+    };
+  </script>
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUclkKHZC16QCYb5xeRHg55IZHmJA7_OI",
+      authDomain: "lirik-lagu-8b4e2.firebaseapp.com",
+      projectId: "lirik-lagu-8b4e2",
+      storageBucket: "lirik-lagu-8b4e2.firebasestorage.app",
+      messagingSenderId: "795702258465",
+      appId: "1:795702258465:web:6d704efba58241c73eac60"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
+    const provider = new GoogleAuthProvider();
+    const songs = [
+      { title: "Empty", artist: "Juice WRLD", trackId: "3T06rGO2dVEntMvym0vpQu", accent: "#a77bff", accent2: "#ff8ac9", soft: "rgba(167, 123, 255, 0.23)" },
+      { title: "Robbery", artist: "Juice WRLD", trackId: "6iaSML1PIYq936g62BDtBq", accent: "#ff6678", accent2: "#ffb38d", soft: "rgba(255, 102, 120, 0.22)" },
+      { title: "Life's A Mess", artist: "Juice WRLD, Halsey", trackId: "5wWAwzGp2OaaoIkwcz6wZs", accent: "#ff4f76", accent2: "#ff927c", soft: "rgba(255, 79, 118, 0.21)" },
+      { title: "All Girls Are The Same", artist: "Juice WRLD", trackId: "4VXIryQMWpIdGgYR4TrjT1", accent: "#7ba8ff", accent2: "#9ce5ff", soft: "rgba(123, 168, 255, 0.22)" },
+      { title: "Cigarettes", artist: "Juice WRLD", trackId: "1CfuBY3BDdKpooQ9L5zgUc", accent: "#b69aff", accent2: "#7cdbff", soft: "rgba(182, 154, 255, 0.22)" },
+      { title: "Candles", artist: "Juice WRLD", trackId: "1wa6QQsdSE3X2GbRljGpFk", accent: "#ffc36b", accent2: "#ff777b", soft: "rgba(255, 195, 107, 0.2)" },
+      { title: "Used To", artist: "Juice WRLD", trackId: "1j1V8ZnkApuo7VS7ilSplV", accent: "#e6b4ff", accent2: "#a489ff", soft: "rgba(211, 159, 255, 0.2)" },
+      { title: "734", artist: "Juice WRLD", trackId: "6vB8bdQCCTDDIH8fhRfuXA", accent: "#88e7ff", accent2: "#8b9cff", soft: "rgba(101, 204, 255, 0.2)" },
+      { title: "Wasted", artist: "Juice WRLD, Lil Uzi Vert", trackId: "1a7WZZZH7LzyvorhpOJFTe", accent: "#bb8bff", accent2: "#ff75bd", soft: "rgba(187, 13
