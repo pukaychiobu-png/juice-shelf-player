@@ -1,0 +1,369 @@
+ `Signed in as ${user.email || "admin"}. Save akan tersinkron ke semua perangkat.`
+        : "Login dengan akun admin untuk mengubah lirik. Pengunjung tetap bisa membaca.";
+    }
+
+    async function loadLyricsForSong(song) {
+      const requestId = ++lyricRequest;
+      lyricStatus.textContent = "loading cloud";
+      try {
+        const snapshot = await getDoc(doc(db, "lyrics", song.trackId));
+        if (requestId !== lyricRequest) return;
+        const cloudText = snapshot.exists() && typeof snapshot.data().text === "string"
+          ? snapshot.data().text
+          : "";
+        const text = cloudText || savedLyrics[song.trackId] || "";
+        lyricsInput.value = text;
+        if (text) {
+          savedLyrics[song.trackId] = text;
+          localStorage.setItem(lyricKey, JSON.stringify(savedLyrics));
+        }
+        refreshCinematicLines();
+        lyricStatus.textContent = cloudText ? "cloud saved" : "not available";
+        syncState.classList.remove("error");
+      } catch (error) {
+        if (requestId !== lyricRequest) return;
+        lyricsInput.value = savedLyrics[song.trackId] || "";
+        refreshCinematicLines();
+        lyricStatus.textContent = lyricsInput.value.trim() ? "local fallback" : "cloud unavailable";
+        syncState.classList.add("error");
+        console.error("Could not load lyrics from Firestore", error);
+      }
+    }
+
+    async function toggleAuthentication() {
+      try {
+        if (auth.currentUser) {
+          await signOut(auth);
+          showToast("Signed out");
+        } else {
+          await signInWithPopup(auth, provider);
+          showToast("Google sign-in berhasil");
+        }
+      } catch (error) {
+        const message = error.code === "auth/unauthorized-domain"
+          ? "Tambahkan domain Vercel ke Firebase Authorized domains"
+          : "Login Google belum berhasil. Coba lagi.";
+        showToast(message);
+        console.error("Firebase authentication error", error);
+      }
+    }
+
+    function triggerLightning() {
+      if (!document.body.classList.contains("storm-room")) return;
+      stormLayer.classList.remove("strike");
+      stormFlash.classList.remove("flash");
+      void stormLayer.offsetWidth;
+      stormLayer.classList.add("strike");
+      stormFlash.classList.add("flash");
+      window.setTimeout(() => {
+        stormLayer.classList.remove("strike");
+        stormFlash.classList.remove("flash");
+      }, 720);
+    }
+
+    function scheduleLightning() {
+      window.clearTimeout(stormTimer);
+      if (!document.body.classList.contains("storm-room")) return;
+      stormTimer = window.setTimeout(() => {
+        triggerLightning();
+        scheduleLightning();
+      }, 3600 + Math.random() * 5200);
+    }
+
+    function setRoomMood(song) {
+      const isStormRoom = song.special === "storm";
+      document.body.classList.toggle("storm-room", isStormRoom);
+      focusEyebrow.textContent = isStormRoom ? "special room · storm mode" : "now selected";
+      cinemaLabel.textContent = isStormRoom ? "special room · thunder cinematic" : "cinematic lyric mode";
+      window.clearTimeout(stormTimer);
+      if (isStormRoom) {
+        triggerLightning();
+        scheduleLightning();
+      }
+    }
+
+    function renderShelf() {
+      const query = search.value.trim().toLowerCase();
+      const filtered = songs.map((song, index) => ({ song, index })).filter(({ song }) =>
+        `${song.title} ${song.artist}`.toLowerCase().includes(query)
+      );
+      grid.textContent = "";
+      filtered.forEach(({ song, index }) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `song-card${index === selectedIndex ? " active" : ""}${song.special ? " special" : ""}`;
+        card.style.setProperty("--card-accent", song.accent);
+        card.innerHTML = `<small>${String(index + 1).padStart(2, "0")}</small><strong>${song.title}</strong><span>${song.artist}</span>`;
+        card.addEventListener("click", () => selectSong(index));
+        grid.appendChild(card);
+      });
+      emptyFilter.style.display = filtered.length ? "none" : "block";
+      document.getElementById("song-count").textContent = query ? `${filtered.length} found` : `${songs.length} tracks`;
+    }
+
+    function renderBars() {
+      const visualizer = document.getElementById("visualizer");
+      visualizer.textContent = "";
+      for (let i = 0; i < 38; i += 1) {
+        const bar = document.createElement("i");
+        bar.style.setProperty("--height", `${8 + Math.random() * 25}px`);
+        bar.style.setProperty("--wave", `${0.55 + Math.random() * 0.75}s`);
+        bar.style.setProperty("--delay", `${-Math.random() * 1.2}s`);
+        visualizer.appendChild(bar);
+      }
+    }
+
+    function renderPlayer(song) {
+      if (spotifyController) {
+        spotifyController.loadUri(`spotify:track:${song.trackId}`);
+        return;
+      }
+      // API belum ready saat song dipilih (misal langsung ganti lagu pas load awal):
+      // simpan sebagai pending, dan tampilkan embed biasa dulu biar tetap keliatan.
+      pendingTrackId = song.trackId;
+      spotifyPlayer.innerHTML = `<iframe title="${song.title} by ${song.artist} on Spotify" src="https://open.spotify.com/embed/track/${song.trackId}?utm_source=generator&theme=0" width="100%" height="152" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+    }
+
+    function selectSong(index) {
+      selectedIndex = index;
+      const song = songs[index];
+      document.documentElement.style.setProperty("--accent", song.accent);
+      document.documentElement.style.setProperty("--accent-2", song.accent2);
+      document.documentElement.style.setProperty("--accent-soft", song.soft);
+      setRoomMood(song);
+      focusName.textContent = song.title;
+      focusArtist.textContent = song.artist;
+      coverLetter.textContent = song.title.charAt(0);
+      lyricsInput.value = savedLyrics[song.trackId] || "";
+      lyricStatus.textContent = lyricsInput.value.trim() ? "local cache" : "loading cloud";
+      refreshCinematicLines();
+      cinemaTrackName.textContent = `${song.title} · ${song.artist}`;
+      renderPlayer(song);
+      renderBars();
+      renderShelf();
+      loadLyricsForSong(song);
+    }
+
+    saveLyricsButton.addEventListener("click", async () => {
+      if (!auth.currentUser) {
+        await toggleAuthentication();
+        return;
+      }
+      const song = songs[selectedIndex];
+      const text = lyricsInput.value.trim();
+      saveLyricsButton.disabled = true;
+      lyricStatus.textContent = "saving cloud";
+      try {
+        await setDoc(doc(db, "lyrics", song.trackId), {
+          text,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        if (text) savedLyrics[song.trackId] = text;
+        else delete savedLyrics[song.trackId];
+        localStorage.setItem(lyricKey, JSON.stringify(savedLyrics));
+        lyricStatus.textContent = text ? "cloud saved" : "cleared";
+        showToast(text ? "Lirik tersimpan ke cloud" : "Lirik cloud dikosongkan");
+      } catch (error) {
+        lyricStatus.textContent = "save denied";
+        const message = error.code === "permission-denied"
+          ? "Akun ini tidak punya izin untuk menyimpan"
+          : "Cloud gagal menyimpan. Coba lagi.";
+        showToast(message);
+        console.error("Could not save lyrics to Firestore", error);
+      } finally {
+        saveLyricsButton.disabled = !activeUser;
+      }
+    });
+
+    clearLyricsButton.addEventListener("click", () => {
+      lyricsInput.value = "";
+      refreshCinematicLines();
+      lyricsInput.focus();
+    });
+
+    lyricsInput.addEventListener("input", () => {
+      refreshCinematicLines();
+      lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
+    });
+
+    addSongToggle.addEventListener("click", () => {
+      addSongForm.classList.toggle("open");
+      if (addSongForm.classList.contains("open")) newSongUrl.focus();
+    });
+
+    addSongForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!auth.currentUser) {
+        await toggleAuthentication();
+        return;
+      }
+      const trackId = getTrackId(newSongUrl.value);
+      const title = newSongTitle.value.trim();
+      const artist = newSongArtist.value.trim();
+      if (!trackId) {
+        showToast("Tempel link Spotify track yang valid");
+        newSongUrl.focus();
+        return;
+      }
+      if (!title || !artist) {
+        showToast("Isi judul dan artist dulu");
+        return;
+      }
+      if (songs.some(song => song.trackId === trackId)) {
+        showToast("Lagu itu sudah ada di shelf");
+        return;
+      }
+      const customSong = { title, artist, trackId };
+      try {
+        await setDoc(doc(db, "customSongs", trackId), {
+          ...customSong,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        savedCustomSongs[trackId] = customSong;
+        localStorage.setItem(customSongKey, JSON.stringify(savedCustomSongs));
+        addSongForm.reset();
+        addSongForm.classList.remove("open");
+        addCustomSong(customSong, { select: true });
+        showToast("Lagu baru masuk ke shelf");
+      } catch (error) {
+        const message = error.code === "permission-denied"
+          ? "Tambahkan aturan Firestore untuk customSongs"
+          : "Gagal menyimpan lagu. Coba lagi.";
+        showToast(message);
+        console.error("Could not save custom song", error);
+      }
+    });
+
+    authButton.addEventListener("click", toggleAuthentication);
+    setEditorAccess(null);
+    onAuthStateChanged(auth, setEditorAccess);
+
+    function renderCinematic() {
+      if (!cinematicLines.length) return;
+      const line = cinematicLines[cinematicIndex];
+      cinematicLine.textContent = "";
+      line.split(/\s+/).forEach((word, index) => {
+        const wordElement = document.createElement("span");
+        wordElement.className = "cinematic-word";
+        wordElement.style.setProperty("--word-index", index);
+        wordElement.textContent = word;
+        cinematicLine.appendChild(wordElement);
+        if (index < line.trim().split(/\s+/).length - 1) cinematicLine.appendChild(document.createTextNode(" "));
+      });
+      lyricPrevious.textContent = cinematicLines[cinematicIndex - 1] || "";
+      lyricNext.textContent = cinematicLines[cinematicIndex + 1] || "";
+      cinemaProgress.textContent = `${String(cinematicIndex + 1).padStart(2, "0")} / ${String(cinematicLines.length).padStart(2, "0")}`;
+      constellation.textContent = "";
+      const dotCount = Math.min(cinematicLines.length, 12);
+      for (let dotIndex = 0; dotIndex < dotCount; dotIndex += 1) {
+        const dot = document.createElement("i");
+        const activeIndex = cinematicLines.length <= 12
+          ? cinematicIndex
+          : Math.round((cinematicIndex / Math.max(cinematicLines.length - 1, 1)) * (dotCount - 1));
+        if (dotIndex === activeIndex) dot.classList.add("active");
+        constellation.appendChild(dot);
+      }
+      cinematicLine.classList.remove("reveal");
+      lyricTapZone.classList.remove("reveal");
+      void cinematicLine.offsetWidth;
+      cinematicLine.classList.add("reveal");
+      lyricTapZone.classList.add("reveal");
+      if (cinemaHint) {
+        cinemaHint.textContent = isSynced
+          ? "mengikuti beat lagu secara otomatis · tap untuk override manual"
+          : "tap layar atau tekan → untuk lanjut";
+      }
+    }
+
+    function openCinematic() {
+      refreshCinematicLines();
+      if (!cinematicLines.length) {
+        showToast("Tambahkan baris teks dulu untuk mode cinematic");
+        lyricsInput.focus();
+        return;
+      }
+      cinematicIndex = 0;
+      renderCinematic();
+      cinematicStage.classList.add("open");
+      cinematicStage.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      lyricTapZone.focus();
+    }
+
+    function closeCinematic() {
+      cinematicStage.classList.remove("open");
+      cinematicStage.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      document.getElementById("open-cinematic").focus();
+    }
+
+    function moveCinematic(direction) {
+      if (!cinematicLines.length) return;
+      const nextIndex = cinematicIndex + direction;
+      if (nextIndex < 0 || nextIndex >= cinematicLines.length) {
+        showToast(nextIndex < 0 ? "Ini baris pertama" : "Sudah sampai baris terakhir");
+        return;
+      }
+      cinematicIndex = nextIndex;
+      renderCinematic();
+    }
+
+    document.getElementById("open-cinematic").addEventListener("click", openCinematic);
+    document.getElementById("close-cinematic").addEventListener("click", closeCinematic);
+    document.getElementById("previous-line").addEventListener("click", () => moveCinematic(-1));
+    document.getElementById("next-line").addEventListener("click", () => moveCinematic(1));
+    lyricTapZone.addEventListener("click", () => moveCinematic(1));
+    document.addEventListener("keydown", event => {
+      if (!cinematicStage.classList.contains("open")) return;
+      if (event.key === "Escape") closeCinematic();
+      if (event.key === "ArrowRight" || event.key === " ") { event.preventDefault(); moveCinematic(1); }
+      if (event.key === "ArrowLeft") { event.preventDefault(); moveCinematic(-1); }
+    });
+
+    search.addEventListener("input", renderShelf);
+
+    const stars = document.getElementById("stars");
+    for (let i = 0; i < 72; i += 1) {
+      const star = document.createElement("span");
+      star.className = "star";
+      star.style.setProperty("--size", `${1 + Math.random() * 2.2}px`);
+      star.style.setProperty("--left", `${Math.random() * 100}%`);
+      star.style.setProperty("--top", `${Math.random() * 100}%`);
+      star.style.setProperty("--opacity", `${0.13 + Math.random() * 0.58}`);
+      star.style.setProperty("--duration", `${2.4 + Math.random() * 4.5}s`);
+      star.style.setProperty("--delay", `${-Math.random() * 4}s`);
+      stars.appendChild(star);
+    }
+
+    for (let i = 0; i < 30; i += 1) {
+      const dust = document.createElement("i");
+      dust.style.setProperty("left", `${Math.random() * 100}%`);
+      dust.style.setProperty("top", `${Math.random() * 100}%`);
+      dust.style.setProperty("--dust-size", `${1 + Math.random() * 3.2}px`);
+      dust.style.setProperty("--dust-opacity", `${0.18 + Math.random() * 0.58}`);
+      dust.style.setProperty("--dust-duration", `${4.5 + Math.random() * 7}s`);
+      dust.style.setProperty("--dust-delay", `${-Math.random() * 8}s`);
+      dust.style.setProperty("--dust-x", `${-50 + Math.random() * 100}px`);
+      dust.style.setProperty("--dust-y", `${-120 - Math.random() * 130}px`);
+      cinemaDust.appendChild(dust);
+    }
+
+    function launchShootingStar() {
+      const star = document.createElement("span");
+      star.className = "shooting-star";
+      star.style.setProperty("--left", `${5 + Math.random() * 75}%`);
+      star.style.setProperty("--top", `${3 + Math.random() * 63}%`);
+      star.style.setProperty("--length", `${90 + Math.random() * 100}px`);
+      star.style.setProperty("--angle", `${-30 + Math.random() * 13}deg`);
+      star.style.setProperty("--travel", `${150 + Math.random() * 170}px`);
+      stars.appendChild(star);
+      star.addEventListener("animationend", () => star.remove(), { once: true });
+    }
+
+    for (let i = 0; i < 3; i += 1) window.setTimeout(launchShootingStar, 1000 + i * 1500);
+    window.setInterval(launchShootingStar, 3800);
+    selectSong(0);
+    loadCustomSongs();
+  </script>
+</body>
+</html>
