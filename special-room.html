@@ -28,6 +28,8 @@
     .toast{position:fixed;z-index:30;bottom:24px;left:50%;padding:10px 15px;border-radius:999px;color:#210309;background:#fff7ee;transform:translate(-50%,90px);transition:transform .25s;box-shadow:0 10px 34px #0008}.toast.show{transform:translate(-50%,0)}
     @keyframes spin{to{transform:rotate(360deg)}}@keyframes floor{to{transform:perspective(520px) rotateX(62deg) translateY(53px)}}@keyframes boltFloat{50%{transform:translate(-8px,12px);opacity:.74}}@keyframes aurora{to{transform:translate3d(11%,-9%,0) rotate(-8deg) scale(1.15)}}@keyframes heistGrid{to{transform:translate3d(0,82px,0) rotate(-8deg)}}@keyframes orbitPulse{50%{transform:scale(.76);opacity:.46}}@keyframes pinkVeil{to{transform:translate3d(-8%,6%,0) scale(1.15) rotate(5deg)}}@keyframes veilRing{50%{transform:rotate(-2deg) scale(.9);opacity:.35}}@keyframes panelUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}@keyframes lightning{0%,71%,100%{opacity:0}73%,76%{opacity:1}79%{opacity:.12}82%{opacity:.8}}@keyframes ribbon{to{transform:translateY(22vh) skewX(-15deg) scaleX(1.15)}}@keyframes reactionPop{0%{opacity:0;transform:scale(.25) rotate(-24deg);filter:blur(8px)}55%{opacity:1;transform:scale(1.18) rotate(7deg)}100%{opacity:.9;transform:scale(1) rotate(0);filter:blur(0)}}@keyframes heistOrbit{to{transform:translate(-50%,-50%) rotate(19deg) scale(1.09);border-radius:59% 41% 39% 61% / 57% 63% 37% 43%}}@keyframes heistDust{0%{opacity:0;transform:translate3d(0,18px,0) scale(.4)}35%{opacity:.95}100%{opacity:0;transform:translate3d(var(--drift),-120px,0) scale(1.3)}}@keyframes angelDust{0%,100%{opacity:.08;transform:translate3d(0,0,0) scale(.75)}50%{opacity:.95;transform:translate3d(var(--drift),-31px,0) scale(1.2)}}@keyframes ransomWord{from{opacity:0;filter:blur(12px);transform:translate3d(var(--x),var(--y),0) rotate(var(--turn)) skewX(var(--skew)) scale(.68)}66%{opacity:1;filter:blur(0);transform:translate3d(-2px,1px,0) rotate(-1deg) scale(1.04)}to{opacity:1;filter:none;transform:none}}@keyframes angelLine{from{opacity:0;filter:blur(18px);transform:translateY(40px) scale(.93);letter-spacing:-.16em}68%{opacity:1;filter:blur(0);transform:translateY(-4px) scale(1.015)}to{opacity:1;filter:none;transform:none;letter-spacing:-.11em}}@keyframes softOrbit{to{transform:translate(-50%,-50%) rotate(12deg) scale(1.08);opacity:.58}}
     @media(max-width:740px){.room{padding:20px 18px 52px}.hero{display:block;margin-top:64px}.intro{margin-top:25px}.grid,.panel{grid-template-columns:1fr}.card{min-height:222px}.panel{padding:16px}.actions{align-items:stretch;flex-direction:column}.action-group{justify-content:stretch}.action-group .btn{flex:1}.meta{left:20px;top:20px;max-width:60vw}.close{right:18px;top:16px}.reaction{top:16%;left:auto;right:12%}.hint{bottom:20px}.cinema.ransom .scene-orbit{width:125vw}.cinema.angels .scene-orbit{width:126vw;height:68vw}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+    .editor{max-height:640px;overflow:auto}.editor-caption{margin:8px 0 14px;color:#fff9;font-size:11px;line-height:1.45}.bulk-area{padding:11px;border:1px solid #ffffff1f;border-radius:14px;background:#03010473}.bulk-head,.scene-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;font:9px "DM Mono",monospace;letter-spacing:.1em}.bulk-state{color:#ffce7d;text-shadow:0 0 12px #ff9850}.bulk-area textarea{min-height:76px;height:76px;margin:9px 0 0}.bulk-actions{display:flex;justify-content:flex-end;margin-top:8px}.import-btn{padding:8px 11px;color:#ffd687}.scene-toolbar{margin-top:16px;padding:0 2px}.scene-count{color:#fff;text-shadow:0 0 12px #ff5379}.scene-sub{color:#fff8}.add-scene{padding:8px 10px}.scene-list{display:grid;gap:8px;min-height:54px;margin-top:10px}.scene-empty{padding:16px 12px;border:1px dashed #ffffff33;border-radius:13px;color:#fff9;font:10px/1.5 "DM Mono",monospace;text-align:center}.scene-card{display:grid;grid-template-columns:28px minmax(0,1fr) 96px auto;align-items:center;gap:8px;padding:8px;border:1px solid #ffffff21;border-radius:14px;background:linear-gradient(105deg,#ffffff0d,#ffffff04);transition:border-color .2s,transform .2s,background .2s}.scene-card:focus-within{border-color:#ff8a9f9c;background:#ff527412}.scene-number{display:grid;width:28px;aspect-ratio:1;border:1px solid #ffffff32;border-radius:50%;color:#ffcf7e;background:#ffffff08;place-items:center;font:9px "DM Mono",monospace;text-shadow:0 0 10px #ff984e}.scene-text{width:100%;min-height:48px;height:48px;margin:0;padding:9px 10px;border-radius:10px;font-size:12px;resize:vertical}.scene-mode{display:grid;gap:3px;color:#fff9;font:8px "DM Mono",monospace;letter-spacing:.08em}.scene-mode select{width:100%;min-width:0;border:1px solid #ffffff30;border-radius:9px;padding:8px 6px;color:#fff;background:#080307;font:9px "DM Mono",monospace;outline:none}.scene-tools{display:grid;grid-template-columns:repeat(2,30px);gap:5px}.scene-tool{display:grid;width:30px;height:29px;border:1px solid #ffffff2e;border-radius:8px;color:#fff;background:#ffffff0a;place-items:center;font:12px "DM Mono",monospace;transition:.18s}.scene-tool:hover,.scene-tool:focus-visible{outline:none;border-color:#fff;box-shadow:0 0 16px #ff5681;transform:translateY(-1px)}.scene-tool.delete:hover{border-color:#ff718b;color:#ff91a4}.editor.readonly{opacity:.8}.editor.readonly .scene-card{background:#ffffff05}.editor.readonly .scene-text{cursor:not-allowed}.scene-progress{position:absolute;z-index:5;right:29px;bottom:24px;margin:0;color:#fff;font:9px "DM Mono",monospace;letter-spacing:.11em;text-shadow:0 0 12px var(--a)}.cinema .hint{left:50%;transform:translateX(-50%)}.line.mood-impact{animation:impactIn .57s cubic-bezier(.15,.9,.2,1) both!important}.line.mood-glitch{animation:glitchIn .64s cubic-bezier(.2,.8,.2,1) both!important}.line.mood-pause{animation:pauseIn 1s cubic-bezier(.2,.8,.2,1) both!important}.cinema.ransom .line .word.mood-glitch{animation-name:ransomGlitchWord}.cinema.ransom .line .word.mood-pause{animation-name:ransomPauseWord}@keyframes impactIn{from{opacity:0;filter:blur(10px);transform:scale(.58) rotate(-3deg)}62%{opacity:1;filter:none;transform:scale(1.09) rotate(.7deg)}to{transform:none}}@keyframes glitchIn{0%{opacity:0;filter:blur(12px);transform:translate(-30px,12px) skewX(-13deg)}38%{opacity:1;transform:translate(19px,-5px) skewX(8deg);text-shadow:-7px 0 #ff4f7f,7px 0 #80ffe7,0 0 27px var(--a)}72%{transform:translate(-5px,2px) skewX(-2deg)}to{filter:none;transform:none}}@keyframes pauseIn{from{opacity:0;filter:blur(18px);transform:translateY(20px);letter-spacing:.08em}to{opacity:1;filter:none;transform:none;letter-spacing:-.11em}}@keyframes ransomGlitchWord{from{opacity:0;filter:blur(12px);transform:translate3d(var(--x),var(--y),0) rotate(var(--turn)) skewX(var(--skew)) scale(.68)}48%{opacity:1;filter:none;transform:translate3d(8px,-4px,0) skewX(-8deg);text-shadow:-5px 0 #ff8d32,5px 0 #bbff56,0 0 24px #a363ff}to{opacity:1;filter:none;transform:none}}@keyframes ransomPauseWord{from{opacity:0;filter:blur(16px);transform:translate3d(var(--x),var(--y),0) scale(.76)}to{opacity:1;filter:none;transform:none}}
+    @media(max-width:740px){.editor{max-height:none}.scene-card{grid-template-columns:28px minmax(0,1fr)}.scene-mode{grid-column:2}.scene-tools{grid-column:2;grid-template-columns:repeat(4,30px)}.scene-progress{right:18px;bottom:56px}.cinema .hint{width:100%;padding:0 20px}.bulk-actions{justify-content:stretch}.bulk-actions .btn{width:100%}}
   </style>
 </head>
 <body>
@@ -44,10 +46,10 @@
     </section>
     <section class="panel" id="panel" aria-live="polite">
       <div><p class="world" id="world">—</p><h3 id="title">—</h3><p class="artist" id="artist">—</p><iframe id="player" title="Spotify player" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture"></iframe></div>
-      <div class="editor"><div class="editor-head"><span>Lyrics editor</span><span class="status" id="status">select track</span></div><textarea id="lyrics" placeholder="Satu baris = satu scene cinematic." spellcheck="false"></textarea><div class="actions"><button class="btn" id="auth" type="button">ADMIN SIGN IN</button><span class="action-group"><button class="btn" id="open" type="button">CINEMATIC</button><button class="btn primary" id="save" type="button">SAVE CLOUD</button></span></div></div>
+      <div class="editor" id="editor"><div class="editor-head"><span>Scene editor</span><span class="status" id="status">select track</span></div><p class="editor-caption">Satu baris menjadi satu scene. Atur urutan dan mood-nya sebelum membuka cinematic.</p><div class="bulk-area"><div class="bulk-head"><span>PASTE LYRICS</span><span class="bulk-state" id="bulk-state">ready</span></div><textarea id="lyrics" placeholder="Tempel lirik di sini. Satu baris = satu scene." spellcheck="false"></textarea><div class="bulk-actions"><button class="btn import-btn" id="import-scenes" type="button">SPLIT INTO SCENES →</button></div></div><div class="scene-toolbar"><span><b class="scene-count" id="scene-count">0 scenes</b><span class="scene-sub"> · order &amp; mood</span></span><button class="btn add-scene" id="add-scene" type="button">＋ ADD SCENE</button></div><div class="scene-list" id="scene-list"></div><div class="actions"><button class="btn" id="auth" type="button">ADMIN SIGN IN</button><span class="action-group"><button class="btn" id="open" type="button">CINEMATIC</button><button class="btn primary" id="save" type="button">SAVE CLOUD</button></span></div></div>
     </section>
   </main>
-  <section class="cinema" id="cinema" aria-label="Cinematic lyrics"><div class="scene-veil" aria-hidden="true"></div><div class="scene-orbit" aria-hidden="true"></div><div class="scene-dust" id="dust" aria-hidden="true"></div><button class="btn close" id="close" type="button">× CLOSE</button><p class="meta" id="meta"></p><p class="line" id="line">Tambahkan teks di editor untuk memulai.</p><span class="reaction" id="reaction" aria-hidden="true"></span><p class="hint">tap layar / → untuk lanjut</p></section>
+  <section class="cinema" id="cinema" aria-label="Cinematic lyrics"><div class="scene-veil" aria-hidden="true"></div><div class="scene-orbit" aria-hidden="true"></div><div class="scene-dust" id="dust" aria-hidden="true"></div><button class="btn close" id="close" type="button">× CLOSE</button><p class="meta" id="meta"></p><p class="line" id="line">Tambahkan teks di editor untuk memulai.</p><span class="reaction" id="reaction" aria-hidden="true"></span><p class="scene-progress" id="scene-progress"></p><p class="hint">tap layar / → untuk lanjut</p></section>
   <div class="toast" id="toast" role="status"></div>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js';
@@ -55,21 +57,212 @@
     import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js';
     const app=initializeApp({apiKey:'AIzaSyDUclkKHZC16QCYb5xeRHg55IZHmJA7_OI',authDomain:'lirik-lagu-8b4e2.firebaseapp.com',projectId:'lirik-lagu-8b4e2',storageBucket:'lirik-lagu-8b4e2.firebasestorage.app',messagingSenderId:'795702258465',appId:'1:795702258465:web:6d704efba58241c73eac60'});
     const auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider(),$=s=>document.querySelector(s);
-    let song,user,lines=[],pos=0;const cache=JSON.parse(localStorage.getItem('midnight-shelf-lyrics-v1')||'{}');
+    const moods={auto:'AUTO',soft:'SOFT',impact:'IMPACT',glitch:'GLITCH',pause:'PAUSE'};
+    const textCache=JSON.parse(localStorage.getItem('midnight-shelf-lyrics-v1')||'{}');
+    const sceneCache=JSON.parse(localStorage.getItem('midnight-shelf-scenes-v2')||'{}');
+    let song,user,draftScenes=[],playbackScenes=[],pos=0,bulkDirty=false;
+
     function toast(message){$('#toast').textContent=message;$('#toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('show'),1800)}
     function seed(number){const value=Math.sin(number*9283.71)*49297.13;return value-Math.floor(value)}
     function createDust(){const dust=$('#dust');for(let i=0;i<34;i+=1){const dot=document.createElement('i');dot.style.left=(4+seed(i+3)*92)+'%';dot.style.top=(7+seed(i+31)*84)+'%';dot.style.setProperty('--drift',((seed(i+55)*2-1)*46).toFixed(1)+'px');dot.style.setProperty('--dur',(3.2+seed(i+79)*5.5).toFixed(2)+'s');dot.style.animationDelay=(-seed(i+111)*8).toFixed(2)+'s';dust.append(dot)}}
-    async function choose(card){song=card.dataset;$('#panel').classList.add('open');$('#world').textContent=card.querySelector('.tag').textContent;$('#title').textContent=song.name;$('#artist').textContent=song.artist;$('#player').src='https://open.spotify.com/embed/track/'+song.id+'?theme=0';$('#status').textContent='loading';try{const snapshot=await getDoc(doc(db,'lyrics',song.id));const text=snapshot.exists()&&typeof snapshot.data().text==='string'?snapshot.data().text:(cache[song.id]||'');$('#lyrics').value=text;cache[song.id]=text;localStorage.setItem('midnight-shelf-lyrics-v1',JSON.stringify(cache));$('#status').textContent=text?'cloud saved':'empty'}catch(error){$('#lyrics').value=cache[song.id]||'';$('#status').textContent='local only'}$('#panel').scrollIntoView({behavior:'smooth',block:'center'})}
+    function scene(text='',mood='auto'){return{text:String(text??''),mood:Object.hasOwn(moods,mood)?mood:'auto'}}
+    function normalizeScenes(items){return Array.isArray(items)?items.map(item=>scene(typeof item==='string'?item:item?.text,item?.mood)):[]}
+    function scenesFromText(text){return String(text||'').split(/\n+/).map(value=>value.trim()).filter(Boolean).map(value=>scene(value))}
+    function cleanScenes(items=draftScenes){return normalizeScenes(items).map(item=>scene(item.text.trim(),item.mood)).filter(item=>item.text)}
+    function textFromScenes(items=draftScenes){return cleanScenes(items).map(item=>item.text).join('\n')}
+    function cacheDraft(){if(!song)return;const clean=cleanScenes();sceneCache[song.id]=clean;textCache[song.id]=textFromScenes();localStorage.setItem('midnight-shelf-scenes-v2',JSON.stringify(sceneCache));localStorage.setItem('midnight-shelf-lyrics-v1',JSON.stringify(textCache))}
+    function syncBulkFromDraft(){$('#lyrics').value=draftScenes.map(item=>item.text).join('\n');bulkDirty=false;$('#bulk-state').textContent=draftScenes.length?'synced':'ready'}
+
+    function makeTool(icon,label,action,index,disabled=false){
+      const button=document.createElement('button');
+      button.type='button';button.className='scene-tool '+(action==='delete'?'delete':'');button.textContent=icon;button.title=label;button.setAttribute('aria-label',label);button.disabled=disabled;
+      button.addEventListener('click',()=>handleSceneTool(action,index));
+      return button;
+    }
+
+    function renderSceneList(){
+      const list=$('#scene-list'),editable=Boolean(user);
+      list.replaceChildren();
+      $('#editor').classList.toggle('readonly',!editable);
+      $('#lyrics').disabled=!editable;
+      $('#import-scenes').disabled=!editable;
+      $('#add-scene').disabled=!editable;
+      $('#scene-count').textContent=cleanScenes().length+' scene'+(cleanScenes().length===1?'':'s');
+
+      if(!draftScenes.length){
+        const empty=document.createElement('p');
+        empty.className='scene-empty';
+        empty.textContent=editable?'Tempel lirik lalu tekan “Split into scenes”, atau tambahkan scene baru.':'Belum ada scene untuk lagu ini.';
+        list.append(empty);
+        return;
+      }
+
+      draftScenes.forEach((item,index)=>{
+        const card=document.createElement('article');
+        card.className='scene-card';
+        const number=document.createElement('span');
+        number.className='scene-number';
+        number.textContent=String(index+1).padStart(2,'0');
+        const input=document.createElement('textarea');
+        input.className='scene-text';
+        input.value=item.text;
+        input.placeholder='Tulis scene';
+        input.disabled=!editable;
+        input.addEventListener('input',()=>{draftScenes[index].text=input.value;syncBulkFromDraft();cacheDraft();$('#status').textContent='unsaved changes';$('#scene-count').textContent=cleanScenes().length+' scene'+(cleanScenes().length===1?'':'s')});
+        const mode=document.createElement('label');
+        mode.className='scene-mode';
+        mode.textContent='MOOD';
+        const select=document.createElement('select');
+        select.disabled=!editable;
+        Object.entries(moods).forEach(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;option.selected=value===item.mood;select.append(option)});
+        select.addEventListener('change',()=>{draftScenes[index].mood=select.value;cacheDraft();$('#status').textContent='unsaved changes';renderSceneList()});
+        mode.append(select);
+        const tools=document.createElement('div');
+        tools.className='scene-tools';
+        tools.append(
+          makeTool('↑','Move scene up','up',index,!editable||index===0),
+          makeTool('↓','Move scene down','down',index,!editable||index===draftScenes.length-1),
+          makeTool('◉','Preview scene','preview',index,false),
+          makeTool('×','Delete scene','delete',index,!editable)
+        );
+        card.append(number,input,mode,tools);
+        list.append(card);
+      });
+    }
+
+    function handleSceneTool(action,index){
+      if(action==='preview'){const one=cleanScenes([draftScenes[index]]);return one.length?openCinema(one):toast('Isi scene dulu')}
+      if(!user)return;
+      if(action==='up'&&index>0){[draftScenes[index-1],draftScenes[index]]=[draftScenes[index],draftScenes[index-1]]}
+      if(action==='down'&&index<draftScenes.length-1){[draftScenes[index+1],draftScenes[index]]=[draftScenes[index],draftScenes[index+1]]}
+      if(action==='delete'){draftScenes.splice(index,1);toast('Scene dihapus')}
+      syncBulkFromDraft();cacheDraft();$('#status').textContent='unsaved changes';renderSceneList();
+    }
+
+    function importBulk(showMessage=true){
+      draftScenes=scenesFromText($('#lyrics').value);
+      bulkDirty=false;
+      syncBulkFromDraft();
+      cacheDraft();
+      $('#status').textContent=draftScenes.length?'unsaved changes':'empty';
+      renderSceneList();
+      if(showMessage)toast(draftScenes.length+' scene siap diatur');
+    }
+
+    function editorScenes(){
+      if(bulkDirty)importBulk(false);
+      return cleanScenes();
+    }
+
+    function updateAccess(){
+      $('#auth').textContent=user?'SIGN OUT':'ADMIN SIGN IN';
+      renderSceneList();
+      if(song&&!user)$('#status').textContent='read only';
+    }
+
+    async function choose(card){
+      song=card.dataset;
+      $('#panel').classList.add('open');
+      $('#world').textContent=card.querySelector('.tag').textContent;
+      $('#title').textContent=song.name;
+      $('#artist').textContent=song.artist;
+      $('#player').src='https://open.spotify.com/embed/track/'+song.id+'?theme=0';
+      $('#status').textContent='loading';
+      try{
+        const snapshot=await getDoc(doc(db,'lyrics',song.id));
+        const saved=snapshot.exists()?snapshot.data():{};
+        const cloudScenes=normalizeScenes(saved.scenes);
+        const localScenes=normalizeScenes(sceneCache[song.id]);
+        const text=typeof saved.text==='string'?saved.text:(textCache[song.id]||'');
+        draftScenes=cloudScenes.length?cloudScenes:(localScenes.length?localScenes:scenesFromText(text));
+        syncBulkFromDraft();
+        cacheDraft();
+        $('#status').textContent=draftScenes.length?'cloud saved':'empty';
+      }catch(error){
+        const localScenes=normalizeScenes(sceneCache[song.id]);
+        draftScenes=localScenes.length?localScenes:scenesFromText(textCache[song.id]||'');
+        syncBulkFromDraft();
+        $('#status').textContent='local only';
+      }
+      renderSceneList();
+      $('#panel').scrollIntoView({behavior:'smooth',block:'center'});
+    }
+
     function reactionFor(text){const words=text?text.split(/\s+/).length:0;if(text.includes('!'))return['⚡','hot'];if(/\.{3,}/.test(text))return['···','pause'];if(words>0&&words<=4)return['✦','short'];return['✹','']}
-    function renderRansom(text){const line=$('#line');line.style.animation='none';line.className='line ransom-words';line.replaceChildren();const pieces=(text||'Tambahkan teks di editor untuk memulai.').split(/\s+/);pieces.forEach((piece,index)=>{const word=document.createElement('span');const base=(pos+1)*37+(index+1)*11;word.className='word';word.textContent=piece;word.style.setProperty('--x',((seed(base)*2-1)*36).toFixed(1)+'vw');word.style.setProperty('--y',((seed(base+4)*2-1)*24).toFixed(1)+'vh');word.style.setProperty('--turn',((seed(base+8)*2-1)*28).toFixed(1)+'deg');word.style.setProperty('--skew',((seed(base+12)*2-1)*12).toFixed(1)+'deg');word.style.setProperty('--delay',(index*.042+seed(base+15)*.09).toFixed(2)+'s');line.append(word,document.createTextNode(' '))})}
-    function render(){const text=lines[pos]||'',line=$('#line'),reaction=$('#reaction'),result=reactionFor(text);if(song.theme==='ransom'){renderRansom(text)}else{line.className='line';line.textContent=text||'Tambahkan teks di editor untuk memulai.';if(song.theme==='angels')line.classList.add('angels-line');line.style.animation='none';void line.offsetWidth;line.style.animation=song.theme==='angels'?'angelLine .95s cubic-bezier(.16,.82,.22,1) both':'angelLine .68s cubic-bezier(.16,.82,.22,1) both'}reaction.textContent=result[0];reaction.className='reaction '+result[1];void reaction.offsetWidth;reaction.classList.add('show')}
+    function renderRansom(current){
+      const line=$('#line'),text=current.text||'Tambahkan teks di editor untuk memulai.',mood=current.mood||'auto';
+      line.style.animation='none';line.className='line ransom-words mood-'+mood;line.replaceChildren();
+      text.split(/\s+/).forEach((piece,index)=>{
+        const word=document.createElement('span'),base=(pos+1)*37+(index+1)*11;
+        word.className='word mood-'+mood;word.textContent=piece;
+        word.style.setProperty('--x',((seed(base)*2-1)*36).toFixed(1)+'vw');
+        word.style.setProperty('--y',((seed(base+4)*2-1)*24).toFixed(1)+'vh');
+        word.style.setProperty('--turn',((seed(base+8)*2-1)*28).toFixed(1)+'deg');
+        word.style.setProperty('--skew',((seed(base+12)*2-1)*12).toFixed(1)+'deg');
+        word.style.setProperty('--delay',(index*.042+seed(base+15)*.09).toFixed(2)+'s');
+        line.append(word,document.createTextNode(' '));
+      });
+    }
+
+    function animationFor(mood){
+      if(mood==='impact')return'impactIn .57s cubic-bezier(.15,.9,.2,1) both';
+      if(mood==='glitch')return'glitchIn .64s cubic-bezier(.2,.8,.2,1) both';
+      if(mood==='pause')return'pauseIn 1s cubic-bezier(.2,.8,.2,1) both';
+      return song.theme==='angels'||mood==='soft'?'angelLine .95s cubic-bezier(.16,.82,.22,1) both':'angelLine .68s cubic-bezier(.16,.82,.22,1) both';
+    }
+
+    function render(){
+      const current=playbackScenes[pos]||scene('Tambahkan teks di editor untuk memulai.');
+      const text=current.text||'';
+      const mood=Object.hasOwn(moods,current.mood)?current.mood:'auto';
+      const line=$('#line'),reaction=$('#reaction'),result=reactionFor(text);
+      if(song.theme==='ransom'&&mood!=='soft'){renderRansom(scene(text,mood))}
+      else{
+        line.className='line mood-'+mood;
+        if(song.theme==='angels')line.classList.add('angels-line');
+        line.textContent=text||'Tambahkan teks di editor untuk memulai.';
+        line.style.animation='none';
+        void line.offsetWidth;
+        line.style.animation=animationFor(mood);
+      }
+      reaction.textContent=result[0];
+      reaction.className='reaction '+result[1];
+      void reaction.offsetWidth;
+      reaction.classList.add('show');
+      $('#scene-progress').textContent=playbackScenes.length?(String(pos+1).padStart(2,'0')+' / '+String(playbackScenes.length).padStart(2,'0')+' · '+moods[mood]):'';
+    }
+
+    function openCinema(scenes){
+      if(!song)return toast('Pilih lagu dulu');
+      playbackScenes=cleanScenes(scenes);
+      if(!playbackScenes.length)return toast('Tambahkan minimal satu scene');
+      pos=0;
+      $('#cinema').className='cinema open '+song.theme;
+      $('#meta').textContent=song.name+' · '+song.artist;
+      render();
+    }
+
     document.querySelectorAll('.card').forEach(card=>card.addEventListener('click',()=>choose(card)));
-    onAuthStateChanged(auth,account=>{user=account;$('#auth').textContent=account?'SIGN OUT':'ADMIN SIGN IN'});
+    $('#lyrics').addEventListener('input',()=>{bulkDirty=true;$('#bulk-state').textContent='ready to split';$('#status').textContent='unsaved changes'});
+    $('#import-scenes').addEventListener('click',()=>importBulk(true));
+    $('#add-scene').addEventListener('click',()=>{if(!user)return;draftScenes.push(scene());syncBulkFromDraft();cacheDraft();$('#status').textContent='unsaved changes';renderSceneList()});
+    onAuthStateChanged(auth,account=>{user=account;updateAccess()});
     $('#auth').addEventListener('click',async()=>{try{if(auth.currentUser)await signOut(auth);else await signInWithPopup(auth,provider)}catch(error){toast(error.code==='auth/unauthorized-domain'?'Tambahkan domain Vercel ke Firebase':'Login gagal')}});
-    $('#save').addEventListener('click',async()=>{if(!song)return toast('Pilih lagu dulu');if(!user)return $('#auth').click();const text=$('#lyrics').value.trim();try{await setDoc(doc(db,'lyrics',song.id),{text,updatedAt:serverTimestamp()},{merge:true});cache[song.id]=text;localStorage.setItem('midnight-shelf-lyrics-v1',JSON.stringify(cache));$('#status').textContent='cloud saved';toast('Lirik tersimpan')}catch(error){toast('Akun ini tidak punya izin simpan')}});
-    $('#open').addEventListener('click',()=>{if(!song)return toast('Pilih lagu dulu');lines=$('#lyrics').value.split(/\n+/).map(value=>value.trim()).filter(Boolean);pos=0;$('#cinema').className='cinema open '+song.theme;$('#meta').textContent=song.name+' · '+song.artist;render()});
-    function nextLine(direction){if(!lines.length)return;pos=(pos+direction+lines.length)%lines.length;render()}
-    $('#close').addEventListener('click',()=>$('#cinema').className='cinema');$('#cinema').addEventListener('click',event=>{if(event.target.closest('#close'))return;nextLine(1)});document.addEventListener('keydown',event=>{if(!$('#cinema').classList.contains('open'))return;if(event.key==='Escape')$('#cinema').className='cinema';if(event.key==='ArrowRight'||event.key===' '){event.preventDefault();nextLine(1)}if(event.key==='ArrowLeft'){event.preventDefault();nextLine(-1)}});createDust();
+    $('#save').addEventListener('click',async()=>{
+      if(!song)return toast('Pilih lagu dulu');
+      if(!user)return $('#auth').click();
+      const scenes=editorScenes(),text=textFromScenes(scenes);
+      try{
+        await setDoc(doc(db,'lyrics',song.id),{text,scenes,updatedAt:serverTimestamp()},{merge:true});
+        draftScenes=scenes;syncBulkFromDraft();cacheDraft();$('#status').textContent='cloud saved';renderSceneList();toast('Scene tersimpan ke cloud');
+      }catch(error){toast('Akun ini tidak punya izin simpan')}
+    });
+    $('#open').addEventListener('click',()=>openCinema(editorScenes()));
+    function nextLine(direction){if(!playbackScenes.length)return;pos=(pos+direction+playbackScenes.length)%playbackScenes.length;render()}
+    $('#close').addEventListener('click',()=>$('#cinema').className='cinema');
+    $('#cinema').addEventListener('click',event=>{if(event.target.closest('#close'))return;nextLine(1)});
+    document.addEventListener('keydown',event=>{if(!$('#cinema').classList.contains('open'))return;if(event.key==='Escape')$('#cinema').className='cinema';if(event.key==='ArrowRight'||event.key===' '){event.preventDefault();nextLine(1)}if(event.key==='ArrowLeft'){event.preventDefault();nextLine(-1)}});
+    createDust();
   </script>
 </body>
 </html>
