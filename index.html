@@ -650,7 +650,7 @@
     .line-color-list { display: grid; gap: 7px; }
     .line-color-row {
       display: grid;
-      grid-template-columns: 28px minmax(0,1fr) 42px 30px;
+      grid-template-columns: 28px minmax(0,1fr) 42px 30px 50px;
       align-items: center;
       gap: 8px;
       min-width: 0;
@@ -701,6 +701,79 @@
     }
     .line-color-reset:hover { color: #fff; border-color: var(--accent); }
     .line-color-reset:disabled, .line-color-input:disabled { opacity: .38; cursor: not-allowed; }
+    .word-color-open {
+      height: 28px;
+      padding: 0 7px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      color: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.035);
+      font-size: .52rem;
+      font-weight: 850;
+      letter-spacing: .06em;
+    }
+    .word-color-open.has-highlights { color: #fff; border-color: var(--accent); box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 28%, transparent); }
+    .word-color-open:disabled { opacity: .38; cursor: not-allowed; }
+    .word-highlight { font: inherit; letter-spacing: inherit; }
+    .word-color-modal {
+      position: fixed;
+      z-index: 90;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(4,2,10,.82);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: .22s ease;
+    }
+    .word-color-modal.open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .word-color-card {
+      width: min(620px, 100%);
+      max-height: min(720px, 90svh);
+      overflow: auto;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(22,14,36,.98), rgba(8,5,16,.99));
+      box-shadow: 0 30px 100px rgba(0,0,0,.58), 0 0 42px color-mix(in srgb,var(--accent) 12%,transparent);
+    }
+    .word-color-top { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+    .word-color-top small { display:block; margin-bottom:4px; color:var(--accent); font-size:.56rem; font-weight:850; letter-spacing:.13em; text-transform:uppercase; }
+    .word-color-top strong { display:block; color:#fff; font-size:1rem; }
+    .word-color-close { width:36px; height:36px; padding:0; border:1px solid var(--line); border-radius:50%; color:#fff; background:rgba(255,255,255,.04); }
+    .word-color-help { margin:13px 0 9px; color:var(--muted); font-size:.72rem; line-height:1.55; }
+    .word-color-preview {
+      min-height: 92px;
+      padding: 17px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 15px;
+      outline: none;
+      color: #fff;
+      background: rgba(255,255,255,.035);
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      font-weight: 780;
+      line-height: 1.6;
+      user-select: text;
+      cursor: text;
+    }
+    .word-color-preview::selection, .word-color-preview *::selection { color:#130d1d; background:#fff; }
+    .word-selection-bar { display:grid; grid-template-columns:minmax(0,1fr) 48px auto; gap:8px; align-items:center; margin-top:10px; }
+    .word-selection-label { min-width:0; padding:10px 11px; border:1px solid rgba(255,255,255,.08); border-radius:11px; color:var(--muted); background:rgba(255,255,255,.025); font-size:.68rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .word-selection-label.ready { color:#fff; }
+    .word-color-picker { width:48px; height:38px; padding:2px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.04); }
+    .word-apply { height:38px; padding:0 14px; border:0; border-radius:10px; color:#160d20; background:linear-gradient(110deg,var(--accent),var(--accent-2)); font-size:.62rem; font-weight:900; letter-spacing:.06em; }
+    .word-color-list { display:flex; flex-wrap:wrap; gap:7px; margin-top:13px; }
+    .word-color-chip { display:inline-flex; align-items:center; gap:7px; max-width:100%; padding:7px 9px; border:1px solid rgba(255,255,255,.1); border-radius:999px; color:#fff; background:rgba(255,255,255,.04); font-size:.62rem; }
+    .word-color-chip i { width:9px; height:9px; flex:0 0 auto; border-radius:50%; background:var(--chip); box-shadow:0 0 10px var(--chip); }
+    .word-color-chip span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .word-color-chip button { padding:0; border:0; color:var(--muted); background:transparent; }
+    .word-color-actions { display:flex; justify-content:space-between; gap:8px; margin-top:15px; }
+    .word-color-actions button { padding:9px 12px; border:1px solid var(--line); border-radius:999px; color:#fff; background:rgba(255,255,255,.04); font-size:.6rem; font-weight:800; }
+    .word-color-actions button:disabled { opacity:.35; }
     .line-color-empty { margin: 3px 0; color: var(--muted); font-size: .68rem; line-height: 1.5; }
 
     #lyrics-input {
@@ -940,7 +1013,7 @@
       .shell { width: min(100% - 24px, 1320px); padding-top: 22px; }
       .top-note { display: none; }
       .sync-state { display: none; }
-      .line-color-row { grid-template-columns: 25px minmax(0,1fr) 38px 30px; gap: 6px; }
+      .line-color-row { grid-template-columns: 25px minmax(0,1fr) 38px 30px 46px; gap: 6px; }
       .line-color-panel { max-height: 260px; }
       .song-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .song-card { min-height: 109px; }
@@ -1142,6 +1215,17 @@
     </div>
   </section>
 
+
+  <section class="word-color-modal" id="word-color-modal" aria-hidden="true" aria-label="Word color editor">
+    <div class="word-color-card">
+      <div class="word-color-top"><div><small>WORD COLOR</small><strong id="word-color-title">Scene</strong></div><button class="word-color-close" id="word-color-close" type="button">×</button></div>
+      <p class="word-color-help">Blok kata atau potongan teks di bawah, pilih warna, lalu tekan APPLY. Timestamp dan scene tetap satu.</p>
+      <div class="word-color-preview" id="word-color-preview" tabindex="0"></div>
+      <div class="word-selection-bar"><span class="word-selection-label" id="word-selection-label">Belum ada teks yang dipilih</span><input class="word-color-picker" id="word-color-picker" type="color" value="#FF77B7"><button class="word-apply" id="word-color-apply" type="button">APPLY</button></div>
+      <div class="word-color-list" id="word-color-list"></div>
+      <div class="word-color-actions"><button id="word-color-clear" type="button">CLEAR WORD COLORS</button><button id="word-color-done" type="button">DONE</button></div>
+    </div>
+  </section>
   <div class="toast" id="toast" role="status"></div>
 
   <script>
@@ -1191,6 +1275,7 @@
 
     const lyricKey = "midnight-shelf-lyrics-v1";
     const lineColorKey = "midnight-shelf-line-colors-v1";
+    const wordHighlightKey = "midnight-shelf-word-highlights-v1";
     const customSongKey = "midnight-shelf-custom-songs-v1";
     const grid = document.getElementById("song-grid");
     const search = document.getElementById("search");
@@ -1232,6 +1317,16 @@
     const toggleLineColorsBtn = document.getElementById("toggle-line-colors");
     const lineColorPanel = document.getElementById("line-color-panel");
     const lineColorList = document.getElementById("line-color-list");
+    const wordColorModal = document.getElementById("word-color-modal");
+    const wordColorTitle = document.getElementById("word-color-title");
+    const wordColorPreview = document.getElementById("word-color-preview");
+    const wordSelectionLabel = document.getElementById("word-selection-label");
+    const wordColorPicker = document.getElementById("word-color-picker");
+    const wordColorApply = document.getElementById("word-color-apply");
+    const wordColorList = document.getElementById("word-color-list");
+    const wordColorClear = document.getElementById("word-color-clear");
+    const wordColorDone = document.getElementById("word-color-done");
+    const wordColorClose = document.getElementById("word-color-close");
     const tapStage = document.getElementById("tap-stage");
     const tapClose = document.getElementById("tap-close");
     const tapTrackName = document.getElementById("tap-track-name");
@@ -1246,12 +1341,17 @@
     const tapApplyBtn = document.getElementById("tap-apply");
     const savedLyrics = JSON.parse(localStorage.getItem(lyricKey) || "{}");
     const savedLineColors = JSON.parse(localStorage.getItem(lineColorKey) || "{}");
+    const savedWordHighlights = JSON.parse(localStorage.getItem(wordHighlightKey) || "{}");
     const savedCustomSongs = JSON.parse(localStorage.getItem(customSongKey) || "{}");
     let selectedIndex = 0;
     let toastTimer = null;
     let cinematicLines = [];
     let cinematicColors = [];
+    let cinematicWordHighlights = [];
     let activeLineColors = [];
+    let activeWordHighlights = [];
+    let wordEditorLineIndex = -1;
+    let wordEditorSelection = null;
     let cinematicIndex = 0;
     let activeUser = null;
     let lyricRequest = 0;
@@ -1276,6 +1376,154 @@
     function normalizeColor(value) {
       const color = String(value || "").trim();
       return /^#[0-9a-f]{6}$/i.test(color) ? color.toUpperCase() : "";
+    }
+
+    function normalizeHighlights(items, text = "") {
+      const length = String(text || "").length;
+      if (!Array.isArray(items)) return [];
+      return items.map(item => ({
+        start: Math.max(0, Math.trunc(Number(item?.start))),
+        end: Math.max(0, Math.trunc(Number(item?.end))),
+        color: normalizeColor(item?.color)
+      })).filter(item => item.color && item.end > item.start && item.start < length)
+        .map(item => ({ ...item, end: Math.min(item.end, length) }))
+        .sort((a, b) => a.start - b.start || a.end - b.end);
+    }
+
+    function ensureWordHighlights() {
+      const lines = getLines(lyricsInput.value).map(stripTimeTags);
+      activeWordHighlights = Array.from({ length: lines.length }, (_, index) => normalizeHighlights(activeWordHighlights[index], lines[index] || ""));
+      return activeWordHighlights;
+    }
+
+    function persistWordHighlightsLocal() {
+      const song = songs[selectedIndex];
+      if (!song) return;
+      const highlights = ensureWordHighlights().map(items => items.map(item => ({ ...item })));
+      if (highlights.some(items => items.length)) savedWordHighlights[song.trackId] = highlights;
+      else delete savedWordHighlights[song.trackId];
+      localStorage.setItem(wordHighlightKey, JSON.stringify(savedWordHighlights));
+    }
+
+    function appendHighlightedSegments(parent, text, highlights, offset = 0, cinematic = false) {
+      const endOffset = offset + text.length;
+      const ranges = (Array.isArray(highlights) ? highlights : []).filter(item => item.end > offset && item.start < endOffset);
+      let cursor = offset;
+      ranges.forEach(item => {
+        const start = Math.max(item.start, offset);
+        const end = Math.min(item.end, endOffset);
+        if (start > cursor) parent.appendChild(document.createTextNode(text.slice(cursor - offset, start - offset)));
+        const span = document.createElement("span");
+        span.className = "word-highlight";
+        span.textContent = text.slice(start - offset, end - offset);
+        span.style.color = item.color;
+        span.style.textShadow = cinematic
+          ? `0 0 8px rgba(255,255,255,.48), 0 0 22px ${item.color}, 0 0 58px ${item.color}`
+          : `0 0 6px rgba(255,255,255,.3), 0 0 16px ${item.color}, 0 0 34px ${item.color}`;
+        parent.appendChild(span);
+        cursor = Math.max(cursor, end);
+      });
+      if (cursor < endOffset) parent.appendChild(document.createTextNode(text.slice(cursor - offset)));
+    }
+
+    function renderRichLyric(element, text, highlights = [], { cinematic = false, animateWords = false, baseColor = "" } = {}) {
+      if (!element) return;
+      element.replaceChildren();
+      applyCustomTextColor(element, baseColor, cinematic);
+      const cleanText = String(text || "");
+      const ranges = normalizeHighlights(highlights, cleanText);
+      if (!animateWords) {
+        appendHighlightedSegments(element, cleanText, ranges, 0, cinematic);
+        return;
+      }
+      const tokens = cleanText.match(/\S+|\s+/g) || [];
+      let offset = 0;
+      let wordIndex = 0;
+      tokens.forEach(token => {
+        if (/^\s+$/.test(token)) {
+          element.appendChild(document.createTextNode(token));
+        } else {
+          const word = document.createElement("span");
+          word.className = "cinematic-word";
+          word.style.setProperty("--word-index", wordIndex++);
+          appendHighlightedSegments(word, token, ranges, offset, cinematic);
+          element.appendChild(word);
+        }
+        offset += token.length;
+      });
+    }
+
+    function selectionOffsetsWithin(element) {
+      const selection = window.getSelection();
+      if (!selection || !selection.rangeCount || selection.isCollapsed) return null;
+      const range = selection.getRangeAt(0);
+      if (!element.contains(range.commonAncestorContainer)) return null;
+      const before = range.cloneRange();
+      before.selectNodeContents(element);
+      before.setEnd(range.startContainer, range.startOffset);
+      const start = before.toString().length;
+      const end = start + range.toString().length;
+      return end > start ? { start, end } : null;
+    }
+
+    function closeWordColorEditor() {
+      wordColorModal.classList.remove("open");
+      wordColorModal.setAttribute("aria-hidden", "true");
+      wordEditorLineIndex = -1;
+      wordEditorSelection = null;
+      window.getSelection()?.removeAllRanges();
+    }
+
+    function renderWordColorEditor() {
+      if (wordEditorLineIndex < 0) return;
+      const lines = getLines(lyricsInput.value).map(stripTimeTags);
+      const text = lines[wordEditorLineIndex] || "";
+      ensureWordHighlights();
+      const highlights = activeWordHighlights[wordEditorLineIndex] || [];
+      wordColorTitle.textContent = `Scene ${String(wordEditorLineIndex + 1).padStart(2, "0")}`;
+      renderRichLyric(wordColorPreview, text, highlights, { baseColor: activeLineColors[wordEditorLineIndex] });
+      wordSelectionLabel.textContent = wordEditorSelection
+        ? `dipilih: “${text.slice(wordEditorSelection.start, wordEditorSelection.end)}”`
+        : "Blok kata atau potongan teks di atas";
+      wordSelectionLabel.classList.toggle("ready", Boolean(wordEditorSelection));
+      wordColorApply.disabled = !activeUser || !wordEditorSelection;
+      wordColorClear.disabled = !activeUser || !highlights.length;
+      wordColorList.replaceChildren();
+      highlights.forEach((item, highlightIndex) => {
+        const chip = document.createElement("span");
+        chip.className = "word-color-chip";
+        chip.style.setProperty("--chip", item.color);
+        const dot = document.createElement("i");
+        const label = document.createElement("span");
+        label.textContent = text.slice(item.start, item.end);
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "×";
+        remove.title = "Hapus warna kata ini";
+        remove.disabled = !activeUser;
+        remove.addEventListener("click", () => {
+          activeWordHighlights[wordEditorLineIndex].splice(highlightIndex, 1);
+          persistWordHighlightsLocal();
+          wordEditorSelection = null;
+          renderWordColorEditor();
+          renderLineColorEditor();
+          refreshCinematicColorState();
+          lyricStatus.textContent = "unsaved word color";
+        });
+        chip.append(dot, label, remove);
+        wordColorList.appendChild(chip);
+      });
+    }
+
+    function openWordColorEditor(index) {
+      if (!activeUser) return;
+      wordEditorLineIndex = index;
+      wordEditorSelection = null;
+      wordColorPicker.value = songs[selectedIndex]?.accent2 || songs[selectedIndex]?.accent || "#FF77B7";
+      renderWordColorEditor();
+      wordColorModal.classList.add("open");
+      wordColorModal.setAttribute("aria-hidden", "false");
+      setTimeout(() => wordColorPreview.focus(), 0);
     }
 
     function ensureLineColors() {
@@ -1313,11 +1561,17 @@
 
     function refreshCinematicColorState() {
       ensureLineColors();
+      ensureWordHighlights();
       if (isSynced) {
-        syncedLines.forEach(item => { item.color = normalizeColor(activeLineColors[item.sourceIndex]); });
+        syncedLines.forEach(item => {
+          item.color = normalizeColor(activeLineColors[item.sourceIndex]);
+          item.highlights = normalizeHighlights(activeWordHighlights[item.sourceIndex], item.text);
+        });
         cinematicColors = syncedLines.map(item => item.color || "");
+        cinematicWordHighlights = syncedLines.map(item => item.highlights || []);
       } else {
         cinematicColors = cinematicLines.map((_, index) => normalizeColor(activeLineColors[index]));
+        cinematicWordHighlights = cinematicLines.map((line, index) => normalizeHighlights(activeWordHighlights[index], line));
       }
       const liveIndex = findSyncedIndex(livePositionSeconds);
       if (isSynced && liveIndex >= 0) updateLiveLyricLine(liveIndex);
@@ -1328,6 +1582,7 @@
       if (!lineColorList) return;
       const lines = getLines(lyricsInput.value);
       ensureLineColors();
+      ensureWordHighlights();
       lineColorList.replaceChildren();
       if (!lines.length) {
         const empty = document.createElement("p");
@@ -1344,7 +1599,7 @@
         number.textContent = String(index + 1).padStart(2, "0");
         const preview = document.createElement("span");
         preview.className = "line-color-text";
-        preview.textContent = stripTimeTags(rawLine) || rawLine;
+        const cleanPreviewText = stripTimeTags(rawLine) || rawLine;
         const picker = document.createElement("input");
         picker.type = "color";
         picker.className = "line-color-input";
@@ -1355,6 +1610,13 @@
         reset.className = "line-color-reset";
         reset.textContent = "↺";
         reset.title = "Kembali ke warna theme";
+        const wordButton = document.createElement("button");
+        wordButton.type = "button";
+        wordButton.className = "word-color-open";
+        wordButton.textContent = "WORD";
+        wordButton.title = "Warnai kata tertentu tanpa memecah scene";
+        wordButton.disabled = !activeUser;
+        wordButton.addEventListener("click", () => openWordColorEditor(index));
         const paintRow = () => {
           const custom = normalizeColor(activeLineColors[index]);
           picker.value = custom || songs[selectedIndex]?.accent || "#FFFFFF";
@@ -1362,6 +1624,9 @@
           if (custom) row.style.setProperty("--line-color", custom);
           else row.style.removeProperty("--line-color");
           reset.disabled = !activeUser || !custom;
+          wordButton.disabled = !activeUser;
+          wordButton.classList.toggle("has-highlights", Boolean(activeWordHighlights[index]?.length));
+          renderRichLyric(preview, cleanPreviewText, activeWordHighlights[index], { baseColor: custom });
         };
         picker.addEventListener("input", () => {
           activeLineColors[index] = normalizeColor(picker.value);
@@ -1378,7 +1643,7 @@
           lyricStatus.textContent = "unsaved color";
         });
         paintRow();
-        row.append(number, preview, picker, reset);
+        row.append(number, preview, picker, reset, wordButton);
         lineColorList.appendChild(row);
       });
     }
@@ -1404,7 +1669,8 @@
           time,
           text: cleanText,
           sourceIndex,
-          color: normalizeColor(activeLineColors[sourceIndex])
+          color: normalizeColor(activeLineColors[sourceIndex]),
+          highlights: normalizeHighlights(activeWordHighlights[sourceIndex], cleanText)
         }));
       });
       parsed.sort((a, b) => a.time - b.time);
@@ -1423,8 +1689,7 @@
         applyCustomTextColor(liveLyric, "");
         return;
       }
-      liveLyric.textContent = syncedLines[index].text;
-      applyCustomTextColor(liveLyric, syncedLines[index].color);
+      renderRichLyric(liveLyric, syncedLines[index].text, syncedLines[index].highlights, { baseColor: syncedLines[index].color });
       liveLyric.classList.add("show");
     }
 
@@ -1471,12 +1736,16 @@
 
     function refreshCinematicLines() {
       ensureLineColors();
+      ensureWordHighlights();
       syncedLines = parseSyncedLyrics(lyricsInput.value);
       isSynced = syncedLines.length > 0;
       cinematicLines = isSynced ? syncedLines.map(item => item.text) : getLines(lyricsInput.value);
       cinematicColors = isSynced
         ? syncedLines.map(item => normalizeColor(item.color))
         : cinematicLines.map((_, index) => normalizeColor(activeLineColors[index]));
+      cinematicWordHighlights = isSynced
+        ? syncedLines.map(item => normalizeHighlights(item.highlights, item.text))
+        : cinematicLines.map((line, index) => normalizeHighlights(activeWordHighlights[index], line));
       cinematicIndex = Math.min(cinematicIndex, Math.max(cinematicLines.length - 1, 0));
       lastSyncedIndex = -1;
       updateSyncBadge();
@@ -1567,9 +1836,12 @@
     function applyTapResults() {
       if (!tapResults.length) return;
       const previousColors = activeLineColors.slice();
+      const previousHighlights = activeWordHighlights.map(items => items.map(item => ({ ...item })));
       lyricsInput.value = tapResults.map(item => `${formatTapTag(item.time)} ${item.text}`).join("\n");
       activeLineColors = tapResults.map(item => normalizeColor(previousColors[item.sourceIndex]));
+      activeWordHighlights = tapResults.map(item => normalizeHighlights(previousHighlights[item.sourceIndex], item.text));
       persistLineColorsLocal();
+      persistWordHighlightsLocal();
       refreshCinematicLines();
       lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
       showToast(`${tapResults.length} baris berhasil di-sync — jangan lupa Save text`);
@@ -1588,6 +1860,57 @@
       toggleLineColorsBtn.classList.toggle("active", lineColorPanel.classList.contains("open"));
       if (lineColorPanel.classList.contains("open")) renderLineColorEditor();
     });
+    wordColorPreview.addEventListener("mouseup", () => {
+      const offsets = selectionOffsetsWithin(wordColorPreview);
+      if (!offsets) return;
+      wordEditorSelection = offsets;
+      const lines = getLines(lyricsInput.value).map(stripTimeTags);
+      const text = lines[wordEditorLineIndex] || "";
+      wordSelectionLabel.textContent = `dipilih: “${text.slice(offsets.start, offsets.end)}”`;
+      wordSelectionLabel.classList.add("ready");
+      wordColorApply.disabled = !activeUser;
+    });
+    wordColorPreview.addEventListener("keyup", () => {
+      const offsets = selectionOffsetsWithin(wordColorPreview);
+      if (offsets) {
+        wordEditorSelection = offsets;
+        const lines = getLines(lyricsInput.value).map(stripTimeTags);
+        const text = lines[wordEditorLineIndex] || "";
+        wordSelectionLabel.textContent = `dipilih: “${text.slice(offsets.start, offsets.end)}”`;
+        wordSelectionLabel.classList.add("ready");
+        wordColorApply.disabled = !activeUser;
+      }
+    });
+    wordColorApply.addEventListener("click", () => {
+      if (!activeUser || wordEditorLineIndex < 0 || !wordEditorSelection) return;
+      const lines = getLines(lyricsInput.value).map(stripTimeTags);
+      const text = lines[wordEditorLineIndex] || "";
+      const color = normalizeColor(wordColorPicker.value);
+      const { start, end } = wordEditorSelection;
+      let ranges = normalizeHighlights(activeWordHighlights[wordEditorLineIndex], text)
+        .filter(item => item.end <= start || item.start >= end);
+      ranges.push({ start, end, color });
+      activeWordHighlights[wordEditorLineIndex] = normalizeHighlights(ranges, text);
+      persistWordHighlightsLocal();
+      wordEditorSelection = null;
+      renderWordColorEditor();
+      renderLineColorEditor();
+      refreshCinematicColorState();
+      lyricStatus.textContent = "unsaved word color";
+    });
+    wordColorClear.addEventListener("click", () => {
+      if (!activeUser || wordEditorLineIndex < 0) return;
+      activeWordHighlights[wordEditorLineIndex] = [];
+      persistWordHighlightsLocal();
+      wordEditorSelection = null;
+      renderWordColorEditor();
+      renderLineColorEditor();
+      refreshCinematicColorState();
+      lyricStatus.textContent = "unsaved word color";
+    });
+    wordColorClose.addEventListener("click", closeWordColorEditor);
+    wordColorDone.addEventListener("click", closeWordColorEditor);
+    wordColorModal.addEventListener("click", event => { if (event.target === wordColorModal) closeWordColorEditor(); });
     document.addEventListener("keydown", event => {
       if (!tapStage || !tapStage.classList.contains("open")) return;
       if (event.key === "Escape") { event.preventDefault(); closeTapSync(); }
@@ -1659,6 +1982,7 @@
         ? `Signed in as ${user.email || "admin"}. Save akan tersinkron ke semua perangkat.`
         : "Login dengan akun admin untuk mengubah lirik. Pengunjung tetap bisa membaca.";
       if (lineColorPanel && lineColorPanel.classList.contains("open")) renderLineColorEditor();
+      if (!signedIn && wordColorModal.classList.contains("open")) closeWordColorEditor();
     }
 
     async function loadLyricsForSong(song) {
@@ -1670,9 +1994,11 @@
         const data = snapshot.exists() ? snapshot.data() : {};
         const cloudText = typeof data.text === "string" ? data.text : "";
         const cloudColors = Array.isArray(data.colors) ? data.colors.map(normalizeColor) : null;
+        const cloudHighlights = Array.isArray(data.highlights) ? data.highlights : null;
         const text = cloudText || savedLyrics[song.trackId] || "";
         lyricsInput.value = text;
         activeLineColors = cloudColors || (Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : []);
+        activeWordHighlights = cloudHighlights || (Array.isArray(savedWordHighlights[song.trackId]) ? savedWordHighlights[song.trackId] : []);
         if (text) {
           savedLyrics[song.trackId] = text;
           localStorage.setItem(lyricKey, JSON.stringify(savedLyrics));
@@ -1682,6 +2008,11 @@
           else delete savedLineColors[song.trackId];
           localStorage.setItem(lineColorKey, JSON.stringify(savedLineColors));
         }
+        if (cloudHighlights) {
+          if (cloudHighlights.some(items => Array.isArray(items) && items.length)) savedWordHighlights[song.trackId] = cloudHighlights;
+          else delete savedWordHighlights[song.trackId];
+          localStorage.setItem(wordHighlightKey, JSON.stringify(savedWordHighlights));
+        }
         refreshCinematicLines();
         lyricStatus.textContent = cloudText ? "cloud saved" : "not available";
         syncState.classList.remove("error");
@@ -1689,6 +2020,7 @@
         if (requestId !== lyricRequest) return;
         lyricsInput.value = savedLyrics[song.trackId] || "";
         activeLineColors = Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : [];
+        activeWordHighlights = Array.isArray(savedWordHighlights[song.trackId]) ? savedWordHighlights[song.trackId] : [];
         refreshCinematicLines();
         lyricStatus.textContent = lyricsInput.value.trim() ? "local fallback" : "cloud unavailable";
         syncState.classList.add("error");
@@ -1802,6 +2134,7 @@
       coverLetter.textContent = song.title.charAt(0);
       lyricsInput.value = savedLyrics[song.trackId] || "";
       activeLineColors = Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : [];
+      activeWordHighlights = Array.isArray(savedWordHighlights[song.trackId]) ? savedWordHighlights[song.trackId] : [];
       lyricStatus.textContent = lyricsInput.value.trim() ? "local cache" : "loading cloud";
       refreshCinematicLines();
       cinemaTrackName.textContent = `${song.title} · ${song.artist}`;
@@ -1819,22 +2152,27 @@
       const song = songs[selectedIndex];
       const text = lyricsInput.value.trim();
       const colors = ensureLineColors().slice();
+      const highlights = ensureWordHighlights().map(items => items.map(item => ({ ...item })));
       saveLyricsButton.disabled = true;
       lyricStatus.textContent = "saving cloud";
       try {
         await setDoc(doc(db, "lyrics", song.trackId), {
           text,
           colors,
+          highlights,
           updatedAt: serverTimestamp()
         }, { merge: true });
         if (text) savedLyrics[song.trackId] = text;
         else delete savedLyrics[song.trackId];
         if (colors.some(Boolean)) savedLineColors[song.trackId] = colors;
         else delete savedLineColors[song.trackId];
+        if (highlights.some(items => items.length)) savedWordHighlights[song.trackId] = highlights;
+        else delete savedWordHighlights[song.trackId];
         localStorage.setItem(lyricKey, JSON.stringify(savedLyrics));
         localStorage.setItem(lineColorKey, JSON.stringify(savedLineColors));
+        localStorage.setItem(wordHighlightKey, JSON.stringify(savedWordHighlights));
         lyricStatus.textContent = text ? "cloud saved" : "cleared";
-        showToast(text ? "Lirik tersimpan ke cloud" : "Lirik cloud dikosongkan");
+        showToast(text ? "Lirik + warna tersimpan ke cloud" : "Lirik cloud dikosongkan");
       } catch (error) {
         lyricStatus.textContent = "save denied";
         const message = error.code === "permission-denied"
@@ -1850,7 +2188,9 @@
     clearLyricsButton.addEventListener("click", () => {
       lyricsInput.value = "";
       activeLineColors = [];
+      activeWordHighlights = [];
       persistLineColorsLocal();
+      persistWordHighlightsLocal();
       refreshCinematicLines();
       if (lineColorPanel && lineColorPanel.classList.contains("open")) renderLineColorEditor();
       lyricsInput.focus();
@@ -1858,6 +2198,7 @@
 
     lyricsInput.addEventListener("input", () => {
       ensureLineColors();
+      ensureWordHighlights();
       refreshCinematicLines();
       lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
     });
@@ -1918,16 +2259,7 @@
       if (!cinematicLines.length) return;
       const line = cinematicLines[cinematicIndex];
       const lineColor = normalizeColor(cinematicColors[cinematicIndex]);
-      cinematicLine.textContent = "";
-      applyCustomTextColor(cinematicLine, lineColor, true);
-      line.split(/\s+/).forEach((word, index) => {
-        const wordElement = document.createElement("span");
-        wordElement.className = "cinematic-word";
-        wordElement.style.setProperty("--word-index", index);
-        wordElement.textContent = word;
-        cinematicLine.appendChild(wordElement);
-        if (index < line.trim().split(/\s+/).length - 1) cinematicLine.appendChild(document.createTextNode(" "));
-      });
+      renderRichLyric(cinematicLine, line, cinematicWordHighlights[cinematicIndex], { cinematic: true, animateWords: true, baseColor: lineColor });
       lyricPrevious.textContent = cinematicLines[cinematicIndex - 1] || "";
       lyricNext.textContent = cinematicLines[cinematicIndex + 1] || "";
       applyEchoColor(lyricPrevious, cinematicColors[cinematicIndex - 1]);
@@ -1994,6 +2326,7 @@
     document.getElementById("next-line").addEventListener("click", () => moveCinematic(1));
     lyricTapZone.addEventListener("click", () => moveCinematic(1));
     document.addEventListener("keydown", event => {
+      if (wordColorModal.classList.contains("open") && event.key === "Escape") { closeWordColorEditor(); return; }
       if (!cinematicStage.classList.contains("open")) return;
       if (event.key === "Escape") closeCinematic();
       if (event.key === "ArrowRight" || event.key === " ") { event.preventDefault(); moveCinematic(1); }
