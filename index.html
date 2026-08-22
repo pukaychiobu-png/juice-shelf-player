@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#08060f" />
-  <title>Midnight Shelf — Juice WRLD</title>
+  <title>Midnight Shelf â€” Juice WRLD</title>
   <style>
     :root {
       --ink: #08060f;
@@ -335,7 +335,7 @@
     }
 
     .search-wrap::before {
-      content: "⌕";
+      content: "âŒ•";
       position: absolute;
       top: 50%;
       left: 15px;
@@ -579,7 +579,7 @@
     }
 
     .cinema-button:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--accent) 22%, transparent); }
-    .cinema-button::before { content: "✦"; color: var(--accent); font-size: 0.85rem; }
+    .cinema-button::before { content: "âœ¦"; color: var(--accent); font-size: 0.85rem; }
     .cinema-button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
     .lyrics-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
 
@@ -608,7 +608,7 @@
       text-transform: uppercase;
     }
     .sync-badge.show { display: inline-flex; }
-    .sync-badge::before { content: "⏱"; font-size: 0.7rem; }
+    .sync-badge::before { content: "â±"; font-size: 0.7rem; }
     .live-lyric {
       display: none;
       margin: 10px 0 0;
@@ -1105,10 +1105,10 @@
           <span class="count" id="song-count">7 tracks</span>
         </div>
         <label class="search-wrap" aria-label="Cari di koleksi ini">
-          <input id="search" type="search" autocomplete="off" placeholder="Cari dari koleksi ini…" />
+          <input id="search" type="search" autocomplete="off" placeholder="Cari dari koleksi iniâ€¦" />
         </label>
-        <a class="special-room-link" href="special-room.html"><div><span>Separate collection · 07 scenes</span><br><b>Enter Special Room</b></div><strong>→</strong></a>
-        <button class="add-song-toggle" id="add-song-toggle" type="button" disabled>＋ Add a song to this shelf</button>
+        <a class="special-room-link" href="special-room.html"><div><span>Separate collection Â· 07 scenes</span><br><b>Enter Special Room</b></div><strong>â†’</strong></a>
+        <button class="add-song-toggle" id="add-song-toggle" type="button" disabled>ï¼‹ Add a song to this shelf</button>
         <form class="add-song-form" id="add-song-form">
           <input id="new-song-url" type="url" inputmode="url" placeholder="Spotify track link" required />
           <div class="form-row">
@@ -1141,8 +1141,8 @@
           </div>
           <div class="lyrics-tools">
             <button class="cinema-button" id="open-cinematic" type="button">Open cinematic mode</button>
-            <button class="cinema-button" id="open-tap-sync" type="button" disabled>🎯 Tap sync</button>
-            <button class="cinema-button" id="toggle-line-colors" type="button">🎨 Line colors</button>
+            <button class="cinema-button" id="open-tap-sync" type="button" disabled>ðŸŽ¯ Tap sync</button>
+            <button class="cinema-button" id="toggle-line-colors" type="button">ðŸŽ¨ Line colors</button>
           </div>
           <p class="live-lyric" id="live-lyric"></p>
           <textarea id="lyrics-input" spellcheck="true" placeholder="Lirik belum tersedia. Satu baris = satu adegan cinematic. Tambahkan [mm:ss] di depan baris untuk auto-sync ke beat lagu, misal: [00:12.50] i pray my sins are forgiven"></textarea>
@@ -1171,7 +1171,7 @@
         <p class="cinema-label" id="cinema-label">cinematic lyric mode</p>
         <strong id="cinema-track-name">Empty</strong>
       </div>
-      <button class="cinema-close" id="close-cinematic" type="button" aria-label="Tutup cinematic mode">×</button>
+      <button class="cinema-close" id="close-cinematic" type="button" aria-label="Tutup cinematic mode">Ã—</button>
     </header>
     <div class="lyric-tap-zone" id="lyric-tap-zone" tabindex="0" role="button" aria-label="Tekan untuk pindah ke baris berikutnya">
       <p class="lyric-echo previous" id="lyric-previous"></p>
@@ -1180,12 +1180,12 @@
     </div>
     <footer class="cinema-footer">
       <div class="cinema-controls">
-        <button class="cinema-nav" id="previous-line" type="button" aria-label="Baris sebelumnya">←</button>
+        <button class="cinema-nav" id="previous-line" type="button" aria-label="Baris sebelumnya">â†</button>
         <span class="constellation" id="constellation" aria-hidden="true"></span>
         <span class="cinema-progress" id="cinema-progress">01 / 01</span>
-        <button class="cinema-nav" id="next-line" type="button" aria-label="Baris berikutnya">→</button>
+        <button class="cinema-nav" id="next-line" type="button" aria-label="Baris berikutnya">â†’</button>
       </div>
-      <span class="cinema-hint" id="cinema-hint">tap layar atau tekan → untuk lanjut</span>
+      <span class="cinema-hint" id="cinema-hint">tap layar atau tekan â†’ untuk lanjut</span>
     </footer>
   </section>
 
@@ -1196,17 +1196,17 @@
           <p class="tap-eyebrow">tap sync</p>
           <strong id="tap-track-name">Empty</strong>
         </div>
-        <button class="cinema-close" id="tap-close" type="button" aria-label="Tutup tap sync">×</button>
+        <button class="cinema-close" id="tap-close" type="button" aria-label="Tutup tap sync">Ã—</button>
       </div>
       <p class="tap-hint">Putar lagunya dari player, lalu tap tombol besar tepat saat tiap baris mulai dinyanyikan. Waktunya kecatet otomatis.</p>
       <p class="tap-progress" id="tap-progress">0 / 0 baris</p>
-      <p class="tap-current" id="tap-current">—</p>
+      <p class="tap-current" id="tap-current">â€”</p>
       <p class="tap-next" id="tap-next"></p>
       <p class="tap-timer" id="tap-timer">00:00.0</p>
       <button class="tap-button" id="tap-button" type="button">TAP</button>
       <div class="tap-controls">
-        <button class="tap-secondary" id="tap-undo" type="button">↩ Undo last</button>
-        <button class="tap-secondary" id="tap-skip" type="button">Skip baris →</button>
+        <button class="tap-secondary" id="tap-undo" type="button">â†© Undo last</button>
+        <button class="tap-secondary" id="tap-skip" type="button">Skip baris â†’</button>
       </div>
       <div class="tap-actions">
         <button class="clear-button" id="tap-cancel" type="button">Batal</button>
@@ -1218,7 +1218,7 @@
 
   <section class="word-color-modal" id="word-color-modal" aria-hidden="true" aria-label="Word color editor">
     <div class="word-color-card">
-      <div class="word-color-top"><div><small>WORD COLOR</small><strong id="word-color-title">Scene</strong></div><button class="word-color-close" id="word-color-close" type="button">×</button></div>
+      <div class="word-color-top"><div><small>WORD COLOR</small><strong id="word-color-title">Scene</strong></div><button class="word-color-close" id="word-color-close" type="button">Ã—</button></div>
       <p class="word-color-help">Blok kata atau potongan teks di bawah, pilih warna, lalu tekan APPLY. Timestamp dan scene tetap satu.</p>
       <div class="word-color-preview" id="word-color-preview" tabindex="0"></div>
       <div class="word-selection-bar"><span class="word-selection-label" id="word-selection-label">Belum ada teks yang dipilih</span><input class="word-color-picker" id="word-color-picker" type="color" value="#FF77B7"><button class="word-apply" id="word-color-apply" type="button">APPLY</button></div>
@@ -1483,7 +1483,7 @@
       wordColorTitle.textContent = `Scene ${String(wordEditorLineIndex + 1).padStart(2, "0")}`;
       renderRichLyric(wordColorPreview, text, highlights, { baseColor: activeLineColors[wordEditorLineIndex] });
       wordSelectionLabel.textContent = wordEditorSelection
-        ? `dipilih: “${text.slice(wordEditorSelection.start, wordEditorSelection.end)}”`
+        ? `dipilih: â€œ${text.slice(wordEditorSelection.start, wordEditorSelection.end)}â€`
         : "Blok kata atau potongan teks di atas";
       wordSelectionLabel.classList.toggle("ready", Boolean(wordEditorSelection));
       wordColorApply.disabled = !activeUser || !wordEditorSelection;
@@ -1498,7 +1498,7 @@
         label.textContent = text.slice(item.start, item.end);
         const remove = document.createElement("button");
         remove.type = "button";
-        remove.textContent = "×";
+        remove.textContent = "Ã—";
         remove.title = "Hapus warna kata ini";
         remove.disabled = !activeUser;
         remove.addEventListener("click", () => {
@@ -1608,7 +1608,7 @@
         const reset = document.createElement("button");
         reset.type = "button";
         reset.className = "line-color-reset";
-        reset.textContent = "↺";
+        reset.textContent = "â†º";
         reset.title = "Kembali ke warna theme";
         const wordButton = document.createElement("button");
         wordButton.type = "button";
@@ -1775,7 +1775,7 @@
 
     function renderTapState() {
       tapProgress.textContent = `${tapResults.length} / ${tapQueue.length} baris`;
-      tapCurrentEl.textContent = tapCursor < tapQueue.length ? tapQueue[tapCursor] : "🎉 semua baris sudah ditandai";
+      tapCurrentEl.textContent = tapCursor < tapQueue.length ? tapQueue[tapCursor] : "ðŸŽ‰ semua baris sudah ditandai";
       tapNextEl.textContent = tapCursor + 1 < tapQueue.length ? `berikutnya: ${tapQueue[tapCursor + 1]}` : "";
       tapButton.disabled = tapCursor >= tapQueue.length;
       tapUndoBtn.disabled = tapResults.length === 0;
@@ -1793,7 +1793,7 @@
       tapQueue = rawLines;
       tapResults = [];
       tapCursor = 0;
-      tapTrackName.textContent = `${songs[selectedIndex].title} · ${songs[selectedIndex].artist}`;
+      tapTrackName.textContent = `${songs[selectedIndex].title} Â· ${songs[selectedIndex].artist}`;
       renderTapState();
       updateTapTimer();
       tapStage.classList.add("open");
@@ -1844,7 +1844,7 @@
       persistWordHighlightsLocal();
       refreshCinematicLines();
       lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
-      showToast(`${tapResults.length} baris berhasil di-sync — jangan lupa Save text`);
+      showToast(`${tapResults.length} baris berhasil di-sync â€” jangan lupa Save text`);
       closeTapSync();
     }
 
@@ -1866,7 +1866,7 @@
       wordEditorSelection = offsets;
       const lines = getLines(lyricsInput.value).map(stripTimeTags);
       const text = lines[wordEditorLineIndex] || "";
-      wordSelectionLabel.textContent = `dipilih: “${text.slice(offsets.start, offsets.end)}”`;
+      wordSelectionLabel.textContent = `dipilih: â€œ${text.slice(offsets.start, offsets.end)}â€`;
       wordSelectionLabel.classList.add("ready");
       wordColorApply.disabled = !activeUser;
     });
@@ -1876,7 +1876,7 @@
         wordEditorSelection = offsets;
         const lines = getLines(lyricsInput.value).map(stripTimeTags);
         const text = lines[wordEditorLineIndex] || "";
-        wordSelectionLabel.textContent = `dipilih: “${text.slice(offsets.start, offsets.end)}”`;
+        wordSelectionLabel.textContent = `dipilih: â€œ${text.slice(offsets.start, offsets.end)}â€`;
         wordSelectionLabel.classList.add("ready");
         wordColorApply.disabled = !activeUser;
       }
@@ -1994,7 +1994,18 @@
         const data = snapshot.exists() ? snapshot.data() : {};
         const cloudText = typeof data.text === "string" ? data.text : "";
         const cloudColors = Array.isArray(data.colors) ? data.colors.map(normalizeColor) : null;
-        const cloudHighlights = Array.isArray(data.highlights) ? data.highlights : null;
+        let cloudHighlights = null;
+        try {
+          if (typeof data.highlightsJson === "string") {
+            const parsedHighlights = JSON.parse(data.highlightsJson);
+            cloudHighlights = Array.isArray(parsedHighlights) ? parsedHighlights : null;
+          } else if (Array.isArray(data.highlights)) {
+            cloudHighlights = data.highlights;
+          }
+        } catch (error) {
+          console.warn("Could not parse word highlights JSON", error);
+          cloudHighlights = null;
+        }
         const text = cloudText || savedLyrics[song.trackId] || "";
         lyricsInput.value = text;
         activeLineColors = cloudColors || (Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : []);
@@ -2071,8 +2082,8 @@
     function setRoomMood(song) {
       const isStormRoom = song.special === "storm";
       document.body.classList.toggle("storm-room", isStormRoom);
-      focusEyebrow.textContent = isStormRoom ? "special room · storm mode" : "now selected";
-      cinemaLabel.textContent = isStormRoom ? "special room · thunder cinematic" : "cinematic lyric mode";
+      focusEyebrow.textContent = isStormRoom ? "special room Â· storm mode" : "now selected";
+      cinemaLabel.textContent = isStormRoom ? "special room Â· thunder cinematic" : "cinematic lyric mode";
       window.clearTimeout(stormTimer);
       if (isStormRoom) {
         triggerLightning();
@@ -2137,7 +2148,7 @@
       activeWordHighlights = Array.isArray(savedWordHighlights[song.trackId]) ? savedWordHighlights[song.trackId] : [];
       lyricStatus.textContent = lyricsInput.value.trim() ? "local cache" : "loading cloud";
       refreshCinematicLines();
-      cinemaTrackName.textContent = `${song.title} · ${song.artist}`;
+      cinemaTrackName.textContent = `${song.title} Â· ${song.artist}`;
       renderPlayer(song);
       renderBars();
       renderShelf();
@@ -2159,7 +2170,7 @@
         await setDoc(doc(db, "lyrics", song.trackId), {
           text,
           colors,
-          highlights,
+          highlightsJson: JSON.stringify(highlights),
           updatedAt: serverTimestamp()
         }, { merge: true });
         if (text) savedLyrics[song.trackId] = text;
@@ -2282,8 +2293,8 @@
       lyricTapZone.classList.add("reveal");
       if (cinemaHint) {
         cinemaHint.textContent = isSynced
-          ? "mengikuti beat lagu secara otomatis · tap untuk override manual"
-          : "tap layar atau tekan → untuk lanjut";
+          ? "mengikuti beat lagu secara otomatis Â· tap untuk override manual"
+          : "tap layar atau tekan â†’ untuk lanjut";
       }
     }
 
@@ -2380,3 +2391,4 @@
   </script>
 </body>
 </html>
+
