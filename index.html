@@ -624,6 +624,85 @@
     }
     .live-lyric.show { display: block; }
 
+    .line-color-panel {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.025);
+      max-height: 300px;
+      overflow: auto;
+    }
+    .line-color-panel.open { display: block; }
+    .line-color-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: .62rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .line-color-head strong { color: #fff; font-size: .66rem; }
+    .line-color-list { display: grid; gap: 7px; }
+    .line-color-row {
+      display: grid;
+      grid-template-columns: 28px minmax(0,1fr) 42px 30px;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      padding: 7px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 11px;
+      background: rgba(255,255,255,.025);
+    }
+    .line-color-row.custom {
+      border-color: color-mix(in srgb, var(--line-color, var(--accent)) 36%, transparent);
+      box-shadow: inset 3px 0 0 var(--line-color, var(--accent));
+    }
+    .line-color-index { color: var(--muted); font-size: .58rem; font-weight: 800; text-align: center; }
+    .line-color-text {
+      min-width: 0;
+      overflow: hidden;
+      color: rgba(255,255,255,.76);
+      font-size: .68rem;
+      font-weight: 650;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .line-color-row.custom .line-color-text {
+      color: var(--line-color);
+      text-shadow: 0 0 10px color-mix(in srgb, var(--line-color) 44%, transparent);
+    }
+    .line-color-input {
+      width: 40px;
+      height: 28px;
+      padding: 2px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      cursor: pointer;
+    }
+    .line-color-input::-webkit-color-swatch-wrapper { padding: 1px; }
+    .line-color-input::-webkit-color-swatch { border: 0; border-radius: 5px; }
+    .line-color-reset {
+      display: grid;
+      width: 30px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255,255,255,.035);
+      place-items: center;
+    }
+    .line-color-reset:hover { color: #fff; border-color: var(--accent); }
+    .line-color-reset:disabled, .line-color-input:disabled { opacity: .38; cursor: not-allowed; }
+    .line-color-empty { margin: 3px 0; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+
     #lyrics-input {
       width: 100%;
       min-height: 118px;
@@ -861,6 +940,8 @@
       .shell { width: min(100% - 24px, 1320px); padding-top: 22px; }
       .top-note { display: none; }
       .sync-state { display: none; }
+      .line-color-row { grid-template-columns: 25px minmax(0,1fr) 38px 30px; gap: 6px; }
+      .line-color-panel { max-height: 260px; }
       .song-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .song-card { min-height: 109px; }
       .focus-top { grid-template-columns: 84px 1fr; gap: 16px; }
@@ -988,9 +1069,14 @@
           <div class="lyrics-tools">
             <button class="cinema-button" id="open-cinematic" type="button">Open cinematic mode</button>
             <button class="cinema-button" id="open-tap-sync" type="button" disabled>🎯 Tap sync</button>
+            <button class="cinema-button" id="toggle-line-colors" type="button">🎨 Line colors</button>
           </div>
           <p class="live-lyric" id="live-lyric"></p>
           <textarea id="lyrics-input" spellcheck="true" placeholder="Lirik belum tersedia. Satu baris = satu adegan cinematic. Tambahkan [mm:ss] di depan baris untuk auto-sync ke beat lagu, misal: [00:12.50] i pray my sins are forgiven"></textarea>
+          <div class="line-color-panel" id="line-color-panel">
+            <div class="line-color-head"><strong>Scene colors</strong><span>warna kosong = ikut theme lagu</span></div>
+            <div class="line-color-list" id="line-color-list"></div>
+          </div>
           <div class="lyrics-actions">
             <span class="privacy-note" id="editor-note">Login admin untuk menyimpan ke cloud.</span>
             <div>
@@ -1104,6 +1190,7 @@
     ];
 
     const lyricKey = "midnight-shelf-lyrics-v1";
+    const lineColorKey = "midnight-shelf-line-colors-v1";
     const customSongKey = "midnight-shelf-custom-songs-v1";
     const grid = document.getElementById("song-grid");
     const search = document.getElementById("search");
@@ -1142,6 +1229,9 @@
     const liveLyric = document.getElementById("live-lyric");
     const cinemaHint = document.getElementById("cinema-hint");
     const openTapSyncBtn = document.getElementById("open-tap-sync");
+    const toggleLineColorsBtn = document.getElementById("toggle-line-colors");
+    const lineColorPanel = document.getElementById("line-color-panel");
+    const lineColorList = document.getElementById("line-color-list");
     const tapStage = document.getElementById("tap-stage");
     const tapClose = document.getElementById("tap-close");
     const tapTrackName = document.getElementById("tap-track-name");
@@ -1155,10 +1245,13 @@
     const tapCancelBtn = document.getElementById("tap-cancel");
     const tapApplyBtn = document.getElementById("tap-apply");
     const savedLyrics = JSON.parse(localStorage.getItem(lyricKey) || "{}");
+    const savedLineColors = JSON.parse(localStorage.getItem(lineColorKey) || "{}");
     const savedCustomSongs = JSON.parse(localStorage.getItem(customSongKey) || "{}");
     let selectedIndex = 0;
     let toastTimer = null;
     let cinematicLines = [];
+    let cinematicColors = [];
+    let activeLineColors = [];
     let cinematicIndex = 0;
     let activeUser = null;
     let lyricRequest = 0;
@@ -1180,14 +1273,126 @@
       return text.split(/\n+/).map(line => line.trim()).filter(Boolean);
     }
 
+    function normalizeColor(value) {
+      const color = String(value || "").trim();
+      return /^#[0-9a-f]{6}$/i.test(color) ? color.toUpperCase() : "";
+    }
+
+    function ensureLineColors() {
+      const count = getLines(lyricsInput.value).length;
+      activeLineColors = Array.from({ length: count }, (_, index) => normalizeColor(activeLineColors[index]));
+      return activeLineColors;
+    }
+
+    function persistLineColorsLocal() {
+      const song = songs[selectedIndex];
+      if (!song) return;
+      const colors = ensureLineColors().slice();
+      if (colors.some(Boolean)) savedLineColors[song.trackId] = colors;
+      else delete savedLineColors[song.trackId];
+      localStorage.setItem(lineColorKey, JSON.stringify(savedLineColors));
+    }
+
+    function applyCustomTextColor(element, color, cinematic = false) {
+      if (!element) return;
+      const clean = normalizeColor(color);
+      element.style.color = clean || "";
+      element.style.textShadow = clean
+        ? (cinematic
+          ? `0 0 10px rgba(255,255,255,.45), 0 0 28px ${clean}, 0 0 78px ${clean}`
+          : `0 0 8px rgba(255,255,255,.28), 0 0 20px ${clean}, 0 0 42px ${clean}`)
+        : "";
+    }
+
+    function applyEchoColor(element, color) {
+      if (!element) return;
+      const clean = normalizeColor(color);
+      element.style.color = clean ? `${clean}48` : "";
+      element.style.textShadow = clean ? `0 0 18px ${clean}55` : "";
+    }
+
+    function refreshCinematicColorState() {
+      ensureLineColors();
+      if (isSynced) {
+        syncedLines.forEach(item => { item.color = normalizeColor(activeLineColors[item.sourceIndex]); });
+        cinematicColors = syncedLines.map(item => item.color || "");
+      } else {
+        cinematicColors = cinematicLines.map((_, index) => normalizeColor(activeLineColors[index]));
+      }
+      const liveIndex = findSyncedIndex(livePositionSeconds);
+      if (isSynced && liveIndex >= 0) updateLiveLyricLine(liveIndex);
+      if (cinematicStage.classList.contains("open") && cinematicLines.length) renderCinematic();
+    }
+
+    function renderLineColorEditor() {
+      if (!lineColorList) return;
+      const lines = getLines(lyricsInput.value);
+      ensureLineColors();
+      lineColorList.replaceChildren();
+      if (!lines.length) {
+        const empty = document.createElement("p");
+        empty.className = "line-color-empty";
+        empty.textContent = "Tambahkan lirik dulu. Setelah itu tiap baris bisa diberi warna sendiri.";
+        lineColorList.appendChild(empty);
+        return;
+      }
+      lines.forEach((rawLine, index) => {
+        const row = document.createElement("div");
+        row.className = "line-color-row";
+        const number = document.createElement("span");
+        number.className = "line-color-index";
+        number.textContent = String(index + 1).padStart(2, "0");
+        const preview = document.createElement("span");
+        preview.className = "line-color-text";
+        preview.textContent = stripTimeTags(rawLine) || rawLine;
+        const picker = document.createElement("input");
+        picker.type = "color";
+        picker.className = "line-color-input";
+        picker.title = "Pilih warna lirik";
+        picker.disabled = !activeUser;
+        const reset = document.createElement("button");
+        reset.type = "button";
+        reset.className = "line-color-reset";
+        reset.textContent = "↺";
+        reset.title = "Kembali ke warna theme";
+        const paintRow = () => {
+          const custom = normalizeColor(activeLineColors[index]);
+          picker.value = custom || songs[selectedIndex]?.accent || "#FFFFFF";
+          row.classList.toggle("custom", Boolean(custom));
+          if (custom) row.style.setProperty("--line-color", custom);
+          else row.style.removeProperty("--line-color");
+          reset.disabled = !activeUser || !custom;
+        };
+        picker.addEventListener("input", () => {
+          activeLineColors[index] = normalizeColor(picker.value);
+          persistLineColorsLocal();
+          paintRow();
+          refreshCinematicColorState();
+          lyricStatus.textContent = "unsaved color";
+        });
+        reset.addEventListener("click", () => {
+          activeLineColors[index] = "";
+          persistLineColorsLocal();
+          paintRow();
+          refreshCinematicColorState();
+          lyricStatus.textContent = "unsaved color";
+        });
+        paintRow();
+        row.append(number, preview, picker, reset);
+        lineColorList.appendChild(row);
+      });
+    }
+
     // Parses LRC-style "[mm:ss.xx] line text" tags. A line can carry more than
     // one time tag (repeated chorus lines), same as the standard .lrc format.
     function parseSyncedLyrics(text) {
       const timeTagPattern = /\[(\d{1,2}):(\d{2}(?:\.\d{1,3})?)\]/g;
       const parsed = [];
+      let sourceIndex = -1;
       text.split(/\n+/).forEach(raw => {
         const line = raw.trim();
         if (!line) return;
+        sourceIndex += 1;
         const times = [];
         let match;
         timeTagPattern.lastIndex = 0;
@@ -1195,7 +1400,12 @@
           times.push(parseInt(match[1], 10) * 60 + parseFloat(match[2]));
         }
         const cleanText = line.replace(timeTagPattern, "").trim();
-        if (times.length && cleanText) times.forEach(time => parsed.push({ time, text: cleanText }));
+        if (times.length && cleanText) times.forEach(time => parsed.push({
+          time,
+          text: cleanText,
+          sourceIndex,
+          color: normalizeColor(activeLineColors[sourceIndex])
+        }));
       });
       parsed.sort((a, b) => a.time - b.time);
       return parsed;
@@ -1210,9 +1420,11 @@
       if (!isSynced || index < 0 || !syncedLines[index]) {
         liveLyric.classList.remove("show");
         liveLyric.textContent = "";
+        applyCustomTextColor(liveLyric, "");
         return;
       }
       liveLyric.textContent = syncedLines[index].text;
+      applyCustomTextColor(liveLyric, syncedLines[index].color);
       liveLyric.classList.add("show");
     }
 
@@ -1258,13 +1470,18 @@
     if (window.__spotifyIframeAPI) handleSpotifyIframeReady(window.__spotifyIframeAPI);
 
     function refreshCinematicLines() {
+      ensureLineColors();
       syncedLines = parseSyncedLyrics(lyricsInput.value);
       isSynced = syncedLines.length > 0;
       cinematicLines = isSynced ? syncedLines.map(item => item.text) : getLines(lyricsInput.value);
+      cinematicColors = isSynced
+        ? syncedLines.map(item => normalizeColor(item.color))
+        : cinematicLines.map((_, index) => normalizeColor(activeLineColors[index]));
       cinematicIndex = Math.min(cinematicIndex, Math.max(cinematicLines.length - 1, 0));
       lastSyncedIndex = -1;
       updateSyncBadge();
       updateLiveLyricLine(-1);
+      if (lineColorPanel && lineColorPanel.classList.contains("open")) renderLineColorEditor();
     }
 
     // ===== TAP SYNC TOOL =====
@@ -1326,7 +1543,7 @@
 
     function tapNow() {
       if (tapCursor >= tapQueue.length) return;
-      tapResults.push({ time: livePositionSeconds, text: tapQueue[tapCursor] });
+      tapResults.push({ time: livePositionSeconds, text: tapQueue[tapCursor], sourceIndex: tapCursor });
       tapCursor += 1;
       tapButton.classList.remove("pulse");
       void tapButton.offsetWidth;
@@ -1349,7 +1566,10 @@
 
     function applyTapResults() {
       if (!tapResults.length) return;
+      const previousColors = activeLineColors.slice();
       lyricsInput.value = tapResults.map(item => `${formatTapTag(item.time)} ${item.text}`).join("\n");
+      activeLineColors = tapResults.map(item => normalizeColor(previousColors[item.sourceIndex]));
+      persistLineColorsLocal();
       refreshCinematicLines();
       lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
       showToast(`${tapResults.length} baris berhasil di-sync — jangan lupa Save text`);
@@ -1363,6 +1583,11 @@
     if (tapUndoBtn) tapUndoBtn.addEventListener("click", undoTap);
     if (tapSkipBtn) tapSkipBtn.addEventListener("click", skipTapLine);
     if (tapApplyBtn) tapApplyBtn.addEventListener("click", applyTapResults);
+    if (toggleLineColorsBtn) toggleLineColorsBtn.addEventListener("click", () => {
+      lineColorPanel.classList.toggle("open");
+      toggleLineColorsBtn.classList.toggle("active", lineColorPanel.classList.contains("open"));
+      if (lineColorPanel.classList.contains("open")) renderLineColorEditor();
+    });
     document.addEventListener("keydown", event => {
       if (!tapStage || !tapStage.classList.contains("open")) return;
       if (event.key === "Escape") { event.preventDefault(); closeTapSync(); }
@@ -1433,6 +1658,7 @@
       editorNote.textContent = signedIn
         ? `Signed in as ${user.email || "admin"}. Save akan tersinkron ke semua perangkat.`
         : "Login dengan akun admin untuk mengubah lirik. Pengunjung tetap bisa membaca.";
+      if (lineColorPanel && lineColorPanel.classList.contains("open")) renderLineColorEditor();
     }
 
     async function loadLyricsForSong(song) {
@@ -1441,14 +1667,20 @@
       try {
         const snapshot = await getDoc(doc(db, "lyrics", song.trackId));
         if (requestId !== lyricRequest) return;
-        const cloudText = snapshot.exists() && typeof snapshot.data().text === "string"
-          ? snapshot.data().text
-          : "";
+        const data = snapshot.exists() ? snapshot.data() : {};
+        const cloudText = typeof data.text === "string" ? data.text : "";
+        const cloudColors = Array.isArray(data.colors) ? data.colors.map(normalizeColor) : null;
         const text = cloudText || savedLyrics[song.trackId] || "";
         lyricsInput.value = text;
+        activeLineColors = cloudColors || (Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : []);
         if (text) {
           savedLyrics[song.trackId] = text;
           localStorage.setItem(lyricKey, JSON.stringify(savedLyrics));
+        }
+        if (cloudColors) {
+          if (cloudColors.some(Boolean)) savedLineColors[song.trackId] = cloudColors;
+          else delete savedLineColors[song.trackId];
+          localStorage.setItem(lineColorKey, JSON.stringify(savedLineColors));
         }
         refreshCinematicLines();
         lyricStatus.textContent = cloudText ? "cloud saved" : "not available";
@@ -1456,6 +1688,7 @@
       } catch (error) {
         if (requestId !== lyricRequest) return;
         lyricsInput.value = savedLyrics[song.trackId] || "";
+        activeLineColors = Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : [];
         refreshCinematicLines();
         lyricStatus.textContent = lyricsInput.value.trim() ? "local fallback" : "cloud unavailable";
         syncState.classList.add("error");
@@ -1568,6 +1801,7 @@
       focusArtist.textContent = song.artist;
       coverLetter.textContent = song.title.charAt(0);
       lyricsInput.value = savedLyrics[song.trackId] || "";
+      activeLineColors = Array.isArray(savedLineColors[song.trackId]) ? savedLineColors[song.trackId].map(normalizeColor) : [];
       lyricStatus.textContent = lyricsInput.value.trim() ? "local cache" : "loading cloud";
       refreshCinematicLines();
       cinemaTrackName.textContent = `${song.title} · ${song.artist}`;
@@ -1584,16 +1818,21 @@
       }
       const song = songs[selectedIndex];
       const text = lyricsInput.value.trim();
+      const colors = ensureLineColors().slice();
       saveLyricsButton.disabled = true;
       lyricStatus.textContent = "saving cloud";
       try {
         await setDoc(doc(db, "lyrics", song.trackId), {
           text,
+          colors,
           updatedAt: serverTimestamp()
         }, { merge: true });
         if (text) savedLyrics[song.trackId] = text;
         else delete savedLyrics[song.trackId];
+        if (colors.some(Boolean)) savedLineColors[song.trackId] = colors;
+        else delete savedLineColors[song.trackId];
         localStorage.setItem(lyricKey, JSON.stringify(savedLyrics));
+        localStorage.setItem(lineColorKey, JSON.stringify(savedLineColors));
         lyricStatus.textContent = text ? "cloud saved" : "cleared";
         showToast(text ? "Lirik tersimpan ke cloud" : "Lirik cloud dikosongkan");
       } catch (error) {
@@ -1610,11 +1849,15 @@
 
     clearLyricsButton.addEventListener("click", () => {
       lyricsInput.value = "";
+      activeLineColors = [];
+      persistLineColorsLocal();
       refreshCinematicLines();
+      if (lineColorPanel && lineColorPanel.classList.contains("open")) renderLineColorEditor();
       lyricsInput.focus();
     });
 
     lyricsInput.addEventListener("input", () => {
+      ensureLineColors();
       refreshCinematicLines();
       lyricStatus.textContent = lyricsInput.value.trim() ? "unsaved draft" : "not available";
     });
@@ -1674,7 +1917,9 @@
     function renderCinematic() {
       if (!cinematicLines.length) return;
       const line = cinematicLines[cinematicIndex];
+      const lineColor = normalizeColor(cinematicColors[cinematicIndex]);
       cinematicLine.textContent = "";
+      applyCustomTextColor(cinematicLine, lineColor, true);
       line.split(/\s+/).forEach((word, index) => {
         const wordElement = document.createElement("span");
         wordElement.className = "cinematic-word";
@@ -1685,6 +1930,8 @@
       });
       lyricPrevious.textContent = cinematicLines[cinematicIndex - 1] || "";
       lyricNext.textContent = cinematicLines[cinematicIndex + 1] || "";
+      applyEchoColor(lyricPrevious, cinematicColors[cinematicIndex - 1]);
+      applyEchoColor(lyricNext, cinematicColors[cinematicIndex + 1]);
       cinemaProgress.textContent = `${String(cinematicIndex + 1).padStart(2, "0")} / ${String(cinematicLines.length).padStart(2, "0")}`;
       constellation.textContent = "";
       const dotCount = Math.min(cinematicLines.length, 12);
